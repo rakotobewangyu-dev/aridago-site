@@ -17,11 +17,6 @@
             background-color: #ffffff;
             border: 1px solid #f0f0f0;
         }
-        .theme-gradient-text {
-            background: linear-gradient(90deg, #d92a2a, #f7b731, #2ab57d);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
         .theme-gradient-bg {
             background: linear-gradient(90deg, #d92a2a, #f7b731);
         }
@@ -36,6 +31,9 @@
         }
         .focus-ring-theme:focus {
             --tw-ring-color: #f7b731;
+        }
+        #price-warning-modal > div {
+            transition: transform 0.3s ease-out;
         }
     </style>
 </head>
@@ -79,7 +77,7 @@
                         Vos produits
                     </legend>
                     <div id="produits-list" class="space-y-6">
-                        <!-- Les produits seront ajoutés dynamiquement ici par JavaScript -->
+                        <!-- Les produits seront ajoutés dynamiquement ici -->
                     </div>
                     <button type="button" id="add-produit" class="mt-6 inline-flex items-center px-6 py-2 border-2 border-dashed border-red-300 text-sm font-semibold rounded-xl shadow-sm text-red-600 bg-white hover:bg-red-50 hover:border-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all">
                         <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
@@ -98,7 +96,7 @@
 
         <!-- Écran de Confirmation -->
         <div id="confirmation-container" class="hidden text-center bg-white p-8 md:p-12 rounded-3xl shadow-2xl">
-            <div class="mx-auto bg-green-100 rounded-full h-24 w-24 flex items-center justify-center">
+             <div class="mx-auto bg-green-100 rounded-full h-24 w-24 flex items-center justify-center">
                  <svg class="h-16 w-16 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -114,6 +112,25 @@
             <button id="new-devis-btn" class="mt-8 font-semibold text-yellow-600 hover:text-yellow-500 transition-colors">Faire une nouvelle demande</button>
         </div>
     </div>
+    
+    <!-- Modal d'avertissement sur le prix -->
+    <div id="price-warning-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 text-center transform scale-95">
+            <div class="mx-auto bg-yellow-100 rounded-full h-16 w-16 flex items-center justify-center mb-5">
+                 <svg class="h-10 w-10 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
+                </svg>
+            </div>
+            <h3 class="text-xl font-bold text-gray-800">Attention sur le Prix Unitaire</h3>
+            <p class="text-gray-600 mt-3">
+                Afin de s'assurer que nous parlons bien du même produit au bon prix, veillez indiquer le prix exact d'achat sur le site que vous avez choisi (Alibaba / Taobao / 1688 / Jing Dong ... ) pour qu'au moment de notre achat il n'y ait pas d'erreur de commande.
+            </p>
+            <button id="close-warning-btn" class="mt-8 w-full bg-yellow-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-yellow-600 transition-colors">
+                Compris
+            </button>
+        </div>
+    </div>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -127,9 +144,11 @@
         const whatsappLink = document.getElementById('whatsapp-link');
         const newDevisBtn = document.getElementById('new-devis-btn');
 
+        const priceWarningModal = document.getElementById('price-warning-modal');
+        const closeWarningBtn = document.getElementById('close-warning-btn');
+        
         let productCounter = 0;
 
-        // Fonction pour ajouter un nouveau bloc produit au formulaire
         function addProduct() {
             productCounter++;
             const productDiv = document.createElement('div');
@@ -145,17 +164,21 @@
                         <input type="text" name="nom_produit_${productCounter}" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus-ring-theme sm:text-sm transition-all">
                     </div>
                     <div>
-                        <label class="block text-sm font-semibold text-gray-600 mb-1">Description du produit</label>
-                        <textarea name="description_produit_${productCounter}" rows="2" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus-ring-theme sm:text-sm transition-all"></textarea>
+                        <label class="block text-sm font-semibold text-gray-600 mb-1">Lien du produit</label>
+                        <input type="url" name="lien_produit_${productCounter}" placeholder="https://..." required class="mt-1 block w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus-ring-theme sm:text-sm transition-all">
+                    </div>
+                     <div>
+                        <label class="block text-sm font-semibold text-gray-600 mb-1">Spécification du Produit <span class="text-red-500 font-bold">(Obligatoire)</span></label>
+                        <textarea name="specification_produit_${productCounter}" rows="2" required placeholder="Ex: Couleur: Bleu, Taille: XL, Modèle: A5" class="mt-1 block w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus-ring-theme sm:text-sm transition-all"></textarea>
                     </div>
                      <div class="grid grid-cols-2 gap-4">
                         <div>
-                            <label class="block text-sm font-semibold text-gray-600 mb-1">Quantité</label>
-                            <input type="number" name="quantite_${productCounter}" min="1" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus-ring-theme sm:text-sm transition-all">
+                            <label class="block text-sm font-semibold text-gray-600 mb-1">Prix Unitaire (CNY)</label>
+                            <input type="number" name="prix_unitaire_${productCounter}" min="0" step="0.01" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus-ring-theme sm:text-sm transition-all">
                         </div>
                         <div>
-                            <label class="block text-sm font-semibold text-gray-600 mb-1">Lien du produit</label>
-                            <input type="url" name="lien_produit_${productCounter}" placeholder="https://..." required class="mt-1 block w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus-ring-theme sm:text-sm transition-all">
+                            <label class="block text-sm font-semibold text-gray-600 mb-1">Quantité</label>
+                            <input type="number" name="quantite_${productCounter}" min="1" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus-ring-theme sm:text-sm transition-all">
                         </div>
                     </div>
                 </div>
@@ -163,18 +186,39 @@
             produitsList.appendChild(productDiv);
         }
 
-        // Ajoute le premier produit au chargement de la page
-        addProduct();
-        addProduitBtn.addEventListener('click', addProduct);
+        // --- Logique du Modal d'Avertissement ---
+        function showPriceWarning() {
+            if (localStorage.getItem('hasSeenPriceWarning') !== 'true') {
+                priceWarningModal.classList.remove('hidden');
+                setTimeout(() => {
+                    priceWarningModal.querySelector('div').classList.remove('scale-95');
+                }, 10);
+            }
+        }
 
-        // Gère la suppression d'un produit
+        closeWarningBtn.addEventListener('click', () => {
+            priceWarningModal.classList.add('hidden');
+            localStorage.setItem('hasSeenPriceWarning', 'true');
+        });
+
+        produitsList.addEventListener('focusin', function(e) {
+            if (e.target && e.target.matches('input[name*="prix_unitaire"]')) {
+                showPriceWarning();
+            }
+        });
+        // --- Fin de la logique du Modal ---
+
+
+        addProduct();
+
+        addProduitBtn.addEventListener('click', addProduct);
+        
         produitsList.addEventListener('click', function(e) {
             if (e.target.classList.contains('remove-produit')) {
                 e.target.closest('.produit-item').remove();
             }
         });
 
-        // Gère la soumission du formulaire
         form.addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = new FormData(form);
@@ -182,7 +226,6 @@
             sendToWhatsapp(data);
         });
         
-        // Gère le bouton "Faire une nouvelle demande"
         newDevisBtn.addEventListener('click', () => {
              confirmationContainer.classList.add('hidden');
              formContainer.classList.remove('hidden');
@@ -192,23 +235,39 @@
              addProduct();
         });
 
-        // Formate et prépare le message pour l'envoi sur WhatsApp
         function sendToWhatsapp(data) {
-            const dateCommande = new Date().toLocaleDateString('fr-FR');
+            // --- Calcul en arrière-plan ---
+            const fraisServicePercent = 10;
+            const tauxChange = 700;
+            let subtotalYuan = 0;
             let produitsText = '';
+            
+            const productElements = document.querySelectorAll('.produit-item');
+            productElements.forEach((prod, index) => {
+                const i = index + 1; 
+                const nom = prod.querySelector(`input[name="nom_produit_${i}"]`).value;
+                const lien = prod.querySelector(`input[name="lien_produit_${i}"]`).value;
+                const spec = prod.querySelector(`textarea[name="specification_produit_${i}"]`).value;
+                const prix = parseFloat(prod.querySelector(`input[name="prix_unitaire_${i}"]`).value) || 0;
+                const qte = parseInt(prod.querySelector(`input[name="quantite_${i}"]`).value) || 0;
 
-            for (let i = 1; i <= productCounter; i++) {
-                if(data[`nom_produit_${i}`]) {
-                    produitsText += `
+                subtotalYuan += prix * qte;
+
+                produitsText += `
 *Produit ${i}:*
-- Nom: ${data[`nom_produit_${i}`]}
-- Description: ${data[`description_produit_${i}`]}
-- Quantité: ${data[`quantite_${i}`]}
-- Lien: ${data[`lien_produit_${i}`]}
+- Nom: ${nom}
+- Spécification: *${spec}*
+- Prix unitaire: ${prix.toFixed(2)} ¥
+- Quantité: ${qte}
+- Lien: ${lien}
 `;
-                }
-            }
-
+            });
+            
+            const fraisServiceYuan = subtotalYuan * (fraisServicePercent / 100);
+            const totalYuan = subtotalYuan + fraisServiceYuan;
+            const totalMga = totalYuan * tauxChange;
+            const dateCommande = new Date().toLocaleDateString('fr-FR');
+            
             const whatsappMessage = `
 *Nouvelle Demande de Devis - ARIDAGO*
 
@@ -218,6 +277,14 @@
 -----------------------------
 *Détails des Produits:*
 ${produitsText}
+-----------------------------
+*Résumé du Calcul:*
+- Total Produits: ${subtotalYuan.toFixed(2)} ¥
+- Frais de service (${fraisServicePercent}%): ${fraisServiceYuan.toFixed(2)} ¥
+- *Total en Yuan: ${totalYuan.toFixed(2)} ¥*
+- *Total en Ariary: ~${Math.round(totalMga).toLocaleString('fr-FR')} Ar*
+-----------------------------
+*N.B. : Les frais de transport Chine-Madagascar ne sont pas inclus dans ce devis.*
 -----------------------------
 *Date:* ${dateCommande}
 
@@ -235,5 +302,4 @@ _Demande envoyée depuis le site web ARIDAGO._
 
 </body>
 </html>
-
 
