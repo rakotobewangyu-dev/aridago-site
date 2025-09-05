@@ -3,304 +3,357 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Demande de Devis - ARIDAGO</title>
+    <title>Demande de Devis - Aridago</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Ajout de la police Poppins pour le titre -->
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Manrope', sans-serif;
-            background: #fdfbfb;
+            background: linear-gradient(to bottom, #FFFBEB, #f7fafc);
         }
-        .form-wrapper {
-            background-color: #ffffff;
-            border: 1px solid #f0f0f0;
+        /* Classe pour la nouvelle police du titre */
+        .font-poppins {
+            font-family: 'Poppins', sans-serif;
+        }
+        .theme-gradient-text {
+            background: linear-gradient(90deg, #d92a2a, #f7b731);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
         .theme-gradient-bg {
             background: linear-gradient(90deg, #d92a2a, #f7b731);
         }
         .btn-primary {
             background: linear-gradient(90deg, #2ab57d, #2a9d8f);
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px 0 rgba(42, 181, 125, 0.4);
         }
-        .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 7px 20px 0 rgba(42, 181, 125, 0.6);
-        }
-        .focus-ring-theme:focus {
-            --tw-ring-color: #f7b731;
-        }
-        #price-warning-modal > div {
-            transition: transform 0.3s ease-out;
+        .modal-backdrop {
+            background-color: rgba(0,0,0,0.6);
         }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body>
 
-    <div class="w-full max-w-4xl mx-auto">
-        <div id="form-container" class="form-wrapper p-8 md:p-12 rounded-3xl shadow-2xl transition-all duration-300">
-            <!-- Entête avec le logo -->
-            <div class="text-center mb-10">
-                <img src="https://i.imgur.com/IZwbFHz.png" alt="Logo ARIDAGO" class="mx-auto h-32 w-auto mb-4">
-                <p class="text-gray-500 text-lg">Votre partenaire d'exportation de confiance Chine-Madagascar</p>
+    <div class="container mx-auto max-w-4xl p-4 md:p-8">
+        
+        <header class="text-center mb-10">
+            <!-- MODIFICATION ICI: Nouveau lien et taille ajustée (h-36) -->
+            <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="mx-auto h-36 w-auto mb-4">
+            
+            <h1 class="font-poppins text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
+                Commander en Chine ?<br>C'est maintenant <span class="theme-gradient-text">simple et rapide !</span>
+            </h1>
+            <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+                Remplissez ce formulaire pour recevoir votre devis personnalisé directement sur WhatsApp.
+            </p>
+        </header>
+
+        <section class="mb-12">
+             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <div class="theme-gradient-bg w-12 h-12 flex items-center justify-center rounded-full text-white font-bold text-xl mx-auto mb-4">1</div>
+                    <h3 class="font-bold text-lg text-gray-800">Remplissez le formulaire</h3>
+                    <p class="text-gray-500 text-sm mt-1">Ajoutez les liens et détails de tous vos produits.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <div class="theme-gradient-bg w-12 h-12 flex items-center justify-center rounded-full text-white font-bold text-xl mx-auto mb-4">2</div>
+                    <h3 class="font-bold text-lg text-gray-800">Envoyez via WhatsApp</h3>
+                    <p class="text-gray-500 text-sm mt-1">Un clic suffit pour nous transmettre votre demande.</p>
+                </div>
+                <div class="bg-white p-6 rounded-2xl shadow-sm">
+                    <div class="theme-gradient-bg w-12 h-12 flex items-center justify-center rounded-full text-white font-bold text-xl mx-auto mb-4">3</div>
+                    <h3 class="font-bold text-lg text-gray-800">Recevez la confirmation</h3>
+                    <p class="text-gray-500 text-sm mt-1">Nous vérifions et validons la commande avec vous.</p>
+                </div>
             </div>
+        </section>
 
+        <main class="bg-white p-6 md:p-10 rounded-3xl shadow-lg">
             <form id="devis-form">
-                <!-- Section Informations Client -->
-                <fieldset class="mb-8 border-b-2 border-gray-100 pb-8">
+                <fieldset class="border-b-2 border-gray-100 pb-8">
                     <legend class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                        <span class="theme-gradient-bg w-10 h-10 flex items-center justify-center rounded-full text-white font-bold mr-4">1</span>
-                        Vos informations
+                        <span class="theme-gradient-bg w-10 h-10 flex items-center justify-center rounded-full text-white font-bold mr-4">1</span> Vos informations
                     </legend>
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                         <div>
                             <label for="nom" class="block text-sm font-semibold text-gray-600 mb-1">Nom</label>
-                            <input type="text" id="nom" name="nom" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus-ring-theme sm:text-sm transition-all">
+                            <input type="text" id="nom" name="nom" required class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition">
                         </div>
                         <div>
                             <label for="prenom" class="block text-sm font-semibold text-gray-600 mb-1">Prénom</label>
-                            <input type="text" id="prenom" name="prenom" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus-ring-theme sm:text-sm transition-all">
+                            <input type="text" id="prenom" name="prenom" required class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition">
+                        </div>
+                        <div>
+                             <label for="whatsapp" class="block text-sm font-semibold text-gray-600 mb-1">Numéro WhatsApp</label>
+                            <input type="tel" id="whatsapp" name="whatsapp" required class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition">
+                        </div>
+                         <div>
+                             <label for="email" class="block text-sm font-semibold text-gray-600 mb-1">Email (Optionnel)</label>
+                            <input type="email" id="email" name="email" class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition">
                         </div>
                     </div>
-                    <div class="mt-6">
-                        <label for="whatsapp" class="block text-sm font-semibold text-gray-600 mb-1">Numéro de tel/WhatsApp</label>
-                        <input type="tel" id="whatsapp" name="whatsapp" required placeholder="+261..." class="mt-1 block w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus-ring-theme sm:text-sm transition-all">
-                    </div>
                 </fieldset>
 
-                <!-- Section Produits -->
-                <fieldset>
-                    <legend class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                        <span class="theme-gradient-bg w-10 h-10 flex items-center justify-center rounded-full text-white font-bold mr-4">2</span>
-                        Vos produits
+                <fieldset class="mt-8">
+                     <legend class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                        <span class="theme-gradient-bg w-10 h-10 flex items-center justify-center rounded-full text-white font-bold mr-4">2</span> Vos produits
                     </legend>
-                    <div id="produits-list" class="space-y-6">
-                        <!-- Les produits seront ajoutés dynamiquement ici -->
+                    <div id="product-list" class="space-y-6">
+                        <!-- Le premier produit est ajouté ici dynamiquement -->
                     </div>
-                    <button type="button" id="add-produit" class="mt-6 inline-flex items-center px-6 py-2 border-2 border-dashed border-red-300 text-sm font-semibold rounded-xl shadow-sm text-red-600 bg-white hover:bg-red-50 hover:border-red-400 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 transition-all">
-                        <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
-                        Ajouter un autre produit
-                    </button>
+                    <div class="mt-6">
+                        <button type="button" id="add-product" class="w-full flex items-center justify-center px-6 py-3 border-2 border-dashed border-red-300 text-sm font-semibold rounded-xl text-red-600 hover:bg-red-50 transition">
+                            <svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>
+                            Ajouter un autre produit
+                        </button>
+                    </div>
                 </fieldset>
-
-                <!-- Bouton de soumission -->
-                <div class="mt-12 text-center">
-                    <button type="submit" class="w-full md:w-auto inline-flex justify-center items-center py-4 px-16 border border-transparent text-lg font-bold rounded-xl text-white btn-primary">
+                
+                <div class="mt-10 text-center">
+                    <button type="submit" class="inline-flex justify-center items-center py-4 px-16 text-lg font-bold rounded-xl text-white btn-primary shadow-lg hover:shadow-xl transform hover:scale-105 transition animate-pulse">
                         Envoyer ma demande
                     </button>
                 </div>
             </form>
-        </div>
+        </main>
 
-        <!-- Écran de Confirmation -->
-        <div id="confirmation-container" class="hidden text-center bg-white p-8 md:p-12 rounded-3xl shadow-2xl">
+        <section class="mt-12 bg-white p-6 md:p-10 rounded-3xl shadow-lg">
+            <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Questions fréquentes (FAQ)</h2>
+            <div class="space-y-4">
+                <div>
+                    <h3 class="font-bold text-gray-800">Quels sont les frais de transport Chine-Madagascar ?</h3>
+                    <p class="text-gray-600 mt-1">Les frais de transport ne sont pas inclus dans le devis initial. Ils dépendent du poids et du volume total de votre commande. Nous vous fournirons une estimation détaillée de ces frais lors de la confirmation de votre commande.</p>
+                </div>
+                 <div>
+                    <h3 class="font-bold text-gray-800">Quels sont les délais de livraison estimés ?</h3>
+                    <p class="text-gray-600 mt-1">Les délais varient en fonction du type de transport choisi (aérien ou maritime). En général, comptez entre 7 à 15 jours pour le transport aérien et 30 à 45 jours pour le transport maritime, après réception de tous vos articles dans notre entrepôt en Chine.</p>
+                </div>
+                 <div>
+                    <h3 class="font-bold text-gray-800">Quels sont les moyens de paiement acceptés ?</h3>
+                    <p class="text-gray-600 mt-1">
+                        Pour les paiements en <b>Yuan (CNY)</b>, nous acceptons : Alipay et WeChat Pay.<br>
+                        Pour les paiements en <b>Ariary (MGA)</b>, nous acceptons : MVola, Orange Money et Airtel Money.<br>
+                        Les détails vous seront communiqués lors de la validation de votre devis.
+                    </p>
+                </div>
+            </div>
+        </section>
+        
+        <footer class="mt-12 text-center text-gray-500 text-sm">
+            <div class="flex justify-center items-center space-x-6 mb-4">
+                 <a href="https://wa.me/8615600021123" target="_blank" class="hover:text-green-500 transition">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.267.655 4.398 1.803 6.182l-.341 1.232 1.257-.328z"/></svg>
+                </a>
+                 <a href="https://www.facebook.com/Aridagochine/" target="_blank" class="hover:text-blue-600 transition">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z"/></svg>
+                </a>
+            </div>
+            <p>&copy; <span id="year"></span> Aridago - Tous droits réservés.</p>
+        </footer>
+
+    </div>
+
+    <!-- Modale d'avertissement pour le PRIX -->
+    <div id="price-alert-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4">
+            <h3 class="text-lg font-bold text-gray-800">Attention sur le Prix Unitaire</h3>
+            <p class="text-gray-600 mt-2 text-sm">Afin de s'assurer que nous parlons bien du même produit au bon prix, veuillez indiquer le prix exact d'achat sur le site que vous avez choisi (Alibaba / Taobao / 1688 / Jing Dong ... ) pour qu'au moment de notre achat il n'y ait pas d'erreur de commande.</p>
+            <button id="close-price-modal-btn" class="mt-6 w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-yellow-600 transition">Compris</button>
+        </div>
+    </div>
+    
+    <!-- Modale d'avertissement pour le LIEN -->
+    <div id="link-alert-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4">
+            <h3 class="text-lg font-bold text-gray-800">Comment copier le lien ?</h3>
+            <p class="text-gray-600 mt-2 text-sm">Copiez-collez le lien du produit que vous souhaitez acheter sur les sites chinois suivants afin que nous puissions l'identifier et l'acheter pour vous : Alibaba, Taobao, 1688, JingDong, XianYu, etc.</p>
+            <button id="close-link-modal-btn" class="mt-6 w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg hover:bg-yellow-600 transition">Compris</button>
+        </div>
+    </div>
+
+    <!-- Modale de Confirmation -->
+    <div id="confirmation-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop">
+         <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 text-center m-4">
              <div class="mx-auto bg-green-100 rounded-full h-24 w-24 flex items-center justify-center">
-                 <svg class="h-16 w-16 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <svg class="h-16 w-16 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
             </div>
             <h2 class="mt-6 text-3xl font-extrabold text-gray-800">C'est presque fini !</h2>
-            <p class="mt-4 text-lg text-gray-600 max-w-md mx-auto">Votre demande est prête. Cliquez ci-dessous pour l'envoyer directement à Mr. Wang sur WhatsApp.</p>
-            <div class="mt-8">
-                <a id="whatsapp-link" href="#" target="_blank" class="inline-flex items-center justify-center py-4 px-8 border border-transparent text-base font-bold rounded-xl text-white btn-primary">
-                    <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.267.655 4.398 1.803 6.182l-.341 1.232 1.257-.328z"/></svg>
-                    Confirmer et Envoyer sur WhatsApp
-                </a>
-            </div>
-            <button id="new-devis-btn" class="mt-8 font-semibold text-yellow-600 hover:text-yellow-500 transition-colors">Faire une nouvelle demande</button>
-        </div>
-    </div>
-    
-    <!-- Modal d'avertissement sur le prix -->
-    <div id="price-warning-modal" class="hidden fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4 z-50 transition-opacity duration-300">
-        <div class="bg-white rounded-2xl shadow-xl w-full max-w-md p-8 text-center transform scale-95">
-            <div class="mx-auto bg-yellow-100 rounded-full h-16 w-16 flex items-center justify-center mb-5">
-                 <svg class="h-10 w-10 text-yellow-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z" />
-                </svg>
-            </div>
-            <h3 class="text-xl font-bold text-gray-800">Attention sur le Prix Unitaire</h3>
-            <p class="text-gray-600 mt-3">
-                Afin de s'assurer que nous parlons bien du même produit au bon prix, veillez indiquer le prix exact d'achat sur le site que vous avez choisi (Alibaba / Taobao / 1688 / Jing Dong ... ) pour qu'au moment de notre achat il n'y ait pas d'erreur de commande.
-            </p>
-            <button id="close-warning-btn" class="mt-8 w-full bg-yellow-500 text-white font-bold py-3 px-6 rounded-lg hover:bg-yellow-600 transition-colors">
-                Compris
-            </button>
-        </div>
+            <p class="mt-4 text-gray-600">Votre devis a été préparé. Cliquez sur le bouton ci-dessous pour nous l'envoyer directement sur WhatsApp.</p>
+            <a id="whatsapp-link" href="#" target="_blank" class="mt-8 inline-flex items-center justify-center w-full py-4 px-8 text-base font-bold rounded-xl text-white btn-primary shadow-lg hover:shadow-xl transform hover:scale-105 transition">
+                <svg class="w-6 h-6 mr-3" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.886-.001 2.267.655 4.398 1.803 6.182l-.341 1.232 1.257-.328z"/></svg>
+                Confirmer et Envoyer sur WhatsApp
+            </a>
+         </div>
     </div>
 
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const VendeurWhatsapp = "+8615600021123";
-        const form = document.getElementById('devis-form');
-        const produitsList = document.getElementById('produits-list');
-        const addProduitBtn = document.getElementById('add-produit');
-        
-        const formContainer = document.getElementById('form-container');
-        const confirmationContainer = document.getElementById('confirmation-container');
-        const whatsappLink = document.getElementById('whatsapp-link');
-        const newDevisBtn = document.getElementById('new-devis-btn');
+document.addEventListener('DOMContentLoaded', function() {
+    const productList = document.getElementById('product-list');
+    const addProductBtn = document.getElementById('add-product');
+    const form = document.getElementById('devis-form');
+    const confirmationModal = document.getElementById('confirmation-modal');
+    const whatsappLink = document.getElementById('whatsapp-link');
+    
+    const priceAlertModal = document.getElementById('price-alert-modal');
+    const closePriceModalBtn = document.getElementById('close-price-modal-btn');
+    const linkAlertModal = document.getElementById('link-alert-modal');
+    const closeLinkModalBtn = document.getElementById('close-link-modal-btn');
+    
+    document.getElementById('year').textContent = new Date().getFullYear();
 
-        const priceWarningModal = document.getElementById('price-warning-modal');
-        const closeWarningBtn = document.getElementById('close-warning-btn');
-        
-        let productCounter = 0;
+    let productCount = 0;
+    let hasShownPriceAlert = localStorage.getItem('hasShownPriceAlert_Aridago');
+    let hasShownLinkAlert = localStorage.getItem('hasShownLinkAlert_Aridago');
 
-        function addProduct() {
-            productCounter++;
-            const productDiv = document.createElement('div');
-            productDiv.classList.add('produit-item', 'p-6', 'border-2', 'border-gray-200', 'rounded-xl', 'bg-white');
-            productDiv.innerHTML = `
-                <div class="flex justify-between items-center mb-4">
-                    <h4 class="font-bold text-lg text-gray-800">Produit ${productCounter}</h4>
-                    ${productCounter > 1 ? '<button type="button" class="remove-produit text-sm font-semibold text-red-600 hover:text-red-800 transition-colors">Retirer</button>' : ''}
+    function createProductBlock() {
+        productCount++;
+        const productDiv = document.createElement('div');
+        productDiv.className = 'p-5 border-2 border-gray-200 rounded-xl bg-gray-50/50 relative';
+        productDiv.innerHTML = `
+            <h4 class="font-bold text-md text-gray-800 mb-4">Produit ${productCount}</h4>
+            ${productCount > 1 ? '<button type="button" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold remove-product">&times;</button>' : ''}
+            <div class="space-y-4">
+                <div>
+                    <label class="text-sm font-semibold text-gray-600">Nom du produit</label>
+                    <input type="text" name="product_name_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition">
                 </div>
-                <div class="grid grid-cols-1 gap-4">
+                <div>
+                    <label class="text-sm font-semibold text-gray-600">Lien du produit</label>
+                    <input type="url" name="product_link_${productCount}" required class="link-input w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition">
+                </div>
+                <div>
+                    <label class="text-sm font-semibold text-gray-600">Spécification du Produit (ex: Couleur, Taille)</label>
+                    <textarea name="product_spec_${productCount}" rows="2" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></textarea>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
                     <div>
-                        <label class="block text-sm font-semibold text-gray-600 mb-1">Nom du produit</label>
-                        <input type="text" name="nom_produit_${productCounter}" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus-ring-theme sm:text-sm transition-all">
+                        <label class="text-sm font-semibold text-gray-600">Prix Unitaire (CNY)</label>
+                        <input type="number" step="0.01" name="product_price_${productCount}" required class="price-input w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition">
                     </div>
                     <div>
-                        <label class="block text-sm font-semibold text-gray-600 mb-1">Lien du produit</label>
-                        <input type="url" name="lien_produit_${productCounter}" placeholder="https://..." required class="mt-1 block w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus-ring-theme sm:text-sm transition-all">
-                    </div>
-                     <div>
-                        <label class="block text-sm font-semibold text-gray-600 mb-1">Spécification du Produit <span class="text-red-500 font-bold">(Obligatoire)</span></label>
-                        <textarea name="specification_produit_${productCounter}" rows="2" required placeholder="Ex: Couleur: Bleu, Taille: XL, Modèle: A5" class="mt-1 block w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus-ring-theme sm:text-sm transition-all"></textarea>
-                    </div>
-                     <div class="grid grid-cols-2 gap-4">
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-600 mb-1">Prix Unitaire (¥)</label>
-                            <input type="number" name="prix_unitaire_${productCounter}" min="0" step="0.01" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus-ring-theme sm:text-sm transition-all">
-                        </div>
-                        <div>
-                            <label class="block text-sm font-semibold text-gray-600 mb-1">Quantité</label>
-                            <input type="number" name="quantite_${productCounter}" min="1" required class="mt-1 block w-full px-4 py-3 bg-gray-50 border-2 border-gray-200 rounded-xl shadow-sm placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus-ring-theme sm:text-sm transition-all">
-                        </div>
+                        <label class="text-sm font-semibold text-gray-600">Quantité</label>
+                        <input type="number" name="product_quantity_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition">
                     </div>
                 </div>
-            `;
-            produitsList.appendChild(productDiv);
+            </div>
+        `;
+        productList.appendChild(productDiv);
+
+        productDiv.querySelector('.link-input').addEventListener('focus', () => {
+            if (!hasShownLinkAlert) {
+                linkAlertModal.style.display = 'flex';
+            }
+        });
+
+        productDiv.querySelector('.price-input').addEventListener('focus', () => {
+            if (!hasShownPriceAlert) {
+                priceAlertModal.style.display = 'flex';
+            }
+        });
+
+        const removeBtn = productDiv.querySelector('.remove-product');
+        if (removeBtn) {
+            removeBtn.addEventListener('click', () => productDiv.remove());
         }
+    }
 
-        // --- Logique du Modal d'Avertissement ---
-        function showPriceWarning() {
-            if (localStorage.getItem('hasSeenPriceWarning') !== 'true') {
-                priceWarningModal.classList.remove('hidden');
-                setTimeout(() => {
-                    priceWarningModal.querySelector('div').classList.remove('scale-95');
-                }, 10);
-            }
+    addProductBtn.addEventListener('click', createProductBlock);
+    
+    closePriceModalBtn.addEventListener('click', () => {
+        priceAlertModal.style.display = 'none';
+        localStorage.setItem('hasShownPriceAlert_Aridago', 'true');
+        hasShownPriceAlert = true;
+    });
+
+    closeLinkModalBtn.addEventListener('click', () => {
+        linkAlertModal.style.display = 'none';
+        localStorage.setItem('hasShownLinkAlert_Aridago', 'true');
+        hasShownLinkAlert = true;
+    });
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const data = Object.fromEntries(formData.entries());
+
+        let devisText = "";
+        let totalCny = 0;
+        
+        const devisId = `ADG-${Date.now().toString().slice(-6)}`;
+        devisText += `*DEMANDE DE DEVIS - ${devisId}*\n`;
+        devisText += `*Client:* ${data.nom} ${data.prenom}\n`;
+        devisText += `*WhatsApp:* ${data.whatsapp}\n`;
+        if (data.email) {
+            devisText += `*Email:* ${data.email}\n`;
         }
+        devisText += `-----------------------------------\n\n`;
 
-        closeWarningBtn.addEventListener('click', () => {
-            priceWarningModal.classList.add('hidden');
-            localStorage.setItem('hasSeenPriceWarning', 'true');
-        });
-
-        produitsList.addEventListener('focusin', function(e) {
-            if (e.target && e.target.matches('input[name*="prix_unitaire"]')) {
-                showPriceWarning();
+        const products = [];
+        const productElements = productList.querySelectorAll('.p-5');
+        productElements.forEach((p_el, index) => {
+            const inputs = p_el.querySelectorAll('input, textarea');
+            const nameInput = p_el.querySelector('input[name^="product_name_"]');
+            if(nameInput && nameInput.value) {
+                const id = nameInput.name.split('_').pop();
+                products.push({
+                    name: formData.get(`product_name_${id}`),
+                    link: formData.get(`product_link_${id}`),
+                    spec: formData.get(`product_spec_${id}`),
+                    price: parseFloat(formData.get(`product_price_${id}`)),
+                    quantity: parseInt(formData.get(`product_quantity_${id}`), 10)
+                });
             }
         });
-        // --- Fin de la logique du Modal ---
-
-
-        addProduct();
-
-        addProduitBtn.addEventListener('click', addProduct);
         
-        produitsList.addEventListener('click', function(e) {
-            if (e.target.classList.contains('remove-produit')) {
-                e.target.closest('.produit-item').remove();
-            }
+        products.forEach((p, index) => {
+            const subTotal = p.price * p.quantity;
+            totalCny += subTotal;
+            devisText += `*Produit ${index + 1}:* ${p.name}\n`;
+            devisText += `*Spécification:* ${p.spec}\n`;
+            devisText += `*Prix Unitaire:* ${p.price.toFixed(2)} CNY\n`;
+            devisText += `*Quantité:* ${p.quantity}\n`;
+            devisText += `*Lien:* ${p.link}\n`;
+            devisText += `*Sous-total:* ${subTotal.toFixed(2)} CNY\n\n`;
         });
 
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
-            const formData = new FormData(form);
-            const data = Object.fromEntries(formData.entries());
-            sendToWhatsapp(data);
-        });
+        const fraisService = totalCny * 0.10;
+        const totalFinalCny = totalCny + fraisService;
+        const totalAriary = totalFinalCny * 700;
+
+        devisText += `-----------------------------------\n`;
+        devisText += `*Total Produits:* ${totalCny.toFixed(2)} CNY\n`;
+        devisText += `*Frais de service (10%):* ${fraisService.toFixed(2)} CNY\n`;
+        devisText += `*Total en Yuan:* ${totalFinalCny.toFixed(2)} CNY\n\n`;
+        devisText += `*Total en Ariary:* ${totalAriary.toLocaleString('fr-FR')} Ar\n\n`;
+        devisText += `*NOTE IMPORTANTE:*\n`;
+        devisText += `Les frais de transport Chine à Madagascar ne sont pas inclus dans ce devis.`;
+
+        const phoneNumber = "8615600021123";
+        const encodedText = encodeURIComponent(devisText);
+        const url = `https://wa.me/${phoneNumber}?text=${encodedText}`;
         
-        newDevisBtn.addEventListener('click', () => {
-             confirmationContainer.classList.add('hidden');
-             formContainer.classList.remove('hidden');
-             form.reset();
-             produitsList.innerHTML = '';
-             productCounter = 0;
-             addProduct();
-        });
-
-        function sendToWhatsapp(data) {
-            // --- Calcul en arrière-plan ---
-            const fraisServicePercent = 10;
-            const tauxChange = 700;
-            let subtotalYuan = 0;
-            let produitsText = '';
-            
-            const productElements = document.querySelectorAll('.produit-item');
-            productElements.forEach((prod, index) => {
-                const i = index + 1; 
-                const nom = prod.querySelector(`input[name="nom_produit_${i}"]`).value;
-                const lien = prod.querySelector(`input[name="lien_produit_${i}"]`).value;
-                const spec = prod.querySelector(`textarea[name="specification_produit_${i}"]`).value;
-                const prix = parseFloat(prod.querySelector(`input[name="prix_unitaire_${i}"]`).value) || 0;
-                const qte = parseInt(prod.querySelector(`input[name="quantite_${i}"]`).value) || 0;
-
-                subtotalYuan += prix * qte;
-
-                produitsText += `
-*Produit ${i}:*
-- Nom: ${nom}
-- Spécification: *${spec}*
-- Prix unitaire: ${prix.toFixed(2)} ¥
-- Quantité: ${qte}
-- Lien: ${lien}
-`;
-            });
-            
-            const fraisServiceYuan = subtotalYuan * (fraisServicePercent / 100);
-            const totalYuan = subtotalYuan + fraisServiceYuan;
-            const totalMga = totalYuan * tauxChange;
-            const dateCommande = new Date().toLocaleDateString('fr-FR');
-            
-            const whatsappMessage = `
-*Nouvelle Demande de Devis - ARIDAGO*
-
-*Client:*
-- Nom: ${data.nom} ${data.prenom}
-- WhatsApp: ${data.whatsapp}
------------------------------
-*Détails des Produits:*
-${produitsText}
------------------------------
-*Résumé du Calcul:*
-- Total Produits: ${subtotalYuan.toFixed(2)} ¥
-- Frais de service (${fraisServicePercent}%): ${fraisServiceYuan.toFixed(2)} ¥
-- *Total en Yuan: ${totalYuan.toFixed(2)} ¥*
-- *Total en Ariary: ~${Math.round(totalMga).toLocaleString('fr-FR')} Ar*
------------------------------
-*N.B. : Les frais de transport Chine-Madagascar ne sont pas inclus dans ce devis.*
------------------------------
-*Date:* ${dateCommande}
-
-_Demande envoyée depuis le site web ARIDAGO._
-`;
-            const encodedMessage = encodeURIComponent(whatsappMessage.trim());
-            const finalWhatsappUrl = `https://wa.me/${VendeurWhatsapp.replace(/\+/g, '')}?text=${encodedMessage}`;
-            
-            whatsappLink.href = finalWhatsappUrl;
-            formContainer.classList.add('hidden');
-            confirmationContainer.classList.remove('hidden');
+        whatsappLink.href = url;
+        confirmationModal.style.display = 'flex';
+    });
+    
+    confirmationModal.addEventListener('click', function(e) {
+        if(e.target === confirmationModal) {
+            confirmationModal.style.display = 'none';
+            form.reset();
+            productList.innerHTML = '';
+            createProductBlock();
         }
     });
+
+    createProductBlock();
+});
 </script>
 
 </body>
 </html>
-
 
