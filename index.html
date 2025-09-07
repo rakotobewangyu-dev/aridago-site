@@ -83,12 +83,13 @@
 <body class="text-slate-800">
 
     <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
-            <div class="flex items-center space-x-4">
-                <a href="#" class="nav-link" data-page="accueil">
+        <div class="container mx-auto px-2 sm:px-4 py-2 flex justify-between items-center">
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <a href="#" class="nav-link flex-shrink-0" data-page="accueil">
                      <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="h-14 md:h-16 w-auto">
                 </a>
-                <nav class="hidden md:flex items-center space-x-2 md:space-x-6 text-sm md:text-base">
+                <!-- Navigation always visible -->
+                <nav class="flex items-center space-x-2 text-xs sm:space-x-4 md:space-x-6 sm:text-sm md:text-base">
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline nav-link-active" data-page="accueil">Accueil</a>
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline" data-page="boutique">Boutique</a>
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline" data-page="devis">Devis</a>
@@ -96,20 +97,9 @@
                 </nav>
             </div>
             
-            <div class="flex items-center space-x-4">
+            <div class="flex items-center">
                 <button id="admin-link-header" class="text-slate-700 hover:text-red-600 text-lg p-2"><i class="fas fa-user-shield"></i></button>
-                <!-- Mobile Menu Button -->
-                <button id="mobile-menu-btn" class="md:hidden text-slate-700 hover:text-red-600 text-2xl p-2">
-                    <i class="fas fa-bars"></i>
-                </button>
             </div>
-        </div>
-        <!-- Mobile Menu -->
-        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200">
-            <a href="#" class="block py-3 px-4 text-base font-semibold text-slate-700 hover:bg-slate-50 nav-link" data-page="accueil">Accueil</a>
-            <a href="#" class="block py-3 px-4 text-base font-semibold text-slate-700 hover:bg-slate-50 nav-link" data-page="boutique">Boutique</a>
-            <a href="#" class="block py-3 px-4 text-base font-semibold text-slate-700 hover:bg-slate-50 nav-link" data-page="devis">Devis</a>
-            <a href="#" class="block py-3 px-4 text-base font-semibold text-slate-700 hover:bg-slate-50 nav-link" data-page="apropos">À Propos</a>
         </div>
     </header>
 
@@ -279,7 +269,6 @@
             </div>
         </section>
 
-        <!-- NOUVELLE PAGE A PROPOS (RESPONSIVE) -->
         <section id="page-apropos" class="page-content hidden">
             <!-- Hero Section -->
             <div class="relative bg-slate-800 text-white flex items-center justify-center pt-24 pb-16 overflow-hidden">
@@ -446,7 +435,6 @@
     <div id="price-alert-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4"><h3 class="text-lg font-bold text-gray-800">Attention sur le Prix Unitaire</h3><p class="text-gray-600 mt-2 text-sm">Afin de s'assurer que nous parlons bien du même produit au bon prix, veuillez indiquer le prix exact d'achat sur le site que vous avez choisi pour qu'au moment de notre achat il n'y ait pas d'erreur de commande.</p><button id="close-price-modal-btn" class="mt-6 w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg">Compris</button></div></div>
     <div id="link-alert-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4"><h3 class="text-lg font-bold text-gray-800">Comment copier le lien ?</h3><p class="text-gray-600 mt-2 text-sm">Copiez-collez le lien du produit que vous souhaitez acheter sur les sites chinois suivants afin que nous puissions l'identifier et l'acheter pour vous : Alibaba, Taobao, 1688, JingDong, XianYu, etc.</p><button id="close-link-modal-btn" class="mt-6 w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg">Compris</button></div></div>
     <div id="confirmation-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 text-center m-4"><div class="mx-auto bg-green-100 rounded-full h-24 w-24 flex items-center justify-center"><svg class="h-16 w-16 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><h2 class="mt-6 text-3xl font-extrabold text-gray-800">C'est presque fini !</h2><p class="mt-4 text-gray-600">Votre devis a été préparé. Cliquez ci-dessous pour nous l'envoyer sur WhatsApp.</p><a id="whatsapp-link" href="#" target="_blank" class="mt-8 inline-flex items-center justify-center w-full py-4 px-8 text-base font-bold rounded-xl text-white btn-primary">Confirmer et Envoyer sur WhatsApp</a></div></div>
-    <!-- NOUVEAU MODAL DE CONFIRMATION DE SUPPRESSION -->
     <div id="delete-confirm-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop">
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4">
             <h3 class="text-lg font-bold text-gray-800">Confirmer la suppression</h3>
@@ -487,13 +475,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // ================== GESTION DE LA NAVIGATION (Single Page App) ==================
     const pages = document.querySelectorAll('.page-content');
     const navLinks = document.querySelectorAll('.nav-link');
-    const mobileMenu = document.getElementById('mobile-menu');
-    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
-
-    // --- NOUVEAU : GESTION DU MENU MOBILE ---
-    mobileMenuBtn.addEventListener('click', () => {
-        mobileMenu.classList.toggle('hidden');
-    });
 
     function showPage(pageId) {
         pages.forEach(page => {
@@ -508,11 +489,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 link.classList.toggle('text-red-600', isTargetLink);
              }
         });
-
-        // Cacher le menu mobile après la navigation
-        if (!mobileMenu.classList.contains('hidden')) {
-            mobileMenu.classList.add('hidden');
-        }
 
         window.scrollTo(0, 0);
 
@@ -889,7 +865,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const adminProductForm = document.getElementById('admin-product-form');
     const adminProductList = document.getElementById('admin-product-list');
     
-    // --- NOUVEAU : GESTION MODAL DE SUPPRESSION ---
     const deleteConfirmModal = document.getElementById('delete-confirm-modal');
     const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
     const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
@@ -1057,10 +1032,9 @@ document.addEventListener('DOMContentLoaded', function() {
             adminSection.scrollIntoView({ behavior: 'smooth' });
         }));
 
-        // --- CORRECTION : Remplacement de confirm() par le modal ---
         document.querySelectorAll('.delete-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
             const id = e.currentTarget.dataset.id;
-            confirmDeleteBtn.dataset.id = id; // Stocke l'ID sur le bouton de confirmation
+            confirmDeleteBtn.dataset.id = id;
             deleteConfirmModal.style.display = 'flex';
         }));
     }
@@ -1073,3 +1047,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
