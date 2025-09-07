@@ -65,6 +65,7 @@
                  <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="h-16 w-auto">
             </a>
             
+            <!-- Menu Desktop -->
             <nav class="hidden md:flex items-center space-x-8">
                 <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline nav-link-active" data-page="accueil">Accueil</a>
                 <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline" data-page="boutique">Boutique</a>
@@ -73,9 +74,25 @@
             
             <div class="flex items-center space-x-5">
                 <button id="admin-link-header" class="text-slate-700 hover:text-red-600 text-lg"><i class="fas fa-user-shield"></i></button>
+                <!-- Bouton Hamburger pour Mobile -->
+                <button id="menu-toggle" class="md:hidden text-slate-700 hover:text-red-600 text-2xl">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
         </div>
     </header>
+
+    <!-- Menu Mobile (caché par défaut) -->
+    <div id="mobile-menu" class="hidden fixed inset-0 bg-white z-50 p-6">
+        <div class="flex justify-end">
+            <button id="menu-close" class="text-4xl text-slate-700">&times;</button>
+        </div>
+        <nav class="flex flex-col items-center justify-center h-full space-y-8">
+            <a href="#" class="text-3xl font-bold text-slate-800 nav-link" data-page="accueil">Accueil</a>
+            <a href="#" class="text-3xl font-bold text-slate-800 nav-link" data-page="boutique">Boutique</a>
+            <a href="#" class="text-3xl font-bold text-slate-800 nav-link" data-page="devis">Devis sur Mesure</a>
+        </nav>
+    </div>
 
     <!-- Bannière promotionnelle -->
     <div style="background: linear-gradient(90deg, #d92a2a, #f7b731);" class="text-white text-center py-2">
@@ -131,8 +148,11 @@
                  <div class="text-center mb-12">
                     <h2 class="text-4xl font-bold mb-2">Notre Boutique</h2>
                     <p class="text-slate-600 text-lg">Commandez directement nos articles sélectionnés pour vous, déjà à Madagascar.</p>
-                     <div class="mt-6 max-w-lg mx-auto">
-                        <input type="text" id="search-bar" placeholder="Rechercher un produit..." class="w-full pl-6 pr-4 py-3 border-2 border-slate-200 rounded-full focus:outline-none focus:ring-2 focus:ring-red-400 transition">
+                     <div class="mt-6 max-w-lg mx-auto relative flex items-center">
+                        <input type="text" id="search-bar" placeholder="Rechercher un produit..." class="w-full pl-6 pr-12 py-3 border-2 border-slate-200 rounded-full focus:outline-none focus:ring-2 focus:ring-red-400 transition">
+                        <button id="search-btn" class="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-white rounded-r-full hover:opacity-90" style="background-color: var(--secondary-color);">
+                            <i class="fas fa-search"></i>
+                        </button>
                      </div>
                  </div>
                  <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
@@ -223,6 +243,9 @@ document.addEventListener('DOMContentLoaded', function() {
     // ================== GESTION DE LA NAVIGATION (Single Page App) ==================
     const pages = document.querySelectorAll('.page-content');
     const navLinks = document.querySelectorAll('.nav-link');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuToggle = document.getElementById('menu-toggle');
+    const menuClose = document.getElementById('menu-close');
 
     function showPage(pageId) {
         pages.forEach(page => {
@@ -230,8 +253,8 @@ document.addEventListener('DOMContentLoaded', function() {
             page.classList.toggle('hidden', !isTargetPage);
         });
         
-        navLinks.forEach(link => {
-            const isTargetLink = `page-${link.dataset.page}` === pageId;
+        document.querySelectorAll('header .nav-link').forEach(link => {
+             const isTargetLink = `page-${link.dataset.page}` === pageId;
             link.classList.toggle('nav-link-active', isTargetLink);
             link.classList.toggle('text-red-600', isTargetLink);
         });
@@ -244,7 +267,15 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const pageId = `page-${this.dataset.page}`;
             showPage(pageId);
+            mobileMenu.classList.add('hidden');
         });
+    });
+
+    menuToggle.addEventListener('click', () => {
+        mobileMenu.classList.remove('hidden');
+    });
+    menuClose.addEventListener('click', () => {
+        mobileMenu.classList.add('hidden');
     });
     
     document.getElementById('admin-link-header').addEventListener('click', () => showPage('page-admin'));
@@ -295,7 +326,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
         const searchBar = document.getElementById('search-bar');
         const lowerCaseSearchTerm = (searchTerm || searchBar.value).toLowerCase();
-        const filteredProducts = boutiqueProducts.filter(p => p.name.toLowerCase().includes(lowerCaseSearchTerm));
+        
+        // CORRECTION: Filtre plus robuste sur le nom ET la description
+        const filteredProducts = boutiqueProducts.filter(p => {
+            const nameMatch = p.name && p.name.toLowerCase().includes(lowerCaseSearchTerm);
+            const descriptionMatch = p.description && p.description.toLowerCase().includes(lowerCaseSearchTerm);
+            return nameMatch || descriptionMatch;
+        });
         
         loadingText.style.display = 'none';
 
@@ -321,6 +358,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     document.getElementById('search-bar').addEventListener('input', () => renderBoutique());
+    document.getElementById('search-btn').addEventListener('click', () => renderBoutique());
 
     function createProductCard(product) {
         const imageUrl = product.images && product.images.length > 0 ? product.images[0] : 'https://placehold.co/600x400/cccccc/ffffff?text=Image';
