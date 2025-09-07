@@ -60,39 +60,25 @@
 
     <!-- En-tête -->
     <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
-            <a href="#" class="nav-link" data-page="accueil">
-                 <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="h-16 w-auto">
-            </a>
+        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+            <!-- Groupe Logo + Nav -->
+            <div class="flex items-center space-x-4 md:space-x-8">
+                <a href="#" class="nav-link" data-page="accueil">
+                     <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="h-16 w-auto">
+                </a>
+                <nav class="flex items-center space-x-2 md:space-x-6 text-sm md:text-base">
+                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline nav-link-active" data-page="accueil">Accueil</a>
+                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline" data-page="boutique">Boutique</a>
+                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline" data-page="devis">Devis</a>
+                </nav>
+            </div>
             
-            <!-- Menu Desktop -->
-            <nav class="hidden md:flex items-center space-x-8">
-                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline nav-link-active" data-page="accueil">Accueil</a>
-                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline" data-page="boutique">Boutique</a>
-                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline" data-page="devis">Devis sur Mesure</a>
-            </nav>
-            
-            <div class="flex items-center space-x-5">
+            <!-- Icône Admin -->
+            <div class="flex items-center">
                 <button id="admin-link-header" class="text-slate-700 hover:text-red-600 text-lg"><i class="fas fa-user-shield"></i></button>
-                <!-- Bouton Hamburger pour Mobile -->
-                <button id="menu-toggle" class="md:hidden text-slate-700 hover:text-red-600 text-2xl">
-                    <i class="fas fa-bars"></i>
-                </button>
             </div>
         </div>
     </header>
-
-    <!-- Menu Mobile (caché par défaut) -->
-    <div id="mobile-menu" class="hidden fixed inset-0 bg-white z-50 p-6">
-        <div class="flex justify-end">
-            <button id="menu-close" class="text-4xl text-slate-700">&times;</button>
-        </div>
-        <nav class="flex flex-col items-center justify-center h-full space-y-8">
-            <a href="#" class="text-3xl font-bold text-slate-800 nav-link" data-page="accueil">Accueil</a>
-            <a href="#" class="text-3xl font-bold text-slate-800 nav-link" data-page="boutique">Boutique</a>
-            <a href="#" class="text-3xl font-bold text-slate-800 nav-link" data-page="devis">Devis sur Mesure</a>
-        </nav>
-    </div>
 
     <!-- Bannière promotionnelle -->
     <div style="background: linear-gradient(90deg, #d92a2a, #f7b731);" class="text-white text-center py-2">
@@ -253,10 +239,12 @@ document.addEventListener('DOMContentLoaded', function() {
             page.classList.toggle('hidden', !isTargetPage);
         });
         
-        document.querySelectorAll('header .nav-link').forEach(link => {
+        document.querySelectorAll('header .nav-link, #mobile-menu .nav-link').forEach(link => {
              const isTargetLink = `page-${link.dataset.page}` === pageId;
             link.classList.toggle('nav-link-active', isTargetLink);
-            link.classList.toggle('text-red-600', isTargetLink);
+            if (link.parentElement.tagName === 'NAV') { // Only apply color to header links
+                 link.classList.toggle('text-red-600', isTargetLink);
+            }
         });
 
         window.scrollTo(0, 0);
@@ -267,16 +255,20 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             const pageId = `page-${this.dataset.page}`;
             showPage(pageId);
-            mobileMenu.classList.add('hidden');
+            if (mobileMenu) mobileMenu.classList.add('hidden');
         });
     });
 
-    menuToggle.addEventListener('click', () => {
-        mobileMenu.classList.remove('hidden');
-    });
-    menuClose.addEventListener('click', () => {
-        mobileMenu.classList.add('hidden');
-    });
+    if (menuToggle) {
+        menuToggle.addEventListener('click', () => {
+            mobileMenu.classList.remove('hidden');
+        });
+    }
+    if (menuClose) {
+        menuClose.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+        });
+    }
     
     document.getElementById('admin-link-header').addEventListener('click', () => showPage('page-admin'));
     
@@ -327,11 +319,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const searchBar = document.getElementById('search-bar');
         const lowerCaseSearchTerm = (searchTerm || searchBar.value).toLowerCase();
         
-        // CORRECTION: Filtre plus robuste sur le nom ET la description
         const filteredProducts = boutiqueProducts.filter(p => {
-            const nameMatch = p.name && p.name.toLowerCase().includes(lowerCaseSearchTerm);
-            const descriptionMatch = p.description && p.description.toLowerCase().includes(lowerCaseSearchTerm);
-            return nameMatch || descriptionMatch;
+            const name = (p.name || '').toLowerCase();
+            const description = (p.description || '').toLowerCase();
+            return name.includes(lowerCaseSearchTerm) || description.includes(lowerCaseSearchTerm);
         });
         
         loadingText.style.display = 'none';
