@@ -237,6 +237,11 @@ document.addEventListener('DOMContentLoaded', function() {
         pages.forEach(page => {
             const isTargetPage = page.id === pageId;
             page.classList.toggle('hidden', !isTargetPage);
+            
+            // Afficher les produits quand on arrive sur la page boutique
+            if (pageId === 'page-boutique' && isTargetPage) {
+                renderBoutique();
+            }
         });
         
         document.querySelectorAll('header .nav-link, #mobile-menu .nav-link').forEach(link => {
@@ -311,33 +316,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     loadAndRenderProducts();
 
-    function renderBoutique(searchTerm = '') {
-        const productGrid = document.getElementById('product-grid');
-        const loadingText = document.getElementById('loading-products');
-        if (!productGrid || !loadingText) return;
-
-        const searchBar = document.getElementById('search-bar');
-        const lowerCaseSearchTerm = (searchTerm || searchBar.value).toLowerCase();
-        
-        const filteredProducts = boutiqueProducts.filter(p => {
-            const name = (p.name || '').toLowerCase();
-            const description = (p.description || '').toLowerCase();
-            return name.includes(lowerCaseSearchTerm) || description.includes(lowerCaseSearchTerm);
-        });
-        
-        loadingText.style.display = 'none';
-
-        if (boutiqueProducts.length === 0) {
-             productGrid.innerHTML = `<p class="text-center text-gray-500 col-span-full">Aucun produit n'a été publié pour le moment.</p>`;
-        } else if (filteredProducts.length === 0) {
-            productGrid.innerHTML = `<p class="text-center text-gray-500 col-span-full">Aucun produit ne correspond à votre recherche.</p>`;
-        } else {
-            productGrid.innerHTML = filteredProducts.map(createProductCard).join('');
-        }
-        
-        addProductCardListeners();
-    }
-    
     function addProductCardListeners() {
         document.querySelectorAll('.view-product-btn').forEach(btn => {
             btn.addEventListener('click', e => {
@@ -348,8 +326,68 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    document.getElementById('search-bar').addEventListener('input', () => renderBoutique());
-    document.getElementById('search-btn').addEventListener('click', () => renderBoutique());
+    // ================== FONCTIONNALITÉS DE RECHERCHE ==================
+    function initSearchFunctionality() {
+        const searchBar = document.getElementById('search-bar');
+        const searchBtn = document.getElementById('search-btn');
+        
+        if (searchBar && searchBtn) {
+            // Recherche lors de la frappe
+            searchBar.addEventListener('input', () => {
+                if (document.getElementById('page-boutique').classList.contains('hidden') === false) {
+                    renderBoutique();
+                }
+            });
+            
+            // Recherche lors du clic sur le bouton
+            searchBtn.addEventListener('click', () => {
+                if (document.getElementById('page-boutique').classList.contains('hidden') === false) {
+                    renderBoutique();
+                }
+            });
+            
+            // Recherche avec la touche Entrée
+            searchBar.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && document.getElementById('page-boutique').classList.contains('hidden') === false) {
+                    renderBoutique();
+                }
+            });
+        }
+    }
+
+    function renderBoutique(searchTerm = '') {
+        const productGrid = document.getElementById('product-grid');
+        const loadingText = document.getElementById('loading-products');
+        
+        // Vérifier si on est sur la page boutique
+        if (!productGrid || document.getElementById('page-boutique').classList.contains('hidden')) {
+            return; // Ne rien faire si on n'est pas sur la page boutique
+        }
+
+        const searchBar = document.getElementById('search-bar');
+        const lowerCaseSearchTerm = (searchTerm || (searchBar ? searchBar.value : '')).toLowerCase();
+        
+        const filteredProducts = boutiqueProducts.filter(p => {
+            const name = (p.name || '').toLowerCase();
+            const description = (p.description || '').toLowerCase();
+            return name.includes(lowerCaseSearchTerm) || description.includes(lowerCaseSearchTerm);
+        });
+        
+        if (loadingText) loadingText.style.display = 'none';
+
+        if (boutiqueProducts.length === 0) {
+            productGrid.innerHTML = `<p class="text-center text-gray-500 col-span-full">Aucun produit n'a été publié pour le moment.</p>`;
+        } else if (filteredProducts.length === 0) {
+            productGrid.innerHTML = `<p class="text-center text-gray-500 col-span-full">Aucun produit ne correspond à votre recherche.</p>`;
+        } else {
+            productGrid.innerHTML = filteredProducts.map(createProductCard).join('');
+        }
+        
+        addProductCardListeners();
+    }
+
+    // Initialiser la fonctionnalité de recherche
+    initSearchFunctionality();
 
     function createProductCard(product) {
         const imageUrl = product.images && product.images.length > 0 ? product.images[0] : 'https://placehold.co/600x400/cccccc/ffffff?text=Image';
@@ -799,4 +837,3 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
-
