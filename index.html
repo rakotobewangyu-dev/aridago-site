@@ -4,217 +4,196 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Aridago - Boutique et Devis</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
-    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        body { font-family: 'Manrope', sans-serif; background: linear-gradient(to bottom, #FFFBEB, #f7fafc); }
-        .font-poppins { font-family: 'Poppins', sans-serif; }
-        .theme-gradient-text { background: linear-gradient(90deg, #d92a2a, #f7b731); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .theme-gradient-bg { background: linear-gradient(90deg, #d92a2a, #f7b731); }
-        .btn-primary { background: linear-gradient(90deg, #2ab57d, #2a9d8f); }
-        .modal-backdrop { background-color: rgba(0,0,0,0.6); }
-        .nav-link { padding: 8px 16px; border-radius: 9999px; transition: all 0.3s; font-weight: 600; border: 2px solid transparent; }
-        .nav-link.active { border-color: #f7b731; background-color: white; color: #d92a2a; }
-        .nav-link:not(.active):hover { background-color: rgba(255,255,255,0.2); }
-        .thumbnail.active { border-color: #f7b731; box-shadow: 0 0 8px #f7b731; }
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #FFFBEB; /* Fond clair du thème Aridago */
+        }
+        /* Couleurs du thème Aridago */
+        :root {
+            --primary-color: #d92a2a; /* Rouge Aridago */
+            --secondary-color: #f7b731; /* Jaune/Orange Aridago */
+        }
+        .nav-link-underline::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--primary-color);
+            transition: width 0.3s;
+        }
+        .nav-link-underline:hover::after, .nav-link-active::after {
+            width: 100%;
+        }
+        .text-gradient {
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .btn-primary {
+             background: linear-gradient(90deg, #d92a2a, #f7b731);
+             color: white;
+        }
+        .btn-secondary {
+            background-color: #2ab57d; /* Vert pour certains boutons d'action */
+            color: white;
+        }
+        .btn-secondary:hover {
+            background-color: #2a9d8f;
+        }
+        .btn-whatsapp {
+            background: linear-gradient(90deg, #25D366, #128C7E);
+            color: white;
+        }
     </style>
 </head>
-<body>
+<body class="text-slate-800">
 
-    <div class="container mx-auto max-w-5xl p-4 md:p-8">
-        
-        <header class="text-center mb-10">
-            <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="mx-auto h-36 w-auto mb-6">
-            <nav class="theme-gradient-bg p-2 rounded-full max-w-md mx-auto flex justify-center items-center space-x-2 text-white shadow-md">
-                <button id="nav-boutique" class="nav-link active">Boutique</button>
-                <button id="nav-devis" class="nav-link">Devis sur Mesure</button>
+    <!-- En-tête -->
+    <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#" class="nav-link" data-page="accueil">
+                 <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="h-16 w-auto">
+            </a>
+            
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline nav-link-active" data-page="accueil">Accueil</a>
+                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline" data-page="boutique">Boutique</a>
+                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline" data-page="devis">Devis sur Mesure</a>
             </nav>
-        </header>
+            
+            <div class="flex items-center space-x-5">
+                <button id="admin-link-header" class="text-slate-700 hover:text-red-600 text-lg"><i class="fas fa-user-shield"></i></button>
+            </div>
+        </div>
+    </header>
 
-        <!-- ================== SECTION BOUTIQUE (GRILLE) ================== -->
-        <div id="boutique-section">
-            <div class="text-center mb-12">
-                 <h1 class="font-poppins text-3xl md:text-4xl font-extrabold text-gray-800">Nos Produits du Moment</h1>
-                 <p class="mt-2 text-lg text-gray-600">Commandez directement nos articles sélectionnés pour vous.</p>
-                 <div class="mt-6 max-w-lg mx-auto">
-                    <div class="relative">
-                        <span class="absolute inset-y-0 left-0 flex items-center pl-4">
-                            <svg class="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                        </span>
-                        <input type="text" id="search-bar" placeholder="Rechercher un produit..." class="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-full focus:outline-none focus:ring-2 focus:ring-yellow-400 transition">
+    <!-- Bannière promotionnelle -->
+    <div style="background: linear-gradient(90deg, #d92a2a, #f7b731);" class="text-white text-center py-2">
+        <p class="text-sm font-semibold">Votre partenaire d'achat en Chine | Simple, rapide et fiable</p>
+    </div>
+
+    <!-- Contenu principal qui change en fonction de la navigation -->
+    <main>
+
+        <!-- =========== PAGE D'ACCUEIL =========== -->
+        <section id="page-accueil" class="page-content">
+            <!-- Bannière Héro -->
+            <div class="relative bg-slate-900 text-white flex items-center justify-center min-h-[500px] overflow-hidden">
+                <div class="absolute inset-0 bg-cover bg-center opacity-30" style="background-image: url('https://images.unsplash.com/photo-1578575437130-5278ce685a21?auto=format&fit=crop&w=1500&q=80');"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent"></div>
+                <div class="relative text-center max-w-3xl px-4 z-10">
+                    <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">Commander en Chine ?<br>C'est maintenant <span class="text-gradient">simple et rapide !</span></h1>
+                    <p class="text-lg md:text-xl text-slate-300 mb-8">Nous sommes votre intermédiaire de confiance pour tous vos achats en Chine, livrés à Madagascar.</p>
+                    <a href="#" class="btn-primary font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 shadow-lg nav-link" data-page="devis">Faire une commande</a>
+                </div>
+            </div>
+
+            <!-- Section Services/avantages -->
+            <section class="bg-white py-16">
+                <div class="container mx-auto px-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-center">
+                        <div class="feature">
+                            <i class="fas fa-search-dollar text-4xl text-red-600 mb-4"></i>
+                            <h3 class="font-bold text-lg mb-2">Recherche de produits</h3>
+                            <p class="text-slate-600">Nous trouvons pour vous les meilleurs produits au meilleur prix.</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-handshake text-4xl text-red-600 mb-4"></i>
+                            <h3 class="font-bold text-lg mb-2">Intermédiaire de confiance</h3>
+                            <p class="text-slate-600">Nous gérons l'achat, la vérification et le paiement pour vous.</p>
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-shipping-fast text-4xl text-red-600 mb-4"></i>
+                            <h3 class="font-bold text-lg mb-2">Transport sécurisé</h3>
+                            <p class="text-slate-600">Nous nous occupons de l'expédition de la Chine vers Madagascar.</p>
+                        </div>
                     </div>
+                </div>
+            </section>
+
+             <!-- Section des produits populaires sur l'accueil -->
+            <div id="popular-products-accueil" class="py-16"></div>
+        </section>
+
+        <!-- =========== PAGE BOUTIQUE =========== -->
+        <section id="page-boutique" class="page-content hidden">
+            <div class="container mx-auto px-4 py-16">
+                 <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold mb-2">Notre Boutique</h2>
+                    <p class="text-slate-600 text-lg">Commandez directement nos articles sélectionnés pour vous, déjà à Madagascar.</p>
+                     <div class="mt-6 max-w-lg mx-auto">
+                        <input type="text" id="search-bar" placeholder="Rechercher un produit..." class="w-full pl-6 pr-4 py-3 border-2 border-slate-200 rounded-full focus:outline-none focus:ring-2 focus:ring-red-400 transition">
+                     </div>
+                 </div>
+                 <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                    <p id="loading-products" class="text-center text-gray-500 col-span-full">Chargement des produits...</p>
                  </div>
             </div>
-            <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <p id="loading-products" class="text-center text-gray-500 col-span-full">Chargement des produits...</p>
-            </div>
-        </div>
-        
-        <!-- ================== SECTION PAGE PRODUIT ================== -->
-        <div id="product-detail-section" class="hidden bg-white p-6 md:p-10 rounded-3xl shadow-lg"></div>
+        </section>
 
-        <!-- ================== SECTION DEVIS SUR MESURE (RÉPARÉE) ================== -->
-        <div id="devis-section" class="hidden">
-             <div class="text-center mb-12">
-                 <h1 class="font-poppins text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
-                    Commander en Chine ?<br>C'est maintenant <span class="theme-gradient-text">simple et rapide !</span>
-                </h1>
-                <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
-                    Remplissez ce formulaire pour recevoir votre devis personnalisé directement sur WhatsApp.
-                </p>
-             </div>
-             <section class="mb-12">
-                 <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    <div class="bg-white p-6 rounded-2xl shadow-sm">
-                        <div class="theme-gradient-bg w-12 h-12 flex items-center justify-center rounded-full text-white font-bold text-xl mx-auto mb-4">1</div>
-                        <h3 class="font-bold text-lg text-gray-800">Remplissez le formulaire</h3>
-                        <p class="text-gray-500 text-sm mt-1">Ajoutez les liens et détails de tous vos produits.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm">
-                        <div class="theme-gradient-bg w-12 h-12 flex items-center justify-center rounded-full text-white font-bold text-xl mx-auto mb-4">2</div>
-                        <h3 class="font-bold text-lg text-gray-800">Envoyez via WhatsApp</h3>
-                        <p class="text-gray-500 text-sm mt-1">Un clic suffit pour nous transmettre votre demande.</p>
-                    </div>
-                    <div class="bg-white p-6 rounded-2xl shadow-sm">
-                        <div class="theme-gradient-bg w-12 h-12 flex items-center justify-center rounded-full text-white font-bold text-xl mx-auto mb-4">3</div>
-                        <h3 class="font-bold text-lg text-gray-800">Recevez la confirmation</h3>
-                        <p class="text-gray-500 text-sm mt-1">Nous vérifions et validons la commande avec vous.</p>
-                    </div>
-                </div>
-            </section>
-             <main class="bg-white p-6 md:p-10 rounded-3xl shadow-lg">
-                <form id="devis-form">
-                    <fieldset class="border-b-2 border-gray-100 pb-8">
-                        <legend class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                            <span class="theme-gradient-bg w-10 h-10 flex items-center justify-center rounded-full text-white font-bold mr-4">1</span> Vos informations
-                        </legend>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
-                            <div><label for="nom" class="block text-sm font-semibold text-gray-600 mb-1">Nom</label><input type="text" id="nom" name="nom" required class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></div>
-                            <div><label for="prenom" class="block text-sm font-semibold text-gray-600 mb-1">Prénom</label><input type="text" id="prenom" name="prenom" required class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></div>
-                            <div><label for="whatsapp" class="block text-sm font-semibold text-gray-600 mb-1">Numéro WhatsApp</label><input type="tel" id="whatsapp" name="whatsapp" required class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></div>
-                            <div><label for="email" class="block text-sm font-semibold text-gray-600 mb-1">Email (Optionnel)</label><input type="email" id="email" name="email" class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></div>
-                        </div>
-                    </fieldset>
-                    <fieldset class="mt-8">
-                        <legend class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                            <span class="theme-gradient-bg w-10 h-10 flex items-center justify-center rounded-full text-white font-bold mr-4">2</span> Vos produits
-                        </legend>
-                        <div id="product-list" class="space-y-6"></div>
-                        <div class="mt-6"><button type="button" id="add-product" class="w-full flex items-center justify-center px-6 py-3 border-2 border-dashed border-red-300 text-sm font-semibold rounded-xl text-red-600 hover:bg-red-50 transition"><svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>Ajouter un autre produit</button></div>
-                    </fieldset>
-                    <div class="mt-10 text-center">
-                        <button type="submit" class="inline-flex justify-center items-center py-4 px-16 text-lg font-bold rounded-xl text-white btn-primary shadow-lg hover:shadow-xl transform hover:scale-105 transition animate-pulse">
-                            <ion-icon name="logo-whatsapp" class="mr-3 text-2xl"></ion-icon>
-                            Envoyer ma demande
-                        </button>
-                    </div>
-                </form>
-            </main>
-            <section class="mt-12 bg-white p-6 md:p-10 rounded-3xl shadow-lg">
-                 <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Questions fréquentes (FAQ)</h2>
-                <div id="faq-container" class="space-y-2">
-                    <div class="faq-item bg-gray-50 rounded-xl">
-                        <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
-                            <span>Quels sont les frais de transport Chine-Madagascar ?</span>
-                            <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-                            <p>Les frais de transport ne sont pas inclus dans le devis initial. Ils dépendent du poids et du volume total de votre commande. Nous vous fournirons une estimation détaillée de ces frais lors de la confirmation de votre commande.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item bg-gray-50 rounded-xl">
-                        <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
-                            <span>Quels sont les délais de livraison estimés ?</span>
-                            <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-                            <p>Les délais varient en fonction du type de transport choisi (aérien ou maritime). En général, comptez entre 7 à 15 jours pour le transport aérien et 30 à 45 jours pour le transport maritime, après réception de tous vos articles dans notre entrepôt en Chine.</p>
-                        </div>
-                    </div>
-                    <div class="faq-item bg-gray-50 rounded-xl">
-                        <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
-                            <span>Quels sont les moyens de paiement acceptés ?</span>
-                            <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                        </button>
-                        <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-                            <p>Pour les paiements en <b>Yuan (CNY)</b>, nous acceptons : Alipay et WeChat Pay.<br>Pour les paiements en <b>Ariary (MGA)</b>, nous acceptons : MVola, Orange Money et Airtel Money.<br>Les détails vous seront communiqués lors de la validation de votre devis.</p>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </div>
+        <!-- =========== PAGE DEVIS SUR MESURE =========== -->
+        <section id="page-devis" class="page-content hidden">
+             <!-- Le contenu de la page de devis est injecté par JavaScript -->
+        </section>
 
-        <!-- ================== SECTION ADMIN ================== -->
-        <div id="admin-section" class="hidden mt-12 bg-gray-800 text-white p-6 md:p-10 rounded-3xl shadow-lg">
-            <div id="admin-login">
-                <h2 class="font-poppins text-3xl font-bold text-center mb-4">Accès Administrateur</h2>
-                <div class="max-w-sm mx-auto">
-                    <div class="mb-4">
-                        <label for="admin-email" class="block text-sm font-semibold mb-1">Email</label>
-                        <input type="email" id="admin-email" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 transition">
-                    </div>
-                    <div class="mb-4">
-                        <label for="admin-password" class="block text-sm font-semibold mb-1">Mot de passe</label>
-                        <input type="password" id="admin-password" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400 transition">
-                    </div>
-                    <button id="admin-login-btn" class="mt-4 w-full btn-primary font-bold py-3 px-4 rounded-xl">Se connecter</button>
-                    <p id="admin-error" class="text-red-400 text-center mt-2 hidden"></p>
-                </div>
-            </div>
+        <!-- =========== PAGE DETAIL PRODUIT =========== -->
+        <section id="page-detail" class="page-content hidden bg-white py-12"></section>
 
-            <div id="admin-dashboard" class="hidden">
-                <h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2>
-                <div class="bg-gray-700 p-6 rounded-2xl mb-8">
-                    <h3 id="admin-form-title" class="text-xl font-bold mb-4">Ajouter un nouveau produit</h3>
-                    <form id="admin-product-form" class="space-y-4">
-                        <input type="hidden" id="product-id">
-                        <div><label class="block text-sm font-semibold mb-1">Nom du produit</label><input type="text" id="product-name" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
-                        <div><label class="block text-sm font-semibold mb-1">Description</label><textarea id="product-description" required class="w-full bg-gray-600 rounded-lg p-2 text-white" rows="2"></textarea></div>
-                        <div><label class="block text-sm font-semibold mb-1">Prix (en Ar)</label><input type="number" id="product-price" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
-                        <div>
-                            <label class="block text-sm font-semibold mb-1">Image(s) du produit</label>
-                            <div class="flex flex-wrap gap-2 mt-2 items-center">
-                                <div id="image-preview-container" class="flex flex-wrap gap-2"></div>
-                                <label for="product-image-upload" class="cursor-pointer w-16 h-16 bg-gray-600 rounded flex items-center justify-center text-gray-400 hover:bg-gray-500 hover:text-white transition" title="Ajouter des images">
-                                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path></svg>
-                                </label>
-                            </div>
-                            <input type="file" id="product-image-upload" multiple accept="image/*" class="hidden">
-                            <input type="hidden" id="product-images-json">
-                            <p id="upload-status" class="text-sm text-yellow-400 mt-1"></p>
-                        </div>
-                        <div class="flex space-x-4">
-                            <button type="submit" id="admin-submit-btn" class="w-full btn-primary font-bold py-2 px-4 rounded-lg disabled:opacity-50">Ajouter le produit</button>
-                            <button type="button" id="admin-cancel-btn" class="w-full bg-gray-500 font-bold py-2 px-4 rounded-lg hidden">Annuler</button>
-                        </div>
-                    </form>
-                </div>
-                <div>
-                     <h3 class="text-xl font-bold mb-4">Produits existants</h3>
-                     <div id="admin-product-list" class="space-y-4"></div>
-                </div>
-                 <button id="admin-logout-btn" class="mt-8 bg-red-600 font-bold py-2 px-4 rounded-lg mr-4">Se déconnecter</button>
-            </div>
-        </div>
-        
-        <footer class="mt-12 text-center text-gray-500 text-sm">
-             <p>&copy; <span id="year"></span> Aridago - Tous droits réservés. <button id="admin-link" class="ml-1 underline text-gray-400 hover:text-gray-600">Admin</button></p>
-        </footer>
-    </div>
+        <!-- =========== PAGE ADMIN =========== -->
+        <section id="page-admin" class="page-content hidden container mx-auto px-4 py-16"></section>
+
+    </main>
     
-    <!-- BOUTON FLOTTANT FACEBOOK -->
-    <a href="https://www.facebook.com/Aridagochine/" target="_blank" class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-xl transform hover:scale-110 transition" title="Contactez-nous sur Facebook">
-        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z"/></svg>
-    </a>
+    <!-- Pied de page -->
+    <footer class="bg-slate-900 text-white">
+        <div class="container mx-auto px-4 py-10">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <!-- Colonne 1: A propos -->
+                <div>
+                     <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="h-16 w-auto mb-4">
+                    <p class="text-slate-400 mb-4">Votre intermédiaire d'achat N°1 en Chine. Qualité, confiance et service client.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/Aridagochine/" target="_blank" class="w-10 h-10 bg-slate-700 hover:bg-red-600 rounded-full flex items-center justify-center transition-colors"><i class="fab fa-facebook-f"></i></a>
+                    </div>
+                </div>
+                 <!-- Colonne 2: Liens rapides -->
+                <div>
+                     <h3 class="text-xl font-bold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-10 after:h-0.5 after:bg-secondary-color">Liens Rapides</h3>
+                     <ul class="space-y-2">
+                        <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="accueil">Accueil</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="boutique">Boutique</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="devis">Devis sur Mesure</a></li>
+                     </ul>
+                </div>
+                 <!-- Colonne 3: Contact -->
+                 <div>
+                     <h3 class="text-xl font-bold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-10 after:h-0.5 after:bg-secondary-color">Contact</h3>
+                     <ul class="space-y-3 text-slate-400">
+                         <li class="flex items-start"><i class="fab fa-whatsapp w-5 mt-1 text-green-400"></i><span>+86 156 0002 1123</span></li>
+                         <li class="flex items-start"><i class="fas fa-envelope w-5 mt-1"></i><span>aridagoservice@hotmail.com</span></li>
+                     </ul>
+                </div>
+            </div>
+            <div class="text-center pt-8 border-t border-slate-700">
+                <p class="text-slate-500">&copy; <span id="year"></span> Aridago - Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
 
-    <!-- MODALES -->
-    <div id="price-alert-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4"><h3 class="text-lg font-bold text-gray-800">Attention sur le Prix Unitaire</h3><p class="text-gray-600 mt-2 text-sm">Afin de s'assurer que nous parlons bien du même produit au bon prix, veuillez indiquer le prix exact d'achat sur le site que vous avez choisi pour qu'au moment de notre achat il n'y ait pas d'erreur de commande.</p><button id="close-price-modal-btn" class="mt-6 w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg">Compris</button></div></div>
-    <div id="link-alert-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4"><h3 class="text-lg font-bold text-gray-800">Comment copier le lien ?</h3><p class="text-gray-600 mt-2 text-sm">Copiez-collez le lien du produit que vous souhaitez acheter sur les sites chinois suivants afin que nous puissions l'identifier et l'acheter pour vous : Alibaba, Taobao, 1688, JingDong, XianYu, etc.</p><button id="close-link-modal-btn" class="mt-6 w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg">Compris</button></div></div>
-    <div id="confirmation-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 text-center m-4"><div class="mx-auto bg-green-100 rounded-full h-24 w-24 flex items-center justify-center"><svg class="h-16 w-16 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><h2 class="mt-6 text-3xl font-extrabold text-gray-800">C'est presque fini !</h2><p class="mt-4 text-gray-600">Votre devis a été préparé. Cliquez ci-dessous pour nous l'envoyer sur WhatsApp.</p><a id="whatsapp-link" href="#" target="_blank" class="mt-8 inline-flex items-center justify-center w-full py-4 px-8 text-base font-bold rounded-xl text-white btn-primary">Confirmer et Envoyer sur WhatsApp</a></div></div>
+    <!-- BOUTON FLOTTANT FACEBOOK -->
+    <a href="https://www.facebook.com/Aridagochine/" target="_blank" class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-xl transform hover:scale-110 transition z-40" title="Contactez-nous sur Facebook">
+        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z"></path></svg>
+    </a>
 
     <!-- SDKs Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -230,6 +209,7 @@
       messagingSenderId: "173722302642",
       appId: "1:173722302642:web:1cad436874f3b4270eb1ab"
     };
+    const IMGBB_API_KEY = '7dfb12ff69d1e1f349a28e4a788f2c1d';
 
     // Initialisation de Firebase
     firebase.initializeApp(firebaseConfig);
@@ -237,52 +217,390 @@
     const auth = firebase.auth();
     const productsCollection = db.collection('products');
 
-
 document.addEventListener('DOMContentLoaded', function() {
     let boutiqueProducts = [];
-    const productGrid = document.getElementById('product-grid');
-    const loadingText = document.getElementById('loading-products');
     
-    // LOGIQUE BOUTIQUE
+    // ================== GESTION DE LA NAVIGATION (Single Page App) ==================
+    const pages = document.querySelectorAll('.page-content');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    function showPage(pageId) {
+        pages.forEach(page => {
+            const isTargetPage = page.id === pageId;
+            page.classList.toggle('hidden', !isTargetPage);
+        });
+        
+        navLinks.forEach(link => {
+            const isTargetLink = `page-${link.dataset.page}` === pageId;
+            link.classList.toggle('nav-link-active', isTargetLink);
+            link.classList.toggle('text-red-600', isTargetLink);
+        });
+
+        window.scrollTo(0, 0);
+    }
+
+    navLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const pageId = `page-${this.dataset.page}`;
+            showPage(pageId);
+        });
+    });
+    
+    document.getElementById('admin-link-header').addEventListener('click', () => showPage('page-admin'));
+    
+    // Initialisation
+    showPage('page-accueil');
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // ================== LOGIQUE BOUTIQUE ==================
     async function loadAndRenderProducts() {
         try {
             const snapshot = await productsCollection.orderBy("name").get();
-            loadingText.style.display = 'none';
-            boutiqueProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            
+            if (snapshot.empty) {
+                console.log("Firebase est vide. Utilisation des produits d'exemple.");
+                boutiqueProducts = [
+                    { id: 'mock1', name: 'Sac à dos de voyage Pro', description: 'Imperméable, grande capacité avec de multiples compartiments. Idéal pour les voyages et le quotidien.', price: 125000, images: ['https://i.imgur.com/v14n2v4.jpeg', 'https://i.imgur.com/1z4kY9M.jpeg'] },
+                    { id: 'mock2', name: 'Thermos intelligent LED', description: 'Affiche la température, conserve la chaleur pendant 12h. Acier inoxydable de haute qualité.', price: 65000, images: ['https://i.imgur.com/5J7Rz72.jpeg'] },
+                    { id: 'mock3', name: 'Montre connectée Sport', description: 'Suivi cardiaque, GPS intégré, étanche IP68 et multiples modes sportifs.', price: 210000, images: ['https://i.imgur.com/eBq62vJ.jpeg', 'https://i.imgur.com/b5k9g7g.jpeg'] },
+                    { id: 'mock4', name: 'Mini-projecteur portable HD', description: 'Transformez n\'importe quel mur en cinéma. Compact, léger et compatible avec tous vos appareils.', price: 350000, images: ['https://i.imgur.com/e692w9d.jpeg'] },
+                    { id: 'mock5', name: 'Casque audio sans fil Pro', description: 'Son haute-fidélité, réduction de bruit active et autonomie de 20h.', price: 180000, images: ['https://i.imgur.com/0a2b5n3.jpeg'] },
+                    { id: 'mock6', name: 'Mini Drone 4K', description: 'Facile à piloter, caméra 4K et design pliable pour l\'emporter partout.', price: 420000, images: ['https://i.imgur.com/kP0b4Yw.jpeg'] }
+                ];
+            } else {
+                boutiqueProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            }
+            
             renderBoutique();
+            renderPopularProducts(boutiqueProducts.slice(0, 4));
+
             if (auth.currentUser) {
                 renderAdminList();
             }
         } catch (error) {
             console.error("Erreur de chargement: ", error);
-            loadingText.textContent = 'Erreur de chargement des produits.';
+            if(document.getElementById('loading-products')) {
+                document.getElementById('loading-products').textContent = 'Erreur de chargement des produits.';
+            }
         }
     }
 
     loadAndRenderProducts();
+
+    function renderBoutique(searchTerm = '') {
+        const productGrid = document.getElementById('product-grid');
+        const loadingText = document.getElementById('loading-products');
+        if (!productGrid || !loadingText) return;
+
+        const searchBar = document.getElementById('search-bar');
+        const lowerCaseSearchTerm = (searchTerm || searchBar.value).toLowerCase();
+        const filteredProducts = boutiqueProducts.filter(p => p.name.toLowerCase().includes(lowerCaseSearchTerm));
+        
+        loadingText.style.display = 'none';
+
+        if (boutiqueProducts.length === 0) {
+             productGrid.innerHTML = `<p class="text-center text-gray-500 col-span-full">Aucun produit n'a été publié pour le moment.</p>`;
+        } else if (filteredProducts.length === 0) {
+            productGrid.innerHTML = `<p class="text-center text-gray-500 col-span-full">Aucun produit ne correspond à votre recherche.</p>`;
+        } else {
+            productGrid.innerHTML = filteredProducts.map(createProductCard).join('');
+        }
+        
+        addProductCardListeners();
+    }
     
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    // LOGIQUE DE NAVIGATION
-    const navBoutique = document.getElementById('nav-boutique');
-    const navDevis = document.getElementById('nav-devis');
-
-    function switchView(view) {
-        document.getElementById('boutique-section').classList.toggle('hidden', view !== 'boutique');
-        document.getElementById('devis-section').classList.toggle('hidden', view !== 'devis');
-        document.getElementById('admin-section').classList.toggle('hidden', view !== 'admin');
-        document.getElementById('product-detail-section').classList.toggle('hidden', view !== 'detail');
-        navBoutique.classList.toggle('active', view === 'boutique' || view === 'detail');
-        navDevis.classList.toggle('active', view === 'devis');
+    function addProductCardListeners() {
+        document.querySelectorAll('.view-product-btn').forEach(btn => {
+            btn.addEventListener('click', e => {
+                const productId = e.currentTarget.dataset.id;
+                renderProductDetail(productId);
+                showPage('page-detail');
+            });
+        });
     }
 
-    navBoutique.addEventListener('click', () => switchView('boutique'));
-    navDevis.addEventListener('click', () => switchView('devis'));
+    document.getElementById('search-bar').addEventListener('input', () => renderBoutique());
 
-    // LOGIQUE ADMIN AVEC AUTH (INCHANGÉE)
-    const IMGBB_API_KEY = '7dfb12ff69d1e1f349a28e4a788f2c1d';
-    // ... (tout le code de l'admin reste ici) ...
-    const adminLink = document.getElementById('admin-link');
+    function createProductCard(product) {
+        const imageUrl = product.images && product.images.length > 0 ? product.images[0] : 'https://placehold.co/600x400/cccccc/ffffff?text=Image';
+        return `
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 view-product-btn cursor-pointer" data-id="${product.id}">
+                <div class="relative">
+                    <img src="${imageUrl}" alt="${product.name}" class="w-full h-64 object-contain p-4">
+                    <div class="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center">
+                        <i class="fas fa-check-circle mr-1"></i> En stock à Mada
+                    </div>
+                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span class="text-white btn-primary py-2 px-5 rounded-full transform hover:scale-105 transition-transform">Voir le produit</span>
+                    </div>
+                </div>
+                <div class="p-5 text-center">
+                    <h3 class="font-semibold text-lg mb-2 truncate">${product.name}</h3>
+                    <p class="text-gradient font-extrabold text-xl">${product.price.toLocaleString('fr-FR')} Ar</p>
+                </div>
+            </div>`;
+    }
+
+    function renderPopularProducts(products) {
+        const container = document.getElementById('popular-products-accueil');
+        if (!container || products.length === 0) {
+            if(container) container.innerHTML = '';
+            return;
+        }
+        container.innerHTML = `
+             <div class="container mx-auto px-4">
+                <div class="text-center mb-12">
+                    <h2 class="text-4xl font-bold mb-2">Produits Populaires</h2>
+                    <p class="text-slate-600 text-lg">Les articles les plus demandés par nos clients</p>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                    ${products.map(createProductCard).join('')}
+                </div>
+            </div>`;
+        addProductCardListeners();
+    }
+
+    function renderProductDetail(productId) {
+        const product = boutiqueProducts.find(p => p.id === productId); 
+        if (!product) return;
+        
+        let thumbnailsHTML = product.images.map((img, index) => `<img src="${img}" class="w-20 h-20 object-contain bg-slate-100 rounded-md cursor-pointer border-2 ${index === 0 ? 'border-red-500' : 'border-transparent'} thumbnail" data-index="${index}">`).join('');
+        
+        const productDetailSection = document.getElementById('page-detail');
+        productDetailSection.innerHTML = `
+        <div class="container mx-auto px-4">
+            <button class="nav-link font-semibold mb-8 inline-flex items-center" data-page="boutique"><i class="fas fa-arrow-left mr-2"></i>Retour à la boutique</button>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+                <div>
+                    <div class="bg-slate-100 rounded-xl shadow-lg mb-4">
+                        <img id="main-product-image" src="${product.images[0]}" alt="${product.name}" class="w-full h-96 object-contain rounded-xl p-4">
+                    </div>
+                    <div id="thumbnail-container" class="flex flex-wrap gap-4 justify-center">${thumbnailsHTML}</div>
+                </div>
+                <div>
+                    <h1 class="text-4xl font-bold text-slate-800">${product.name}</h1>
+                    <p class="text-4xl font-extrabold text-gradient my-4">${product.price.toLocaleString('fr-FR')} Ar</p>
+                    <div class="mt-4 flex items-center text-green-600 font-semibold">
+                        <i class="fas fa-check-circle mr-2"></i>Produit disponible à Madagascar
+                    </div>
+                    <p class="mt-4 text-slate-600 whitespace-pre-wrap">${product.description}</p>
+                    <div class="mt-8">
+                        <a href="#" data-id="${product.id}" class="order-now-btn w-full inline-flex items-center justify-center text-center btn-secondary transition text-white font-bold py-4 px-4 rounded-xl text-lg"><i class="fab fa-whatsapp mr-3 text-2xl"></i>Commander maintenant</a>
+                    </div>
+                </div>
+            </div>
+        </div>`;
+        
+        productDetailSection.querySelector('.nav-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            showPage('page-boutique');
+        });
+        
+        productDetailSection.querySelector('.order-now-btn').addEventListener('click', e => {
+            e.preventDefault();
+            const id = e.currentTarget.dataset.id;
+            const p = boutiqueProducts.find(p => p.id === id);
+            let orderText = `*COMMANDE DIRECTE ARIDAGO*\n\n- Produit: ${p.name}\n- Prix: ${p.price.toLocaleString('fr-FR')} Ar\n\n(Frais de Livraison non inclus)`;
+            window.open(`https://wa.me/8615600021123?text=${encodeURIComponent(orderText)}`, '_blank');
+        });
+
+        const mainImage = document.getElementById('main-product-image');
+        const thumbnails = document.querySelectorAll('.thumbnail');
+        thumbnails.forEach(thumb => {
+            thumb.addEventListener('click', e => {
+                const index = parseInt(e.currentTarget.dataset.index);
+                mainImage.src = product.images[index];
+                thumbnails.forEach(t => t.classList.remove('border-red-500'));
+                e.currentTarget.classList.add('border-red-500');
+            });
+        });
+    }
+
+    // ================== LOGIQUE DEVIS SUR MESURE ==================
+    const devisSection = document.getElementById('page-devis');
+    devisSection.innerHTML = `
+        <div class="py-16">
+            <div class="text-center mb-12">
+                 <h1 class="font-poppins text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
+                    Commander en Chine ?<br>C'est maintenant <span class="text-gradient">simple et rapide !</span>
+                </h1>
+                <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+                    Remplissez ce formulaire pour recevoir votre devis personnalisé directement sur WhatsApp.
+                </p>
+             </div>
+             <main class="bg-white p-6 md:p-10 rounded-3xl shadow-lg max-w-4xl mx-auto">
+                <form id="devis-form">
+                    <fieldset class="border-b-2 border-gray-100 pb-8">
+                        <legend class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <span class="w-10 h-10 flex items-center justify-center rounded-full text-white font-bold mr-4" style="background: linear-gradient(90deg, #d92a2a, #f7b731);">1</span> Vos informations
+                        </legend>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
+                            <div><label for="nom" class="block text-sm font-semibold text-gray-600 mb-1">Nom</label><input type="text" id="nom" name="nom" required class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-red-400 transition"></div>
+                            <div><label for="prenom" class="block text-sm font-semibold text-gray-600 mb-1">Prénom</label><input type="text" id="prenom" name="prenom" required class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-red-400 transition"></div>
+                            <div><label for="whatsapp" class="block text-sm font-semibold text-gray-600 mb-1">Numéro WhatsApp</label><input type="tel" id="whatsapp" name="whatsapp" required class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-red-400 transition"></div>
+                            <div><label for="email" class="block text-sm font-semibold text-gray-600 mb-1">Email (Optionnel)</label><input type="email" id="email" name="email" class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-red-400 transition"></div>
+                        </div>
+                    </fieldset>
+                    <fieldset class="mt-8">
+                        <legend class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                            <span class="w-10 h-10 flex items-center justify-center rounded-full text-white font-bold mr-4" style="background: linear-gradient(90deg, #d92a2a, #f7b731);">2</span> Vos produits
+                        </legend>
+                        <div id="product-list" class="space-y-6"></div>
+                        <div class="mt-6"><button type="button" id="add-product" class="w-full flex items-center justify-center px-6 py-3 border-2 border-dashed border-red-300 text-sm font-semibold rounded-xl text-red-600 hover:bg-red-50 transition"><svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>Ajouter un autre produit</button></div>
+                    </fieldset>
+                    <div class="mt-10 text-center">
+                        <button type="submit" class="inline-flex justify-center items-center py-4 px-16 text-lg font-bold rounded-xl btn-whatsapp shadow-lg hover:shadow-xl transform hover:scale-105 transition animate-pulse">
+                            <i class="fab fa-whatsapp mr-3 text-2xl"></i>
+                            Envoyer ma demande
+                        </button>
+                    </div>
+                </form>
+            </main>
+            <section class="mt-12 bg-white p-6 md:p-10 rounded-3xl shadow-lg max-w-4xl mx-auto">
+                 <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Questions fréquentes</h2>
+                <div class="space-y-2">
+                    <div class="faq-item bg-gray-50 rounded-xl">
+                        <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
+                            <span>Quels sont les frais de transport Chine-Madagascar ?</span>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div class="faq-answer hidden px-4 pb-4 text-gray-600">
+                            <p>Les frais de transport ne sont pas inclus dans le devis initial. Ils dépendent du poids et du volume total de votre commande. Nous vous fournirons une estimation détaillée de ces frais lors de la confirmation de votre commande.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item bg-gray-50 rounded-xl">
+                         <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
+                            <span>Quels sont les délais de livraison estimés ?</span>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div class="faq-answer hidden px-4 pb-4 text-gray-600">
+                            <p>Les délais varient en fonction du type de transport choisi (aérien ou maritime). En général, comptez entre 7 à 15 jours pour le transport aérien et 30 à 45 jours pour le transport maritime, après réception de tous vos articles dans notre entrepôt en Chine.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item bg-gray-50 rounded-xl">
+                        <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
+                            <span>Quels sont les moyens de paiement acceptés ?</span>
+                            <i class="fas fa-chevron-down transition-transform"></i>
+                        </button>
+                        <div class="faq-answer hidden px-4 pb-4 text-gray-600">
+                            <p>Pour les paiements en <b>Yuan (CNY)</b>, nous acceptons : Alipay et WeChat Pay.<br>Pour les paiements en <b>Ariary (MGA)</b>, nous acceptons : MVola, Orange Money et Airtel Money.<br>Les détails vous seront communiqués lors de la validation de votre devis.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>`;
+
+    const devisForm = document.getElementById('devis-form'); 
+    const devisProductList = document.getElementById('product-list');
+    const addProductBtn = document.getElementById('add-product');
+    let productCount = 0;
+    function createProductBlock() { 
+        productCount++; 
+        const productDiv = document.createElement('div');
+        productDiv.className = 'p-5 border-2 border-gray-200 rounded-xl bg-gray-50/50 relative';
+        productDiv.innerHTML = `<h4 class="font-bold text-md text-gray-800 mb-4">Produit ${productCount}</h4> ${productCount > 1 ? '<button type="button" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold remove-product">&times;</button>' : ''}<div class="space-y-4"><div><label class="text-sm font-semibold text-gray-600">Nom du produit</label><input type="text" name="product_name_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Lien du produit</label><input type="url" name="product_link_${productCount}" required class="link-input w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Spécification du Produit (ex: Couleur, Taille)</label><textarea name="product_spec_${productCount}" rows="2" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></textarea></div><div class="grid grid-cols-2 gap-4"><div><label class="text-sm font-semibold text-gray-600">Prix Unitaire (CNY)</label><input type="number" step="0.01" name="product_price_${productCount}" required class="price-input w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Quantité</label><input type="number" name="product_quantity_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div></div></div>`; 
+        devisProductList.appendChild(productDiv);
+        const removeBtn = productDiv.querySelector('.remove-product'); 
+        if (removeBtn) removeBtn.addEventListener('click', () => productDiv.remove()); 
+    }
+    addProductBtn.addEventListener('click', createProductBlock);
+    createProductBlock();
+    
+    devisForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(devisForm);
+        const data = Object.fromEntries(formData.entries());
+        let devisText = "";
+        let totalCny = 0;
+        const devisId = `ADG-${Date.now().toString().slice(-6)}`;
+        devisText += `*DEMANDE DE DEVIS - ${devisId}*\n*Client:* ${data.nom} ${data.prenom}\n*WhatsApp:* ${data.whatsapp}\n`;
+        if (data.email) devisText += `*Email:* ${data.email}\n`;
+        devisText += `-----------------------------------\n\n`;
+        const products = [];
+        const productElements = devisProductList.querySelectorAll('.p-5');
+        productElements.forEach((p_el) => {
+            const nameInput = p_el.querySelector('input[name^="product_name_"]');
+            if (nameInput && nameInput.value) {
+                const id = nameInput.name.split('_').pop();
+                products.push({
+                    name: formData.get(`product_name_${id}`),
+                    link: formData.get(`product_link_${id}`),
+                    spec: formData.get(`product_spec_${id}`),
+                    price: parseFloat(formData.get(`product_price_${id}`)),
+                    quantity: parseInt(formData.get(`product_quantity_${id}`), 10)
+                });
+            }
+        });
+        products.forEach((p, index) => {
+            const subTotal = p.price * p.quantity;
+            totalCny += subTotal;
+            devisText += `*Produit ${index + 1}:* ${p.name}\n*Spécification:* ${p.spec}\n*Prix Unitaire:* ${p.price.toFixed(2)} CNY\n*Quantité:* ${p.quantity}\n*Lien:* ${p.link}\n*Sous-total:* ${subTotal.toFixed(2)} CNY\n\n`;
+        });
+        const fraisService = totalCny * 0.10;
+        const totalFinalCny = totalCny + fraisService;
+        const totalAriary = totalFinalCny * 700;
+        devisText += `-----------------------------------\n*Total Produits:* ${totalCny.toFixed(2)} CNY\n*Frais de service (10%):* ${fraisService.toFixed(2)} CNY\n*Total en Yuan:* ${totalFinalCny.toFixed(2)} CNY\n\n*Total en Ariary:* ${totalAriary.toLocaleString('fr-FR')} Ar\n\n*NOTE IMPORTANTE:*\nLes frais de transport Chine à Madagascar ne sont pas inclus dans ce devis.`;
+        
+        window.open(`https://wa.me/8615600021123?text=${encodeURIComponent(devisText)}`, '_blank');
+    });
+
+    document.querySelectorAll('.faq-question').forEach(button => {
+        button.addEventListener('click', () => {
+            const answer = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            answer.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        });
+    });
+
+    // ================== LOGIQUE ADMIN ==================
+    const adminSection = document.getElementById('page-admin');
+    adminSection.innerHTML = `
+        <div class="bg-slate-800 text-white p-6 md:p-10 rounded-3xl shadow-lg">
+            <div id="admin-login">
+                <h2 class="font-poppins text-3xl font-bold text-center mb-4">Accès Administrateur</h2>
+                <div class="max-w-sm mx-auto">
+                    <div class="mb-4"><label for="admin-email" class="block text-sm font-semibold mb-1">Email</label><input type="email" id="admin-email" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-red-400 transition"></div>
+                    <div class="mb-4"><label for="admin-password" class="block text-sm font-semibold mb-1">Mot de passe</label><input type="password" id="admin-password" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-red-400 transition"></div>
+                    <button id="admin-login-btn" class="mt-4 w-full btn-primary font-bold py-3 px-4 rounded-xl">Se connecter</button>
+                    <p id="admin-error" class="text-red-400 text-center mt-2 hidden"></p>
+                </div>
+            </div>
+            <div id="admin-dashboard" class="hidden">
+                <h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2>
+                <div class="bg-gray-700 p-6 rounded-2xl mb-8">
+                    <h3 id="admin-form-title" class="text-xl font-bold mb-4">Ajouter un nouveau produit</h3>
+                    <form id="admin-product-form" class="space-y-4">
+                        <input type="hidden" id="product-id">
+                        <div><label class="block text-sm font-semibold mb-1">Nom</label><input type="text" id="product-name" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
+                        <div><label class="block text-sm font-semibold mb-1">Description</label><textarea id="product-description" required class="w-full bg-gray-600 rounded-lg p-2 text-white" rows="2"></textarea></div>
+                        <div><label class="block text-sm font-semibold mb-1">Prix (Ar)</label><input type="number" id="product-price" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Image(s)</label>
+                            <div class="flex flex-wrap gap-2 mt-2 items-center">
+                                <div id="image-preview-container" class="flex flex-wrap gap-2"></div>
+                                <label for="product-image-upload" class="cursor-pointer w-16 h-16 bg-gray-600 rounded flex items-center justify-center text-gray-400 hover:bg-gray-500 hover:text-white transition"><i class="fas fa-plus"></i></label>
+                            </div>
+                            <input type="file" id="product-image-upload" multiple accept="image/*" class="hidden">
+                            <input type="hidden" id="product-images-json">
+                            <p id="upload-status" class="text-sm text-yellow-400 mt-1"></p>
+                        </div>
+                        <div class="flex space-x-4">
+                            <button type="submit" id="admin-submit-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg disabled:opacity-50">Ajouter</button>
+                            <button type="button" id="admin-cancel-btn" class="w-full bg-gray-500 font-bold py-2 px-4 rounded-lg hidden">Annuler</button>
+                        </div>
+                    </form>
+                </div>
+                <div>
+                     <h3 class="text-xl font-bold mb-4">Produits existants</h3>
+                     <div id="admin-product-list" class="space-y-4"></div>
+                </div>
+                 <button id="admin-logout-btn" class="mt-8 bg-red-600 font-bold py-2 px-4 rounded-lg mr-4">Se déconnecter</button>
+            </div>
+        </div>
+    `;
+
     const adminLogin = document.getElementById('admin-login');
     const adminDashboard = document.getElementById('admin-dashboard');
     const adminEmailInput = document.getElementById('admin-email');
@@ -304,8 +622,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    adminLink.addEventListener('click', () => switchView('admin'));
-
     adminLoginBtn.addEventListener('click', () => {
         const email = adminEmailInput.value;
         const password = adminPasswordInput.value;
@@ -318,7 +634,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     adminLogoutBtn.addEventListener('click', () => {
         auth.signOut();
-        switchView('boutique');
+        showPage('page-accueil');
     });
 
     const productImageUpload = document.getElementById('product-image-upload');
@@ -411,7 +727,7 @@ document.addEventListener('DOMContentLoaded', function() {
         hiddenImagesJson.value = '[]';
         uploadStatus.textContent = '';
         imagePreviewContainer.innerHTML = '';
-        adminSubmitBtn.textContent = 'Ajouter le produit';
+        adminSubmitBtn.textContent = 'Ajouter';
         adminFormTitle.textContent = 'Ajouter un nouveau produit';
         adminCancelBtn.classList.add('hidden');
     }
@@ -419,7 +735,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderAdminList() {
         adminProductList.innerHTML = '';
         boutiqueProducts.forEach(p => {
-            adminProductList.innerHTML += `<div class="bg-gray-600 p-3 rounded-lg flex items-center justify-between"><div><p class="font-bold">${p.name}</p><p class="text-sm text-gray-400">${p.price.toLocaleString('fr-FR')} Ar</p></div><div class="space-x-2"><button class="edit-product-btn bg-blue-500 px-3 py-1 rounded" data-id="${p.id}">Modifier</button><button class="delete-product-btn bg-red-500 px-3 py-1 rounded" data-id="${p.id}">Supprimer</button></div></div>`;
+            adminProductList.innerHTML += `<div class="bg-gray-600 p-3 rounded-lg flex items-center justify-between"><div><p class="font-bold">${p.name}</p><p class="text-sm text-gray-400">${p.price.toLocaleString('fr-FR')} Ar</p></div><div class="space-x-2"><button class="edit-product-btn bg-blue-500 px-3 py-1 rounded text-white" data-id="${p.id}">Modifier</button><button class="delete-product-btn bg-red-500 px-3 py-1 rounded text-white" data-id="${p.id}">Supprimer</button></div></div>`;
         });
         
         document.querySelectorAll('.edit-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
@@ -450,65 +766,6 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }));
     }
-
-    // LOGIQUE DE RENDU BOUTIQUE (INCHANGÉE)
-    function renderBoutique(searchTerm = '') {
-        const searchBar = document.getElementById('search-bar');
-        const lowerCaseSearchTerm = (searchTerm || searchBar.value).toLowerCase();
-        const filteredProducts = boutiqueProducts.filter(p => p.name.toLowerCase().includes(lowerCaseSearchTerm));
-        
-        if (boutiqueProducts.length === 0 && loadingText.style.display === 'none') {
-             productGrid.innerHTML = `<p class="text-center text-gray-500 col-span-full">Aucun produit n'a été publié pour le moment.</p>`;
-        } else if (filteredProducts.length === 0) {
-            productGrid.innerHTML = `<p class="text-center text-gray-500 col-span-full">Aucun produit ne correspond à votre recherche.</p>`;
-        } else {
-            productGrid.innerHTML = ''; 
-            filteredProducts.forEach(p => productGrid.innerHTML += createProductCard(p));
-        }
-        
-        document.querySelectorAll('.view-product-btn').forEach(btn => {
-            btn.addEventListener('click', e => {
-                const productId = e.currentTarget.dataset.id;
-                renderProductDetail(productId);
-                switchView('detail');
-            });
-        });
-    }
-    document.getElementById('search-bar').addEventListener('input', () => renderBoutique());
-
-    function createProductCard(product) {
-        const imageUrl = product.images && product.images.length > 0 ? product.images[0] : 'https://placehold.co/600x400/cccccc/ffffff?text=Image';
-        return `<div class="bg-white rounded-2xl shadow-md overflow-hidden flex flex-col group view-product-btn cursor-pointer" data-id="${product.id}"><div class="overflow-hidden bg-gray-100"><img src="${imageUrl}" alt="${product.name}" class="w-full h-48 object-contain group-hover:scale-105 transition-transform duration-300"></div><div class="p-4 flex flex-col flex-grow"><h3 class="text-lg font-bold text-gray-800 flex-grow">${product.name}</h3><div class="mt-4"><span class="text-xl font-extrabold theme-gradient-text">${product.price.toLocaleString('fr-FR')} Ar</span></div></div></div>`;
-    }
-
-    function renderProductDetail(productId) {
-        const product = boutiqueProducts.find(p => p.id === productId); if (!product) return;
-        let thumbnailsHTML = product.images.map((img, index) => `<img src="${img}" class="thumbnail w-16 h-16 object-contain bg-gray-100 rounded-md cursor-pointer border-2 ${index === 0 ? 'active' : 'border-transparent'}" data-index="${index}">`).join('');
-        
-        const productDetailSection = document.getElementById('product-detail-section');
-        productDetailSection.innerHTML = `<div><button id="back-to-shop" class="text-gray-600 font-semibold mb-6 flex items-center"><svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>Retour à la boutique</button></div><div class="grid grid-cols-1 md:grid-cols-2 gap-8"><div><div class="bg-gray-100 rounded-xl shadow-lg"><img id="main-product-image" src="${product.images[0]}" alt="${product.name}" class="w-full h-80 object-contain rounded-xl"></div><div id="thumbnail-container" class="flex flex-wrap gap-2 mt-4">${thumbnailsHTML}</div></div><div><h1 class="font-poppins text-4xl font-bold text-gray-800">${product.name}</h1><p class="mt-4 text-gray-600 whitespace-pre-wrap">${product.description}</p><p class="mt-6 text-4xl font-extrabold theme-gradient-text">${product.price.toLocaleString('fr-FR')} Ar</p><div class="mt-8"><a href="#" data-id="${product.id}" class="order-now-btn w-full inline-flex items-center justify-center text-center bg-green-600 hover:bg-green-700 transition text-white font-bold py-4 px-4 rounded-xl text-lg"><ion-icon name="logo-whatsapp" class="mr-3 text-2xl"></ion-icon>Commander maintenant</a></div></div></div>`;
-        
-        document.getElementById('back-to-shop').addEventListener('click', () => switchView('boutique'));
-        
-        document.querySelector('.order-now-btn').addEventListener('click', e => {
-            e.preventDefault();
-            const id = e.currentTarget.dataset.id;
-            const product = boutiqueProducts.find(p => p.id === id);
-            let orderText = `*COMMANDE DIRECTE ARIDAGO*\n\n- Produit: ${product.name}\n- Prix: ${product.price.toLocaleString('fr-FR')} Ar\n\n(Frais de Livraison non inclus)`;
-            window.open(`https://wa.me/8615600021123?text=${encodeURIComponent(orderText)}`, '_blank');
-        });
-
-        const mainImage = document.getElementById('main-product-image'); const thumbnails = document.querySelectorAll('.thumbnail');
-        thumbnails.forEach(thumb => { thumb.addEventListener('click', e => { const index = parseInt(e.currentTarget.dataset.index); mainImage.src = product.images[index]; thumbnails.forEach(t => t.classList.remove('active')); e.currentTarget.classList.add('active'); }); });
-    }
-
-    // ================== LOGIQUE DU FORMULAIRE DE DEVIS (RESTAURÉE) ==================
-    const devisForm = document.getElementById('devis-form'); const devisProductList = document.getElementById('product-list'); const addProductBtn = document.getElementById('add-product'); const confirmationModal = document.getElementById('confirmation-modal'); const whatsappLink = document.getElementById('whatsapp-link'); const priceAlertModal = document.getElementById('price-alert-modal'); const closePriceModalBtn = document.getElementById('close-price-modal-btn'); const linkAlertModal = document.getElementById('link-alert-modal'); const closeLinkModalBtn = document.getElementById('close-link-modal-btn'); let productCount = 0; let hasShownPriceAlert = localStorage.getItem('hasShownPriceAlert_Aridago'); let hasShownLinkAlert = localStorage.getItem('hasShownLinkAlert_Aridago');
-    function createProductBlock() { productCount++; const productDiv = document.createElement('div'); productDiv.className = 'p-5 border-2 border-gray-200 rounded-xl bg-gray-50/50 relative'; productDiv.innerHTML = `<h4 class="font-bold text-md text-gray-800 mb-4">Produit ${productCount}</h4> ${productCount > 1 ? '<button type="button" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold remove-product">&times;</button>' : ''}<div class="space-y-4"><div><label class="text-sm font-semibold text-gray-600">Nom du produit</label><input type="text" name="product_name_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Lien du produit</label><input type="url" name="product_link_${productCount}" required class="link-input w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Spécification du Produit (ex: Couleur, Taille)</label><textarea name="product_spec_${productCount}" rows="2" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></textarea></div><div class="grid grid-cols-2 gap-4"><div><label class="text-sm font-semibold text-gray-600">Prix Unitaire (CNY)</label><input type="number" step="0.01" name="product_price_${productCount}" required class="price-input w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Quantité</label><input type="number" name="product_quantity_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div></div></div>`; devisProductList.appendChild(productDiv); productDiv.querySelector('.link-input').addEventListener('focus', () => { if (!hasShownLinkAlert) linkAlertModal.style.display = 'flex'; }); productDiv.querySelector('.price-input').addEventListener('focus', () => { if (!hasShownPriceAlert) priceAlertModal.style.display = 'flex'; }); const removeBtn = productDiv.querySelector('.remove-product'); if (removeBtn) removeBtn.addEventListener('click', () => productDiv.remove()); }
-    addProductBtn.addEventListener('click', createProductBlock); closePriceModalBtn.addEventListener('click', () => { priceAlertModal.style.display = 'none'; localStorage.setItem('hasShownPriceAlert_Aridago', 'true'); hasShownPriceAlert = true; }); closeLinkModalBtn.addEventListener('click', () => { linkAlertModal.style.display = 'none'; localStorage.setItem('hasShownLinkAlert_Aridago', 'true'); hasShownLinkAlert = true; }); devisForm.addEventListener('submit', function(e) { e.preventDefault(); const formData = new FormData(devisForm); const data = Object.fromEntries(formData.entries()); let devisText = ""; let totalCny = 0; const devisId = `ADG-${Date.now().toString().slice(-6)}`; devisText += `*DEMANDE DE DEVIS - ${devisId}*\n*Client:* ${data.nom} ${data.prenom}\n*WhatsApp:* ${data.whatsapp}\n`; if (data.email) devisText += `*Email:* ${data.email}\n`; devisText += `-----------------------------------\n\n`; const products = []; const productElements = devisProductList.querySelectorAll('.p-5'); productElements.forEach((p_el) => { const nameInput = p_el.querySelector('input[name^="product_name_"]'); if (nameInput && nameInput.value) { const id = nameInput.name.split('_').pop(); products.push({ name: formData.get(`product_name_${id}`), link: formData.get(`product_link_${id}`), spec: formData.get(`product_spec_${id}`), price: parseFloat(formData.get(`product_price_${id}`)), quantity: parseInt(formData.get(`product_quantity_${id}`), 10) }); } }); products.forEach((p, index) => { const subTotal = p.price * p.quantity; totalCny += subTotal; devisText += `*Produit ${index + 1}:* ${p.name}\n*Spécification:* ${p.spec}\n*Prix Unitaire:* ${p.price.toFixed(2)} CNY\n*Quantité:* ${p.quantity}\n*Lien:* ${p.link}\n*Sous-total:* ${subTotal.toFixed(2)} CNY\n\n`; }); const fraisService = totalCny * 0.10; const totalFinalCny = totalCny + fraisService; const totalAriary = totalFinalCny * 700; devisText += `-----------------------------------\n*Total Produits:* ${totalCny.toFixed(2)} CNY\n*Frais de service (10%):* ${fraisService.toFixed(2)} CNY\n*Total en Yuan:* ${totalFinalCny.toFixed(2)} CNY\n\n*Total en Ariary:* ${totalAriary.toLocaleString('fr-FR')} Ar\n\n*NOTE IMPORTANTE:*\nLes frais de transport Chine à Madagascar ne sont pas inclus dans ce devis.`; whatsappLink.href = `https://wa.me/8615600021123?text=${encodeURIComponent(devisText)}`; confirmationModal.style.display = 'flex'; }); confirmationModal.addEventListener('click', e => { if (e.target === confirmationModal) { confirmationModal.style.display = 'none'; devisForm.reset(); devisProductList.innerHTML = ''; createProductBlock(); } });
-    createProductBlock();
-    
-    document.querySelectorAll('.faq-question').forEach(button => { button.addEventListener('click', () => { const answer = button.nextElementSibling; const icon = button.querySelector('svg'); answer.classList.toggle('hidden'); icon.classList.toggle('rotate-180'); }); });
 });
 </script>
 </body>
