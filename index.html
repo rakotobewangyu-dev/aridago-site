@@ -75,7 +75,7 @@
         .rotate-180 {
             transform: rotate(180deg);
         }
-        #confirmation-modal, #price-alert-modal, #link-alert-modal {
+        #confirmation-modal, #price-alert-modal, #link-alert-modal, #delete-confirm-modal {
             display: none;
         }
     </style>
@@ -84,9 +84,9 @@
 
     <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
         <div class="container mx-auto px-4 py-2 flex justify-between items-center">
-            <div class="flex items-center space-x-4 md:space-x-8">
+            <div class="flex items-center space-x-4">
                 <a href="#" class="nav-link" data-page="accueil">
-                     <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="h-16 w-auto">
+                     <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="h-14 md:h-16 w-auto">
                 </a>
                 <nav class="hidden md:flex items-center space-x-2 md:space-x-6 text-sm md:text-base">
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline nav-link-active" data-page="accueil">Accueil</a>
@@ -96,14 +96,25 @@
                 </nav>
             </div>
             
-            <div class="flex items-center">
-                <button id="admin-link-header" class="text-slate-700 hover:text-red-600 text-lg"><i class="fas fa-user-shield"></i></button>
+            <div class="flex items-center space-x-4">
+                <button id="admin-link-header" class="text-slate-700 hover:text-red-600 text-lg p-2"><i class="fas fa-user-shield"></i></button>
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden text-slate-700 hover:text-red-600 text-2xl p-2">
+                    <i class="fas fa-bars"></i>
+                </button>
             </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white border-t border-slate-200">
+            <a href="#" class="block py-3 px-4 text-base font-semibold text-slate-700 hover:bg-slate-50 nav-link" data-page="accueil">Accueil</a>
+            <a href="#" class="block py-3 px-4 text-base font-semibold text-slate-700 hover:bg-slate-50 nav-link" data-page="boutique">Boutique</a>
+            <a href="#" class="block py-3 px-4 text-base font-semibold text-slate-700 hover:bg-slate-50 nav-link" data-page="devis">Devis</a>
+            <a href="#" class="block py-3 px-4 text-base font-semibold text-slate-700 hover:bg-slate-50 nav-link" data-page="apropos">À Propos</a>
         </div>
     </header>
 
     <div style="background: linear-gradient(90deg, #d92a2a, #f7b731);" class="text-white text-center py-2">
-        <p class="text-sm font-semibold">Votre partenaire d'achat en Chine | Simple, rapide et fiable</p>
+        <p class="text-sm font-semibold px-2">Votre partenaire d'achat en Chine | Simple, rapide et fiable</p>
     </div>
 
     <main>
@@ -119,20 +130,20 @@
                 </div>
             </div>
 
-            <section class="bg-white py-16">
+            <section class="bg-white py-12 md:py-16">
                 <div class="container mx-auto px-4">
                     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-center">
-                        <div class="feature">
+                        <div class="feature p-4">
                             <i class="fas fa-search-dollar text-4xl text-red-600 mb-4"></i>
                             <h3 class="font-bold text-lg mb-2">Recherche de produits</h3>
                             <p class="text-slate-600">Nous trouvons pour vous les meilleurs produits au meilleur prix.</p>
                         </div>
-                        <div class="feature">
+                        <div class="feature p-4">
                             <i class="fas fa-handshake text-4xl text-red-600 mb-4"></i>
                             <h3 class="font-bold text-lg mb-2">Intermédiaire de confiance</h3>
                             <p class="text-slate-600">Nous gérons l'achat, la vérification et le paiement pour vous.</p>
                         </div>
-                        <div class="feature">
+                        <div class="feature p-4">
                             <i class="fas fa-shipping-fast text-4xl text-red-600 mb-4"></i>
                             <h3 class="font-bold text-lg mb-2">Transport sécurisé</h3>
                             <p class="text-slate-600">Nous nous occupons de l'expédition de la Chine vers Madagascar.</p>
@@ -141,14 +152,14 @@
                 </div>
             </section>
 
-             <div id="popular-products-accueil" class="py-16">
+             <div id="popular-products-accueil" class="py-12 md:py-16">
                  </div>
         </section>
 
         <section id="page-boutique" class="page-content hidden">
-            <div class="container mx-auto px-4 py-16">
+            <div class="container mx-auto px-4 py-12 md:py-16">
                  <div class="text-center mb-12">
-                    <h2 class="text-4xl font-bold mb-2">Notre Boutique</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-2">Notre Boutique</h2>
                     <p class="text-slate-600 text-lg">Commandez directement nos articles sélectionnés pour vous, déjà à Madagascar.</p>
                      <div class="mt-6 max-w-lg mx-auto relative flex items-center">
                         <input type="text" id="search-bar" placeholder="Rechercher un produit..." class="w-full pl-6 pr-12 py-3 border-2 border-slate-200 rounded-full focus:outline-none focus:ring-2 focus:ring-red-400 transition">
@@ -157,7 +168,7 @@
                         </button>
                      </div>
                  </div>
-                 <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+                 <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                     <p id="loading-products" class="text-center text-gray-500 col-span-full">Chargement des produits...</p>
                  </div>
             </div>
@@ -167,17 +178,17 @@
             <div class="container mx-auto max-w-4xl p-4 md:p-8">
         
                 <header class="text-center mb-10">
-                    <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="mx-auto h-36 w-auto mb-6">
-                    <h1 class="text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
+                    <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="mx-auto h-24 md:h-36 w-auto mb-6">
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-gray-800 leading-tight">
                         Commander en Chine ?<br>C'est maintenant <span class="theme-gradient-text">simple et rapide !</span>
                     </h1>
-                    <p class="mt-4 text-lg text-gray-600 max-w-2xl mx-auto">
+                    <p class="mt-4 text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
                         Remplissez ce formulaire pour recevoir votre devis personnalisé directement sur WhatsApp.
                     </p>
                 </header>
 
                 <section class="mb-12">
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center">
                         <div class="bg-white p-6 rounded-2xl shadow-sm">
                             <div class="theme-gradient-bg w-12 h-12 flex items-center justify-center rounded-full text-white font-bold text-xl mx-auto mb-4">1</div>
                             <h3 class="font-bold text-lg text-gray-800">Remplissez le formulaire</h3>
@@ -199,8 +210,8 @@
                 <main class="bg-white p-6 md:p-10 rounded-3xl shadow-lg">
                     <form id="devis-form">
                         <fieldset class="border-b-2 border-gray-100 pb-8">
-                            <legend class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                                <span class="theme-gradient-bg w-10 h-10 flex items-center justify-center rounded-full text-white font-bold mr-4">1</span> Vos informations
+                            <legend class="text-xl md:text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                <span class="theme-gradient-bg w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full text-white font-bold mr-4 text-base md:text-lg">1</span> Vos informations
                             </legend>
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                                 <div><label for="nom" class="block text-sm font-semibold text-gray-600 mb-1">Nom</label><input type="text" id="nom" name="nom" required class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></div>
@@ -210,14 +221,14 @@
                             </div>
                         </fieldset>
                         <fieldset class="mt-8">
-                            <legend class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                                <span class="theme-gradient-bg w-10 h-10 flex items-center justify-center rounded-full text-white font-bold mr-4">2</span> Vos produits
+                            <legend class="text-xl md:text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                                <span class="theme-gradient-bg w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full text-white font-bold mr-4 text-base md:text-lg">2</span> Vos produits
                             </legend>
                             <div id="product-list" class="space-y-6"></div>
                             <div class="mt-6"><button type="button" id="add-product" class="w-full flex items-center justify-center px-6 py-3 border-2 border-dashed border-red-300 text-sm font-semibold rounded-xl text-red-600 hover:bg-red-50 transition"><svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>Ajouter un autre produit</button></div>
                         </fieldset>
                         <div class="mt-10 text-center">
-                            <button type="submit" class="inline-flex justify-center items-center py-4 px-16 text-lg font-bold rounded-xl text-white btn-whatsapp shadow-lg hover:shadow-xl transform hover:scale-105 transition animate-pulse">
+                            <button type="submit" class="inline-flex justify-center items-center py-3 px-8 md:py-4 md:px-16 text-base md:text-lg font-bold rounded-xl text-white btn-whatsapp shadow-lg hover:shadow-xl transform hover:scale-105 transition animate-pulse">
                                 <ion-icon name="logo-whatsapp" class="mr-3 text-2xl"></ion-icon>
                                 Envoyer ma commande
                             </button>
@@ -268,76 +279,120 @@
             </div>
         </section>
 
+        <!-- NOUVELLE PAGE A PROPOS (RESPONSIVE) -->
         <section id="page-apropos" class="page-content hidden">
-            <div class="container mx-auto px-4 py-16">
-                <div class="text-center mb-12">
-                    <h2 class="text-4xl font-bold mb-2">À Propos d'Aridago</h2>
-                    <p class="text-slate-600 text-lg">Votre partenaire de confiance pour les achats en Chine</p>
+            <!-- Hero Section -->
+            <div class="relative bg-slate-800 text-white flex items-center justify-center pt-24 pb-16 overflow-hidden">
+                <div class="absolute inset-0 bg-cover bg-center opacity-20" style="background-image: url('https://images.unsplash.com/photo-1578575437130-5278ce685a21?auto=format&fit=crop&w=1500&q=80');"></div>
+                <div class="absolute inset-0 bg-gradient-to-t from-slate-800 via-slate-800/70 to-transparent"></div>
+                <div class="relative text-center max-w-4xl px-4 z-10">
+                    <h2 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Votre Partenaire de Confiance Pour la Chine</h2>
+                    <p class="text-lg md:text-xl text-slate-300">Nous avons créé Aridago pour rendre les achats en Chine simples, transparents et accessibles à tous depuis Madagascar.</p>
                 </div>
+            </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
-                    <div>
-                        <h3 class="text-3xl font-bold mb-6 text-gradient">Qui sommes-nous ?</h3>
-                        <p class="text-slate-700 mb-4">
-                            Fondé par des passionnés de commerce international basés à la fois à Madagascar et en Chine, Aridago est né d'un constat simple : l'accès aux produits chinois de qualité peut être complexe et intimidant.
-                        </p>
-                        <p class="text-slate-700">
-                            Nous sommes une équipe d'experts dédiés à devenir votre partenaire de confiance, facilitant vos achats en Chine avec transparence et efficacité.
-                        </p>
-                    </div>
-                    <div class="order-first md:order-last">
-                        <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=800&q=80" alt="Équipe Aridago" class="rounded-xl shadow-lg">
-                    </div>
-                </div>
+            <div class="bg-white">
+                <div class="container mx-auto px-4 py-16 md:py-20">
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16">
-                    <div>
-                        <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=80" alt="Services Aridago" class="rounded-xl shadow-lg">
-                    </div>
-                    <div>
-                        <h3 class="text-3xl font-bold mb-6 text-gradient">Que faisons-nous ?</h3>
-                        <p class="text-slate-700 mb-4">
-                            Nous offrons un service complet d'intermédiaire d'achat. Vous avez trouvé un produit ? Nous nous occupons de tout : communication, négociation, et paiement sécurisé.
-                        </p>
-                        <p class="text-slate-700">
-                            En plus, notre boutique vous propose une sélection de produits déjà en stock à Madagascar, prêts à être récupérés sur place pour une satisfaction immédiate.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="bg-slate-100 rounded-2xl p-8 md:p-12 mb-16">
-                    <h3 class="text-3xl font-bold mb-8 text-center text-gradient">Nos Valeurs</h3>
-                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                        <div class="text-center p-6 bg-white rounded-xl shadow-sm">
-                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-red-100 flex items-center justify-center">
-                                <i class="fas fa-shield-alt text-2xl text-red-600"></i>
-                            </div>
-                            <h4 class="font-bold text-lg mb-2">Confiance</h4>
-                            <p class="text-slate-600">Transparence totale dans nos processus et nos tarifs.</p>
+                    <!-- Qui sommes-nous ? -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16 md:mb-24">
+                        <div class="order-last md:order-first">
+                            <h3 class="text-3xl font-bold mb-6 text-gradient">Qui sommes-nous ?</h3>
+                            <p class="text-slate-700 mb-4 text-base md:text-lg">
+                                Fondé par des passionnés de commerce international basés à la fois à Madagascar et en Chine, Aridago est né d'un constat simple : l'accès aux produits chinois de qualité peut être complexe et intimidant.
+                            </p>
+                            <p class="text-slate-700 text-base md:text-lg">
+                                Nous sommes une équipe d'experts dédiés à devenir votre partenaire de confiance, facilitant vos achats en Chine avec transparence et efficacité.
+                            </p>
                         </div>
-                        <div class="text-center p-6 bg-white rounded-xl shadow-sm">
-                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-yellow-100 flex items-center justify-center">
-                                <i class="fas fa-bolt text-2xl text-yellow-600"></i>
-                            </div>
-                            <h4 class="font-bold text-lg mb-2">Efficacité</h4>
-                            <p class="text-slate-600">Process optimisés pour des délais réduits au maximum.</p>
-                        </div>
-                        <div class="text-center p-6 bg-white rounded-xl shadow-sm">
-                            <div class="w-16 h-16 mx-auto mb-4 rounded-full bg-green-100 flex items-center justify-center">
-                                <i class="fas fa-hands-helping text-2xl text-green-600"></i>
-                            </div>
-                            <h4 class="font-bold text-lg mb-2">Accompagnement</h4>
-                            <p class="text-slate-600">Support personnalisé à chaque étape de votre commande.</p>
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1560472354-b33ff0c44a43?auto=format&fit=crop&w=800&q=80" alt="Équipe Aridago" class="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
                         </div>
                     </div>
-                </div>
 
-                <div class="text-center bg-gradient-to-r from-red-600 to-orange-500 rounded-2xl p-10 text-white">
-                    <h3 class="text-3xl font-bold mb-4">Prêt à commander ?</h3>
-                    <p class="text-xl mb-6">Rejoignez nos clients satisfaits et simplifiez vos achats en Chine.</p>
-                    <div class="flex flex-col sm:flex-row justify-center gap-4">
-                        <a href="#" class="bg-white text-red-600 font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 shadow-lg nav-link" data-page="devis">Demander un devis</a>
-                        <a href="#" class="border-2 border-white text-white font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 hover:bg-white hover:text-red-600 nav-link" data-page="boutique">Voir la boutique</a>
+                    <!-- Que faisons-nous ? -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16 md:mb-24">
+                        <div>
+                            <img src="https://images.unsplash.com/photo-1563013544-824ae1b704d3?auto=format&fit=crop&w=800&q=80" alt="Services Aridago" class="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
+                        </div>
+                        <div>
+                            <h3 class="text-3xl font-bold mb-6 text-gradient">Que faisons-nous ?</h3>
+                            <p class="text-slate-700 mb-4 text-base md:text-lg">
+                                Nous offrons un service complet d'intermédiaire d'achat. Vous avez trouvé un produit ? Nous nous occupons de tout : communication, négociation, et paiement sécurisé.
+                            </p>
+                            <p class="text-slate-700 text-base md:text-lg">
+                                En plus, notre boutique vous propose une sélection de produits déjà en stock à Madagascar, prêts à être récupérés sur place pour une satisfaction immédiate.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Notre Processus Simplifié -->
+                    <div class="text-center mb-16 md:mb-24">
+                        <h3 class="text-3xl md:text-4xl font-bold mb-4">Notre Processus Simplifié</h3>
+                        <p class="text-slate-600 text-base md:text-lg max-w-2xl mx-auto">En quatre étapes claires, nous vous accompagnons de la recherche à la livraison.</p>
+                        <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 relative">
+                            <!-- Connecting line for desktop -->
+                            <div class="hidden md:block absolute top-10 left-0 w-full h-px bg-slate-200" style="z-index: 0;"></div>
+                            
+                            <div class="relative z-10 flex flex-col items-center p-4 md:p-6">
+                                <div class="theme-gradient-bg w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-2xl md:text-3xl mx-auto mb-4 shadow-lg border-4 border-white">1</div>
+                                <h4 class="font-bold text-lg text-gray-800">Votre Demande</h4>
+                                <p class="text-gray-500 text-sm mt-1">Vous soumettez votre demande via notre formulaire de devis détaillé.</p>
+                            </div>
+                            <div class="relative z-10 flex flex-col items-center p-4 md:p-6">
+                                <div class="theme-gradient-bg w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-2xl md:text-3xl mx-auto mb-4 shadow-lg border-4 border-white">2</div>
+                                <h4 class="font-bold text-lg text-gray-800">Devis & Validation</h4>
+                                <p class="text-gray-500 text-sm mt-1">Nous vous envoyons un devis clair. Après votre accord, nous procédons à l'achat.</p>
+                            </div>
+                            <div class="relative z-10 flex flex-col items-center p-4 md:p-6">
+                                <div class="theme-gradient-bg w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-2xl md:text-3xl mx-auto mb-4 shadow-lg border-4 border-white">3</div>
+                                <h4 class="font-bold text-lg text-gray-800">Vérification</h4>
+                                <p class="text-gray-500 text-sm mt-1">Nous recevons et vérifions la qualité de vos produits dans notre entrepôt en Chine.</p>
+                            </div>
+                            <div class="relative z-10 flex flex-col items-center p-4 md:p-6">
+                                <div class="theme-gradient-bg w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-2xl md:text-3xl mx-auto mb-4 shadow-lg border-4 border-white">4</div>
+                                <h4 class="font-bold text-lg text-gray-800">Expédition</h4>
+                                <p class="text-gray-500 text-sm mt-1">Nous expédions vos articles en toute sécurité vers Madagascar.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Nos Valeurs -->
+                    <div class="bg-slate-50 rounded-2xl p-8 md:p-12 mb-16 md:mb-24">
+                        <h3 class="text-3xl md:text-4xl font-bold mb-12 text-center text-gradient">Ce qui nous définit</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                            <div class="text-center p-8 bg-white rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
+                                <div class="w-16 h-16 md:w-20 md:h-20 mx-auto mb-6 rounded-full bg-red-100 flex items-center justify-center">
+                                    <i class="fas fa-shield-alt text-3xl text-red-600"></i>
+                                </div>
+                                <h4 class="font-bold text-xl mb-2">Confiance</h4>
+                                <p class="text-slate-600">Transparence totale dans nos processus et nos tarifs pour une collaboration sereine.</p>
+                            </div>
+                            <div class="text-center p-8 bg-white rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
+                                <div class="w-16 h-16 md:w-20 md:h-20 mx-auto mb-6 rounded-full bg-yellow-100 flex items-center justify-center">
+                                    <i class="fas fa-bolt text-3xl text-yellow-600"></i>
+                                </div>
+                                <h4 class="font-bold text-xl mb-2">Efficacité</h4>
+                                <p class="text-slate-600">Nous optimisons chaque étape pour vous garantir des délais de traitement rapides.</p>
+                            </div>
+                            <div class="text-center p-8 bg-white rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
+                                <div class="w-16 h-16 md:w-20 md:h-20 mx-auto mb-6 rounded-full bg-green-100 flex items-center justify-center">
+                                    <i class="fas fa-hands-helping text-3xl text-green-600"></i>
+                                </div>
+                                <h4 class="font-bold text-xl mb-2">Accompagnement</h4>
+                                <p class="text-slate-600">Nous offrons un support personnalisé et réactif à chaque étape de votre commande.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Call to Action -->
+                    <div class="text-center theme-gradient-bg rounded-2xl p-10 text-white shadow-2xl">
+                        <h3 class="text-3xl md:text-4xl font-bold mb-4">Prêt à simplifier vos achats ?</h3>
+                        <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Rejoignez les dizaines de clients qui nous font confiance pour leurs approvisionnements en Chine.</p>
+                        <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
+                            <a href="#" class="bg-white text-red-600 font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 shadow-lg nav-link" data-page="devis">Demander un devis</a>
+                            <a href="#" class="border-2 border-white text-white font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 hover:bg-white hover:text-red-600 nav-link" data-page="boutique">Explorer la Boutique</a>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -352,16 +407,16 @@
     
     <footer class="bg-slate-900 text-white">
         <div class="container mx-auto px-4 py-10">
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 text-center md:text-left">
                 <div>
-                     <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="h-16 w-auto mb-4">
+                     <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="h-16 w-auto mb-4 mx-auto md:mx-0">
                     <p class="text-slate-400 mb-4">Votre intermédiaire d'achat N°1 en Chine. Qualité, confiance et service client.</p>
-                    <div class="flex space-x-4">
+                    <div class="flex space-x-4 justify-center md:justify-start">
                         <a href="https://www.facebook.com/Aridagochine/" target="_blank" class="w-10 h-10 bg-slate-700 hover:bg-red-600 rounded-full flex items-center justify-center transition-colors"><i class="fab fa-facebook-f"></i></a>
                     </div>
                 </div>
                  <div>
-                     <h3 class="text-xl font-bold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-10 after:h-0.5 after:bg-secondary-color">Liens Rapides</h3>
+                     <h3 class="text-xl font-bold mb-4 relative pb-2 inline-block md:block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-10 after:h-0.5 after:bg-secondary-color">Liens Rapides</h3>
                      <ul class="space-y-2">
                         <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="accueil">Accueil</a></li>
                         <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="boutique">Boutique</a></li>
@@ -370,10 +425,10 @@
                      </ul>
                 </div>
                  <div>
-                     <h3 class="text-xl font-bold mb-4 relative pb-2 after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-10 after:h-0.5 after:bg-secondary-color">Contact</h3>
+                     <h3 class="text-xl font-bold mb-4 relative pb-2 inline-block md:block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-10 after:h-0.5 after:bg-secondary-color">Contact</h3>
                      <ul class="space-y-3 text-slate-400">
-                         <li class="flex items-start"><i class="fab fa-whatsapp w-5 mt-1 text-green-400"></i><span>+86 156 0002 1123</span></li>
-                         <li class="flex items-start"><i class="fas fa-envelope w-5 mt-1"></i><span>aridagoservice@hotmail.com</span></li>
+                         <li class="flex items-center justify-center md:justify-start"><i class="fab fa-whatsapp w-5 mr-2 text-green-400"></i><span>+86 156 0002 1123</span></li>
+                         <li class="flex items-center justify-center md:justify-start"><i class="fas fa-envelope w-5 mr-2"></i><span>aridagoservice@hotmail.com</span></li>
                      </ul>
                 </div>
             </div>
@@ -383,19 +438,33 @@
         </div>
     </footer>
 
-    <a href="https://www.facebook.com/Aridagochine/" target="_blank" class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white w-16 h-16 rounded-full flex items-center justify-center shadow-xl transform hover:scale-110 transition z-40" title="Contactez-nous sur Facebook">
-        <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z"></path></svg>
+    <a href="https://www.facebook.com/Aridagochine/" target="_blank" class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-xl transform hover:scale-110 transition z-40" title="Contactez-nous sur Facebook">
+        <svg class="w-7 h-7 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z"></path></svg>
     </a>
 
+    <!-- Modals -->
     <div id="price-alert-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4"><h3 class="text-lg font-bold text-gray-800">Attention sur le Prix Unitaire</h3><p class="text-gray-600 mt-2 text-sm">Afin de s'assurer que nous parlons bien du même produit au bon prix, veuillez indiquer le prix exact d'achat sur le site que vous avez choisi pour qu'au moment de notre achat il n'y ait pas d'erreur de commande.</p><button id="close-price-modal-btn" class="mt-6 w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg">Compris</button></div></div>
     <div id="link-alert-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4"><h3 class="text-lg font-bold text-gray-800">Comment copier le lien ?</h3><p class="text-gray-600 mt-2 text-sm">Copiez-collez le lien du produit que vous souhaitez acheter sur les sites chinois suivants afin que nous puissions l'identifier et l'acheter pour vous : Alibaba, Taobao, 1688, JingDong, XianYu, etc.</p><button id="close-link-modal-btn" class="mt-6 w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg">Compris</button></div></div>
     <div id="confirmation-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 text-center m-4"><div class="mx-auto bg-green-100 rounded-full h-24 w-24 flex items-center justify-center"><svg class="h-16 w-16 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><h2 class="mt-6 text-3xl font-extrabold text-gray-800">C'est presque fini !</h2><p class="mt-4 text-gray-600">Votre devis a été préparé. Cliquez ci-dessous pour nous l'envoyer sur WhatsApp.</p><a id="whatsapp-link" href="#" target="_blank" class="mt-8 inline-flex items-center justify-center w-full py-4 px-8 text-base font-bold rounded-xl text-white btn-primary">Confirmer et Envoyer sur WhatsApp</a></div></div>
+    <!-- NOUVEAU MODAL DE CONFIRMATION DE SUPPRESSION -->
+    <div id="delete-confirm-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop">
+        <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4">
+            <h3 class="text-lg font-bold text-gray-800">Confirmer la suppression</h3>
+            <p class="text-gray-600 mt-2 text-sm">Êtes-vous sûr de vouloir supprimer ce produit ? Cette action est irréversible.</p>
+            <div class="mt-6 flex justify-center gap-4">
+                <button id="cancel-delete-btn" class="w-full bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg">Annuler</button>
+                <button id="confirm-delete-btn" class="w-full bg-red-600 text-white font-bold py-2 px-4 rounded-lg">Supprimer</button>
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-firestore.js"></script>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
     // ================== CONFIGURATION FIREBASE & IMGBB ==================
     const firebaseConfig = {
       apiKey: "AIzaSyBa93ZQ34S4JEz6lc7yt_2ZrIiTc2Jqh9c",
@@ -413,13 +482,18 @@
     const auth = firebase.auth();
     const productsCollection = db.collection('products');
 
-
-document.addEventListener('DOMContentLoaded', function() {
     let boutiqueProducts = [];
     
     // ================== GESTION DE LA NAVIGATION (Single Page App) ==================
     const pages = document.querySelectorAll('.page-content');
     const navLinks = document.querySelectorAll('.nav-link');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+
+    // --- NOUVEAU : GESTION DU MENU MOBILE ---
+    mobileMenuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
 
     function showPage(pageId) {
         pages.forEach(page => {
@@ -434,6 +508,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 link.classList.toggle('text-red-600', isTargetLink);
              }
         });
+
+        // Cacher le menu mobile après la navigation
+        if (!mobileMenu.classList.contains('hidden')) {
+            mobileMenu.classList.add('hidden');
+        }
 
         window.scrollTo(0, 0);
 
@@ -492,7 +571,7 @@ document.addEventListener('DOMContentLoaded', function() {
         return `
             <div class="bg-white rounded-xl shadow-lg overflow-hidden group transform hover:-translate-y-2 transition-transform duration-300 view-product-btn cursor-pointer" data-id="${product.id}">
                 <div class="relative">
-                    <img src="${imageUrl}" alt="${product.name}" class="w-full h-64 object-contain p-4">
+                    <img src="${imageUrl}" alt="${product.name}" class="w-full h-56 md:h-64 object-contain p-4">
                     <div class="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center">
                         <i class="fas fa-check-circle mr-1"></i> En stock à Mada
                     </div>
@@ -555,10 +634,10 @@ document.addEventListener('DOMContentLoaded', function() {
         container.innerHTML = `
              <div class="container mx-auto px-4">
                 <div class="text-center mb-12">
-                    <h2 class="text-4xl font-bold mb-2">Produits Populaires</h2>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-2">Produits Populaires</h2>
                     <p class="text-slate-600 text-lg">Les articles les plus demandés par nos clients</p>
                 </div>
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
                     ${products.map(createProductCard).join('')}
                 </div>
             </div>`;
@@ -569,22 +648,22 @@ document.addEventListener('DOMContentLoaded', function() {
         const product = boutiqueProducts.find(p => p.id === productId); 
         if (!product) return;
         
-        let thumbnailsHTML = (product.images || []).map((img, index) => `<img src="${img}" class="w-20 h-20 object-contain bg-slate-100 rounded-md cursor-pointer border-2 ${index === 0 ? 'border-red-500' : 'border-transparent'} thumbnail" data-index="${index}">`).join('');
+        let thumbnailsHTML = (product.images || []).map((img, index) => `<img src="${img}" class="w-16 h-16 md:w-20 md:h-20 object-contain bg-slate-100 rounded-md cursor-pointer border-2 ${index === 0 ? 'border-red-500' : 'border-transparent'} thumbnail" data-index="${index}">`).join('');
         
         const productDetailSection = document.getElementById('page-detail');
         productDetailSection.innerHTML = `
         <div class="container mx-auto px-4">
             <button class="nav-link font-semibold mb-8 inline-flex items-center" data-page="boutique"><i class="fas fa-arrow-left mr-2"></i>Retour à la boutique</button>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
                 <div>
                     <div class="bg-slate-100 rounded-xl shadow-lg mb-4">
-                        <img id="main-product-image" src="${product.images[0]}" alt="${product.name}" class="w-full h-96 object-contain rounded-xl p-4">
+                        <img id="main-product-image" src="${product.images[0]}" alt="${product.name}" class="w-full h-80 md:h-96 object-contain rounded-xl p-4">
                     </div>
                     <div id="thumbnail-container" class="flex flex-wrap gap-4 justify-center">${thumbnailsHTML}</div>
                 </div>
                 <div>
-                    <h1 class="text-4xl font-bold text-slate-800">${product.name}</h1>
-                    <p class="text-4xl font-extrabold text-gradient my-4">${product.price.toLocaleString('fr-FR')} Ar</p>
+                    <h1 class="text-3xl md:text-4xl font-bold text-slate-800">${product.name}</h1>
+                    <p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">${product.price.toLocaleString('fr-FR')} Ar</p>
                     <div class="mt-4 flex items-center text-green-600 font-semibold">
                         <i class="fas fa-check-circle mr-2"></i>Produit disponible à Madagascar
                     </div>
@@ -621,14 +700,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Initialiser la fonctionnalité de recherche
     function initSearchFunctionality() {
         const searchBar = document.getElementById('search-bar');
         const searchBtn = document.getElementById('search-btn');
         
         if (searchBar && searchBtn) {
             const performSearch = () => {
-                 if (document.getElementById('page-boutique').classList.contains('hidden') === false) {
+                 if (document.getElementById('page-boutique').offsetParent !== null) { // Check if page is visible
                     renderBoutique();
                 }
             };
@@ -642,7 +720,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // ================== LOGIQUE DEVIS SUR MESURE (Design V2) ==================
+    // ================== LOGIQUE DEVIS SUR MESURE ==================
     const devisForm = document.getElementById('devis-form');
     const productList = document.getElementById('product-list');
     const addProductBtn = document.getElementById('add-product');
@@ -698,9 +776,7 @@ document.addEventListener('DOMContentLoaded', function() {
         let totalCny = 0;
         const devisId = `ADG-${Date.now().toString().slice(-6)}`;
         
-        // --- MODIFICATION ICI ---
         devisText += `*Nouvelle Demande de Devis - ARIDAGO*\n\n*Référence:* ${devisId}\n*Client:* ${data.nom} ${data.prenom}\n*WhatsApp:* ${data.whatsapp}\n`;
-        // --- FIN DE LA MODIFICATION ---
         
         if (data.email) devisText += `*Email:* ${data.email}\n`;
         devisText += `-----------------------------------\n\n`;
@@ -756,7 +832,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // ================== LOGIQUE ADMIN (Fonctionnalités V1) ==================
+    // ================== LOGIQUE ADMIN ==================
     const adminSection = document.getElementById('page-admin');
     adminSection.innerHTML = `
         <div class="bg-slate-800 text-white p-6 md:p-10 rounded-3xl shadow-lg">
@@ -788,7 +864,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <input type="hidden" id="product-images-json">
                             <p id="upload-status" class="text-sm text-yellow-400 mt-1"></p>
                         </div>
-                        <div class="flex space-x-4">
+                        <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
                             <button type="submit" id="admin-submit-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg disabled:opacity-50">Ajouter</button>
                             <button type="button" id="admin-cancel-btn" class="w-full bg-gray-500 font-bold py-2 px-4 rounded-lg hidden">Annuler</button>
                         </div>
@@ -812,6 +888,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const adminLogoutBtn = document.getElementById('admin-logout-btn');
     const adminProductForm = document.getElementById('admin-product-form');
     const adminProductList = document.getElementById('admin-product-list');
+    
+    // --- NOUVEAU : GESTION MODAL DE SUPPRESSION ---
+    const deleteConfirmModal = document.getElementById('delete-confirm-modal');
+    const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+    const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
 
     auth.onAuthStateChanged(user => {
         if (user) {
@@ -933,12 +1014,32 @@ document.addEventListener('DOMContentLoaded', function() {
         adminFormTitle.textContent = 'Ajouter un nouveau produit';
         adminCancelBtn.classList.add('hidden');
     }
+    
+    cancelDeleteBtn.addEventListener('click', () => {
+        deleteConfirmModal.style.display = 'none';
+    });
+
+    confirmDeleteBtn.addEventListener('click', async () => {
+        const id = confirmDeleteBtn.dataset.id;
+        if (id) {
+            try {
+                await productsCollection.doc(id).delete();
+                await loadAndRenderProducts();
+            } catch (error) {
+                console.error("Erreur de suppression: ", error);
+                alert("Une erreur s'est produite lors de la suppression.");
+            } finally {
+                deleteConfirmModal.style.display = 'none';
+            }
+        }
+    });
+
 
     function renderAdminList() {
         if (!adminProductList) return;
         adminProductList.innerHTML = '';
         boutiqueProducts.forEach(p => {
-            adminProductList.innerHTML += `<div class="bg-gray-600 p-3 rounded-lg flex items-center justify-between"><div><p class="font-bold">${p.name}</p><p class="text-sm text-gray-400">${p.price.toLocaleString('fr-FR')} Ar</p></div><div class="space-x-2"><button class="edit-product-btn bg-blue-500 px-3 py-1 rounded text-white" data-id="${p.id}">Modifier</button><button class="delete-product-btn bg-red-500 px-3 py-1 rounded text-white" data-id="${p.id}">Supprimer</button></div></div>`;
+            adminProductList.innerHTML += `<div class="bg-gray-600 p-3 rounded-lg flex items-center justify-between"><div><p class="font-bold">${p.name}</p><p class="text-sm text-gray-400">${p.price.toLocaleString('fr-FR')} Ar</p></div><div class="flex space-x-2"><button class="edit-product-btn bg-blue-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Modifier</button><button class="delete-product-btn bg-red-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Supprimer</button></div></div>`;
         });
         
         document.querySelectorAll('.edit-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
@@ -948,25 +1049,19 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('product-name').value = product.name;
             document.getElementById('product-description').value = product.description;
             document.getElementById('product-price').value = product.price;
-            hiddenImagesJson.value = JSON.stringify(product.images);
-            renderImagePreviews(product.images);
+            hiddenImagesJson.value = JSON.stringify(product.images || []);
+            renderImagePreviews(product.images || []);
             adminFormTitle.textContent = 'Modifier le produit';
             adminSubmitBtn.textContent = 'Mettre à jour';
             adminCancelBtn.classList.remove('hidden');
-            window.scrollTo(0, adminProductForm.offsetTop);
+            adminSection.scrollIntoView({ behavior: 'smooth' });
         }));
 
-        document.querySelectorAll('.delete-product-btn').forEach(btn => btn.addEventListener('click', async (e) => {
-            if (confirm('Êtes-vous sûr de vouloir supprimer ce produit ?')) {
-                const id = e.currentTarget.dataset.id;
-                try {
-                    await productsCollection.doc(id).delete();
-                    await loadAndRenderProducts();
-                } catch (error) {
-                    console.error("Erreur de suppression: ", error);
-                    alert("Une erreur s'est produite.");
-                }
-            }
+        // --- CORRECTION : Remplacement de confirm() par le modal ---
+        document.querySelectorAll('.delete-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
+            const id = e.currentTarget.dataset.id;
+            confirmDeleteBtn.dataset.id = id; // Stocke l'ID sur le bouton de confirmation
+            deleteConfirmModal.style.display = 'flex';
         }));
     }
 
