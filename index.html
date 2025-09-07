@@ -57,9 +57,9 @@
         <!-- ================== SECTION PAGE PRODUIT ================== -->
         <div id="product-detail-section" class="hidden bg-white p-6 md:p-10 rounded-3xl shadow-lg"></div>
 
-        <!-- ================== SECTION DEVIS SUR MESURE ================== -->
+        <!-- ================== SECTION DEVIS SUR MESURE (RÉPARÉE) ================== -->
         <div id="devis-section" class="hidden">
-            <div class="text-center mb-12">
+             <div class="text-center mb-12">
                  <h1 class="font-poppins text-4xl md:text-5xl font-extrabold text-gray-800 leading-tight">
                     Commander en Chine ?<br>C'est maintenant <span class="theme-gradient-text">simple et rapide !</span>
                 </h1>
@@ -114,6 +114,38 @@
                     </div>
                 </form>
             </main>
+            <section class="mt-12 bg-white p-6 md:p-10 rounded-3xl shadow-lg">
+                 <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Questions fréquentes (FAQ)</h2>
+                <div id="faq-container" class="space-y-2">
+                    <div class="faq-item bg-gray-50 rounded-xl">
+                        <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
+                            <span>Quels sont les frais de transport Chine-Madagascar ?</span>
+                            <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="faq-answer hidden px-4 pb-4 text-gray-600">
+                            <p>Les frais de transport ne sont pas inclus dans le devis initial. Ils dépendent du poids et du volume total de votre commande. Nous vous fournirons une estimation détaillée de ces frais lors de la confirmation de votre commande.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item bg-gray-50 rounded-xl">
+                        <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
+                            <span>Quels sont les délais de livraison estimés ?</span>
+                            <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="faq-answer hidden px-4 pb-4 text-gray-600">
+                            <p>Les délais varient en fonction du type de transport choisi (aérien ou maritime). En général, comptez entre 7 à 15 jours pour le transport aérien et 30 à 45 jours pour le transport maritime, après réception de tous vos articles dans notre entrepôt en Chine.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item bg-gray-50 rounded-xl">
+                        <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
+                            <span>Quels sont les moyens de paiement acceptés ?</span>
+                            <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                        </button>
+                        <div class="faq-answer hidden px-4 pb-4 text-gray-600">
+                            <p>Pour les paiements en <b>Yuan (CNY)</b>, nous acceptons : Alipay et WeChat Pay.<br>Pour les paiements en <b>Ariary (MGA)</b>, nous acceptons : MVola, Orange Money et Airtel Money.<br>Les détails vous seront communiqués lors de la validation de votre devis.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
 
         <!-- ================== SECTION ADMIN ================== -->
@@ -179,6 +211,11 @@
         <svg class="w-8 h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z"/></svg>
     </a>
 
+    <!-- MODALES -->
+    <div id="price-alert-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4"><h3 class="text-lg font-bold text-gray-800">Attention sur le Prix Unitaire</h3><p class="text-gray-600 mt-2 text-sm">Afin de s'assurer que nous parlons bien du même produit au bon prix, veuillez indiquer le prix exact d'achat sur le site que vous avez choisi pour qu'au moment de notre achat il n'y ait pas d'erreur de commande.</p><button id="close-price-modal-btn" class="mt-6 w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg">Compris</button></div></div>
+    <div id="link-alert-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4"><h3 class="text-lg font-bold text-gray-800">Comment copier le lien ?</h3><p class="text-gray-600 mt-2 text-sm">Copiez-collez le lien du produit que vous souhaitez acheter sur les sites chinois suivants afin que nous puissions l'identifier et l'acheter pour vous : Alibaba, Taobao, 1688, JingDong, XianYu, etc.</p><button id="close-link-modal-btn" class="mt-6 w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg">Compris</button></div></div>
+    <div id="confirmation-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 text-center m-4"><div class="mx-auto bg-green-100 rounded-full h-24 w-24 flex items-center justify-center"><svg class="h-16 w-16 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><h2 class="mt-6 text-3xl font-extrabold text-gray-800">C'est presque fini !</h2><p class="mt-4 text-gray-600">Votre devis a été préparé. Cliquez ci-dessous pour nous l'envoyer sur WhatsApp.</p><a id="whatsapp-link" href="#" target="_blank" class="mt-8 inline-flex items-center justify-center w-full py-4 px-8 text-base font-bold rounded-xl text-white btn-primary">Confirmer et Envoyer sur WhatsApp</a></div></div>
+
     <!-- SDKs Firebase -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
@@ -206,6 +243,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const productGrid = document.getElementById('product-grid');
     const loadingText = document.getElementById('loading-products');
     
+    // LOGIQUE BOUTIQUE
     async function loadAndRenderProducts() {
         try {
             const snapshot = await productsCollection.orderBy("name").get();
@@ -225,6 +263,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     document.getElementById('year').textContent = new Date().getFullYear();
 
+    // LOGIQUE DE NAVIGATION
     const navBoutique = document.getElementById('nav-boutique');
     const navDevis = document.getElementById('nav-devis');
 
@@ -237,13 +276,12 @@ document.addEventListener('DOMContentLoaded', function() {
         navDevis.classList.toggle('active', view === 'devis');
     }
 
-    navBoutique.addEventListener('click', () => {
-        switchView('boutique');
-    });
+    navBoutique.addEventListener('click', () => switchView('boutique'));
     navDevis.addEventListener('click', () => switchView('devis'));
 
-    // ================== LOGIQUE ADMIN AVEC AUTH ==================
+    // LOGIQUE ADMIN AVEC AUTH (INCHANGÉE)
     const IMGBB_API_KEY = '7dfb12ff69d1e1f349a28e4a788f2c1d';
+    // ... (tout le code de l'admin reste ici) ...
     const adminLink = document.getElementById('admin-link');
     const adminLogin = document.getElementById('admin-login');
     const adminDashboard = document.getElementById('admin-dashboard');
@@ -412,13 +450,14 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }));
     }
-    
+
+    // LOGIQUE DE RENDU BOUTIQUE (INCHANGÉE)
     function renderBoutique(searchTerm = '') {
         const searchBar = document.getElementById('search-bar');
         const lowerCaseSearchTerm = (searchTerm || searchBar.value).toLowerCase();
         const filteredProducts = boutiqueProducts.filter(p => p.name.toLowerCase().includes(lowerCaseSearchTerm));
         
-        if (boutiqueProducts.length === 0) {
+        if (boutiqueProducts.length === 0 && loadingText.style.display === 'none') {
              productGrid.innerHTML = `<p class="text-center text-gray-500 col-span-full">Aucun produit n'a été publié pour le moment.</p>`;
         } else if (filteredProducts.length === 0) {
             productGrid.innerHTML = `<p class="text-center text-gray-500 col-span-full">Aucun produit ne correspond à votre recherche.</p>`;
@@ -435,7 +474,6 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         });
     }
-
     document.getElementById('search-bar').addEventListener('input', () => renderBoutique());
 
     function createProductCard(product) {
@@ -463,6 +501,14 @@ document.addEventListener('DOMContentLoaded', function() {
         const mainImage = document.getElementById('main-product-image'); const thumbnails = document.querySelectorAll('.thumbnail');
         thumbnails.forEach(thumb => { thumb.addEventListener('click', e => { const index = parseInt(e.currentTarget.dataset.index); mainImage.src = product.images[index]; thumbnails.forEach(t => t.classList.remove('active')); e.currentTarget.classList.add('active'); }); });
     }
+
+    // ================== LOGIQUE DU FORMULAIRE DE DEVIS (RESTAURÉE) ==================
+    const devisForm = document.getElementById('devis-form'); const devisProductList = document.getElementById('product-list'); const addProductBtn = document.getElementById('add-product'); const confirmationModal = document.getElementById('confirmation-modal'); const whatsappLink = document.getElementById('whatsapp-link'); const priceAlertModal = document.getElementById('price-alert-modal'); const closePriceModalBtn = document.getElementById('close-price-modal-btn'); const linkAlertModal = document.getElementById('link-alert-modal'); const closeLinkModalBtn = document.getElementById('close-link-modal-btn'); let productCount = 0; let hasShownPriceAlert = localStorage.getItem('hasShownPriceAlert_Aridago'); let hasShownLinkAlert = localStorage.getItem('hasShownLinkAlert_Aridago');
+    function createProductBlock() { productCount++; const productDiv = document.createElement('div'); productDiv.className = 'p-5 border-2 border-gray-200 rounded-xl bg-gray-50/50 relative'; productDiv.innerHTML = `<h4 class="font-bold text-md text-gray-800 mb-4">Produit ${productCount}</h4> ${productCount > 1 ? '<button type="button" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold remove-product">&times;</button>' : ''}<div class="space-y-4"><div><label class="text-sm font-semibold text-gray-600">Nom du produit</label><input type="text" name="product_name_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Lien du produit</label><input type="url" name="product_link_${productCount}" required class="link-input w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Spécification du Produit (ex: Couleur, Taille)</label><textarea name="product_spec_${productCount}" rows="2" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></textarea></div><div class="grid grid-cols-2 gap-4"><div><label class="text-sm font-semibold text-gray-600">Prix Unitaire (CNY)</label><input type="number" step="0.01" name="product_price_${productCount}" required class="price-input w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Quantité</label><input type="number" name="product_quantity_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div></div></div>`; devisProductList.appendChild(productDiv); productDiv.querySelector('.link-input').addEventListener('focus', () => { if (!hasShownLinkAlert) linkAlertModal.style.display = 'flex'; }); productDiv.querySelector('.price-input').addEventListener('focus', () => { if (!hasShownPriceAlert) priceAlertModal.style.display = 'flex'; }); const removeBtn = productDiv.querySelector('.remove-product'); if (removeBtn) removeBtn.addEventListener('click', () => productDiv.remove()); }
+    addProductBtn.addEventListener('click', createProductBlock); closePriceModalBtn.addEventListener('click', () => { priceAlertModal.style.display = 'none'; localStorage.setItem('hasShownPriceAlert_Aridago', 'true'); hasShownPriceAlert = true; }); closeLinkModalBtn.addEventListener('click', () => { linkAlertModal.style.display = 'none'; localStorage.setItem('hasShownLinkAlert_Aridago', 'true'); hasShownLinkAlert = true; }); devisForm.addEventListener('submit', function(e) { e.preventDefault(); const formData = new FormData(devisForm); const data = Object.fromEntries(formData.entries()); let devisText = ""; let totalCny = 0; const devisId = `ADG-${Date.now().toString().slice(-6)}`; devisText += `*DEMANDE DE DEVIS - ${devisId}*\n*Client:* ${data.nom} ${data.prenom}\n*WhatsApp:* ${data.whatsapp}\n`; if (data.email) devisText += `*Email:* ${data.email}\n`; devisText += `-----------------------------------\n\n`; const products = []; const productElements = devisProductList.querySelectorAll('.p-5'); productElements.forEach((p_el) => { const nameInput = p_el.querySelector('input[name^="product_name_"]'); if (nameInput && nameInput.value) { const id = nameInput.name.split('_').pop(); products.push({ name: formData.get(`product_name_${id}`), link: formData.get(`product_link_${id}`), spec: formData.get(`product_spec_${id}`), price: parseFloat(formData.get(`product_price_${id}`)), quantity: parseInt(formData.get(`product_quantity_${id}`), 10) }); } }); products.forEach((p, index) => { const subTotal = p.price * p.quantity; totalCny += subTotal; devisText += `*Produit ${index + 1}:* ${p.name}\n*Spécification:* ${p.spec}\n*Prix Unitaire:* ${p.price.toFixed(2)} CNY\n*Quantité:* ${p.quantity}\n*Lien:* ${p.link}\n*Sous-total:* ${subTotal.toFixed(2)} CNY\n\n`; }); const fraisService = totalCny * 0.10; const totalFinalCny = totalCny + fraisService; const totalAriary = totalFinalCny * 700; devisText += `-----------------------------------\n*Total Produits:* ${totalCny.toFixed(2)} CNY\n*Frais de service (10%):* ${fraisService.toFixed(2)} CNY\n*Total en Yuan:* ${totalFinalCny.toFixed(2)} CNY\n\n*Total en Ariary:* ${totalAriary.toLocaleString('fr-FR')} Ar\n\n*NOTE IMPORTANTE:*\nLes frais de transport Chine à Madagascar ne sont pas inclus dans ce devis.`; whatsappLink.href = `https://wa.me/8615600021123?text=${encodeURIComponent(devisText)}`; confirmationModal.style.display = 'flex'; }); confirmationModal.addEventListener('click', e => { if (e.target === confirmationModal) { confirmationModal.style.display = 'none'; devisForm.reset(); devisProductList.innerHTML = ''; createProductBlock(); } });
+    createProductBlock();
+    
+    document.querySelectorAll('.faq-question').forEach(button => { button.addEventListener('click', () => { const answer = button.nextElementSibling; const icon = button.querySelector('svg'); answer.classList.toggle('hidden'); icon.classList.toggle('rotate-180'); }); });
 });
 </script>
 </body>
