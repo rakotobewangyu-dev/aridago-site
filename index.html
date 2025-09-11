@@ -814,7 +814,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div id="admin-dashboard" class="hidden">
                 <h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2>
 
-                 <!-- AI Text Generator Section -->
+                <!-- AI Text Generator Section -->
                 <div class="bg-gray-700 p-6 rounded-2xl mb-8 border-2 border-dashed border-yellow-400">
                     <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-magic mr-3 text-yellow-400"></i>Générateur de Fiche Produit par IA</h3>
                     <div class="space-y-4">
@@ -1103,7 +1103,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         }
-
+        
         aiGenerateTextBtn.addEventListener('click', async () => {
             const productName = aiTextName.value.trim();
             if (!productName) {
@@ -1115,7 +1115,14 @@ document.addEventListener('DOMContentLoaded', function() {
             aiGenerateTextBtn.disabled = true;
 
             try {
-                const apiKey = "";
+                // IMPORTANT: Pour que cela fonctionne sur GitHub, vous devez obtenir une clé API
+                // depuis Google AI Studio (https://aistudio.google.com/app/apikey) et la coller ci-dessous.
+                const apiKey = "VOTRE_CLÉ_API_ICI";
+                
+                if (apiKey === "VOTRE_CLÉ_API_ICI") {
+                    throw new Error("Veuillez remplacer 'VOTRE_CLÉ_API_ICI' par votre véritable clé API.");
+                }
+
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
                 const prompt = `En tant qu'assistant de fiche produit, génère une description pour "${productName}". La description doit être une liste à puces concise des spécifications techniques et des caractéristiques clés. Évite les phrases marketing. Va droit au but. La réponse doit être en texte brut, sans formatage Markdown. Format attendu : NOM : [Nom clair du produit] ;;; DESCRIPTION : [Liste à puces (-) des spécifications.]`;
 
