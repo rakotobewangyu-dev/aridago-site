@@ -1103,7 +1103,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         }
-        
+
         aiGenerateTextBtn.addEventListener('click', async () => {
             const productName = aiTextName.value.trim();
             if (!productName) {
@@ -1115,13 +1115,10 @@ document.addEventListener('DOMContentLoaded', function() {
             aiGenerateTextBtn.disabled = true;
 
             try {
-                // IMPORTANT: Pour que cela fonctionne sur GitHub, vous devez obtenir une clé API
-                // depuis Google AI Studio (https://aistudio.google.com/app/apikey) et la coller ci-dessous.
-                const apiKey = "VOTRE_CLÉ_API_ICI";
-                
-                if (apiKey === "VOTRE_CLÉ_API_ICI") {
-                    throw new Error("Veuillez remplacer 'VOTRE_CLÉ_API_ICI' par votre véritable clé API.");
-                }
+                // IMPORTANT : Pour un déploiement sur un site externe (comme GitHub Pages),
+                // vous devrez obtenir votre propre clé API gratuite depuis Google AI Studio
+                // et la coller ici. Pour l'instant, la clé est fournie automatiquement.
+                const apiKey = ""; 
 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
                 const prompt = `En tant qu'assistant de fiche produit, génère une description pour "${productName}". La description doit être une liste à puces concise des spécifications techniques et des caractéristiques clés. Évite les phrases marketing. Va droit au but. La réponse doit être en texte brut, sans formatage Markdown. Format attendu : NOM : [Nom clair du produit] ;;; DESCRIPTION : [Liste à puces (-) des spécifications.]`;
