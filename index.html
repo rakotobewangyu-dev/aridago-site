@@ -813,12 +813,28 @@ document.addEventListener('DOMContentLoaded', function() {
             </div>
             <div id="admin-dashboard" class="hidden">
                 <h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2>
+
+                 <!-- AI Text Generator Section -->
+                <div class="bg-gray-700 p-6 rounded-2xl mb-8 border-2 border-dashed border-yellow-400">
+                    <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-magic mr-3 text-yellow-400"></i>Générateur de Fiche Produit par IA</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Nom ou mots-clés du produit</label>
+                            <input type="text" id="ai-text-name" placeholder="Ex: Sac à dos de voyage, Thermos intelligent..." class="w-full bg-gray-600 rounded-lg p-2 text-white">
+                        </div>
+                        <button id="ai-generate-text-btn" class="w-full btn-primary font-bold py-2 px-4 rounded-lg flex items-center justify-center disabled:opacity-50">
+                            <i class="fas fa-rocket mr-2"></i>Générer la description
+                        </button>
+                        <p id="ai-text-status" class="text-sm text-yellow-400 mt-1 text-center h-4"></p>
+                    </div>
+                </div>
+
                 <div class="bg-gray-700 p-6 rounded-2xl mb-8">
-                    <h3 id="admin-form-title" class="text-xl font-bold mb-4">Ajouter un nouveau produit</h3>
+                    <h3 id="admin-form-title" class="text-xl font-bold mb-4">Fiche Produit</h3>
                     <form id="admin-product-form" class="space-y-4">
                         <input type="hidden" id="product-id">
                         <div><label class="block text-sm font-semibold mb-1">Nom</label><input type="text" id="product-name" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
-                        <div><label class="block text-sm font-semibold mb-1">Description</label><textarea id="product-description" required class="w-full bg-gray-600 rounded-lg p-2 text-white" rows="2"></textarea></div>
+                        <div><label class="block text-sm font-semibold mb-1">Description</label><textarea id="product-description" required class="w-full bg-gray-600 rounded-lg p-2 text-white" rows="6"></textarea></div>
                         <div><label class="block text-sm font-semibold mb-1">Prix (Ar)</label><input type="number" id="product-price" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
                         <div>
                             <label class="block text-sm font-semibold mb-1">Image(s)</label>
@@ -831,7 +847,7 @@ document.addEventListener('DOMContentLoaded', function() {
                             <p id="upload-status" class="text-sm text-yellow-400 mt-1"></p>
                         </div>
                         <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-                            <button type="submit" id="admin-submit-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg disabled:opacity-50">Ajouter</button>
+                            <button type="submit" id="admin-submit-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg disabled:opacity-50">Ajouter / Mettre à jour</button>
                             <button type="button" id="admin-cancel-btn" class="w-full bg-gray-500 font-bold py-2 px-4 rounded-lg hidden">Annuler</button>
                         </div>
                     </form>
@@ -864,6 +880,7 @@ document.addEventListener('DOMContentLoaded', function() {
             adminLogin.classList.add('hidden');
             adminDashboard.classList.remove('hidden');
             renderAdminList();
+            initAiFeatures(); 
         } else {
             adminLogin.classList.remove('hidden');
             adminDashboard.classList.add('hidden');
@@ -975,9 +992,13 @@ document.addEventListener('DOMContentLoaded', function() {
         hiddenImagesJson.value = '[]';
         uploadStatus.textContent = '';
         imagePreviewContainer.innerHTML = '';
-        adminSubmitBtn.textContent = 'Ajouter';
-        adminFormTitle.textContent = 'Ajouter un nouveau produit';
+        adminSubmitBtn.textContent = 'Ajouter / Mettre à jour';
+        adminFormTitle.textContent = 'Fiche Produit';
         adminCancelBtn.classList.add('hidden');
+        if(document.getElementById('ai-text-name')) {
+            document.getElementById('ai-text-name').value = '';
+            document.getElementById('ai-text-status').textContent = '';
+        }
     }
     
     cancelDeleteBtn.addEventListener('click', () => {
@@ -1028,6 +1049,97 @@ document.addEventListener('DOMContentLoaded', function() {
             deleteConfirmModal.style.display = 'flex';
         }));
     }
+    
+    // ================== AI FEATURES LOGIC ==================
+    function initAiFeatures() {
+        const aiTextName = document.getElementById('ai-text-name');
+        const aiGenerateTextBtn = document.getElementById('ai-generate-text-btn');
+        const aiTextStatus = document.getElementById('ai-text-status');
+
+        async function callGenerativeApi(url, payload, maxRetries = 3) {
+            let attempt = 0;
+            while (attempt < maxRetries) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const responseText = await response.text();
+                    
+                    if (!response.ok) {
+                        let errorDetails = `(Status: ${response.status})`;
+                        try {
+                            const errorResult = JSON.parse(responseText);
+                            errorDetails = errorResult?.error?.message || `(Status: ${response.status})`;
+                        } catch (e) {
+                           errorDetails = responseText || response.statusText;
+                        }
+                        throw new Error(`Erreur API ${errorDetails}`);
+                    }
+                    
+                    const result = JSON.parse(responseText);
+
+                    if (!result.candidates || result.candidates.length === 0) {
+                        if (result.promptFeedback) {
+                            const blockReason = result.promptFeedback.blockReason;
+                            console.error("Prompt bloqué:", result.promptFeedback);
+                            throw new Error(`La requête a été bloquée: ${blockReason}`);
+                        }
+                        throw new Error("La réponse de l'API ne contient aucun résultat valide.");
+                    }
+
+                    return result;
+
+                } catch (error) {
+                    console.error(`Tentative ${attempt + 1} échouée:`, error);
+                    attempt++;
+                    if (attempt >= maxRetries) {
+                        throw error; 
+                    }
+                    const delay = Math.pow(2, attempt) * 200; 
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
+
+        aiGenerateTextBtn.addEventListener('click', async () => {
+            const productName = aiTextName.value.trim();
+            if (!productName) {
+                aiTextStatus.textContent = 'Veuillez fournir un nom ou des mots-clés.';
+                return;
+            }
+
+            aiTextStatus.textContent = 'Génération du texte en cours...';
+            aiGenerateTextBtn.disabled = true;
+
+            try {
+                const apiKey = "";
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                const prompt = `En tant qu'assistant de fiche produit, génère une description pour "${productName}". La description doit être une liste à puces concise des spécifications techniques et des caractéristiques clés. Évite les phrases marketing. Va droit au but. La réponse doit être en texte brut, sans formatage Markdown. Format attendu : NOM : [Nom clair du produit] ;;; DESCRIPTION : [Liste à puces (-) des spécifications.]`;
+
+                const payload = { contents: [{ parts: [{ text: prompt }] }] };
+
+                const result = await callGenerativeApi(apiUrl, payload);
+                const text = result.candidates[0].content.parts[0].text;
+                
+                const parts = text.split(';;;');
+                const generatedName = parts[0].replace('NOM :', '').trim();
+                const generatedDesc = parts[1].replace('DESCRIPTION :', '').trim();
+
+                document.getElementById('product-name').value = generatedName;
+                document.getElementById('product-description').value = generatedDesc;
+                aiTextStatus.textContent = 'Description générée avec succès !';
+
+            } catch (error) {
+                console.error('Erreur du générateur de texte IA:', error);
+                aiTextStatus.textContent = `Erreur: ${error.message}`;
+            } finally {
+                aiGenerateTextBtn.disabled = false;
+            }
+        });
+    }
 
     // ================== APPEL INITIAL ==================
     showPage('page-accueil');
@@ -1037,3 +1149,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
