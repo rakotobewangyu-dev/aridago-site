@@ -814,7 +814,7 @@ document.addEventListener('DOMContentLoaded', function() {
             <div id="admin-dashboard" class="hidden">
                 <h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2>
 
-                <!-- AI Text Generator Section -->
+                 <!-- AI Text Generator Section -->
                 <div class="bg-gray-700 p-6 rounded-2xl mb-8 border-2 border-dashed border-yellow-400">
                     <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-magic mr-3 text-yellow-400"></i>Générateur de Fiche Produit par IA</h3>
                     <div class="space-y-4">
@@ -1115,9 +1115,7 @@ document.addEventListener('DOMContentLoaded', function() {
             aiGenerateTextBtn.disabled = true;
 
             try {
-                // IMPORTANT : Pour un déploiement sur un site externe (comme GitHub Pages),
-                // vous devrez obtenir votre propre clé API gratuite depuis Google AI Studio
-                // et la coller ici. Pour l'instant, la clé est fournie automatiquement.
+                // IMPORTANT: Collez votre clé API Google AI ici pour que cela fonctionne sur un site externe.
                 const apiKey = ""; 
 
                 const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
