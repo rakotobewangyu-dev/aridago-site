@@ -207,6 +207,7 @@
                                 <div><label for="prenom" class="block text-sm font-semibold text-gray-600 mb-1">Prénom</label><input type="text" id="prenom" name="prenom" required class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></div>
                                 <div><label for="whatsapp" class="block text-sm font-semibold text-gray-600 mb-1">Numéro WhatsApp</label><input type="tel" id="whatsapp" name="whatsapp" required class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></div>
                                 <div><label for="email" class="block text-sm font-semibold text-gray-600 mb-1">Email (Optionnel)</label><input type="email" id="email" name="email" class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></div>
+                                <div class="md:col-span-2"><label for="adresse" class="block text-sm font-semibold text-gray-600 mb-1">Adresse de livraison</label><input type="text" id="adresse" name="adresse" required class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></div>
                             </div>
                         </fieldset>
                         <fieldset class="mt-8">
@@ -294,7 +295,7 @@
                             </p>
                         </div>
                         <div>
-                            <img <img src="https://i.ibb.co/pvdKjdPG/Capture-d-cran-2025-09-09-183658.png" alt="Équipe Aridago" class="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
+                            <img src="https://i.ibb.co/pvdKjdPG/Capture-d-cran-2025-09-09-183658.png" alt="Équipe Aridago" class="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
                         </div>
                     </div>
 
@@ -711,28 +712,21 @@ document.addEventListener('DOMContentLoaded', function() {
     const addProductBtn = document.getElementById('add-product');
     const confirmationModal = document.getElementById('confirmation-modal');
     const whatsappLink = document.getElementById('whatsapp-link');
-    const priceAlertModal = document.getElementById('price-alert-modal');
-    const closePriceModalBtn = document.getElementById('close-price-modal-btn');
     const linkAlertModal = document.getElementById('link-alert-modal');
     const closeLinkModalBtn = document.getElementById('close-link-modal-btn');
     
     let productCount = 0;
-    let hasShownPriceAlert = localStorage.getItem('hasShownPriceAlert_Aridago');
     let hasShownLinkAlert = localStorage.getItem('hasShownLinkAlert_Aridago');
 
     function createProductBlock() {
         productCount++;
         const productDiv = document.createElement('div');
         productDiv.className = 'p-5 border-2 border-gray-200 rounded-xl bg-gray-50/50 relative';
-        productDiv.innerHTML = `<h4 class="font-bold text-md text-gray-800 mb-4">Produit ${productCount}</h4> ${productCount > 1 ? '<button type="button" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold remove-product">&times;</button>' : ''}<div class="space-y-4"><div><label class="text-sm font-semibold text-gray-600">Nom du produit</label><input type="text" name="product_name_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Lien du produit</label><input type="url" name="product_link_${productCount}" required class="link-input w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Spécification du Produit (ex: Couleur, Taille)</label><textarea name="product_spec_${productCount}" rows="2" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></textarea></div><div class="grid grid-cols-2 gap-4"><div><label class="text-sm font-semibold text-gray-600">Prix Unitaire (CNY)</label><input type="number" step="0.01" name="product_price_${productCount}" required class="price-input w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Quantité</label><input type="number" name="product_quantity_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div></div></div>`;
+        productDiv.innerHTML = `<h4 class="font-bold text-md text-gray-800 mb-4">Produit ${productCount}</h4> ${productCount > 1 ? '<button type="button" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold remove-product">&times;</button>' : ''}<div class="space-y-4"><div><label class="text-sm font-semibold text-gray-600">Nom du produit</label><input type="text" name="product_name_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Lien du produit</label><input type="url" name="product_link_${productCount}" required class="link-input w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Spécification du Produit (ex: Couleur, Taille)</label><textarea name="product_spec_${productCount}" rows="2" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></textarea></div><div><label class="text-sm font-semibold text-gray-600">Quantité</label><input type="number" name="product_quantity_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div></div>`;
         productList.appendChild(productDiv);
         
         productDiv.querySelector('.link-input').addEventListener('focus', () => {
             if (!hasShownLinkAlert) linkAlertModal.style.display = 'flex';
-        });
-        
-        productDiv.querySelector('.price-input').addEventListener('focus', () => {
-            if (!hasShownPriceAlert) priceAlertModal.style.display = 'flex';
         });
         
         const removeBtn = productDiv.querySelector('.remove-product');
@@ -740,12 +734,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     if(addProductBtn) addProductBtn.addEventListener('click', createProductBlock);
-    
-    if(closePriceModalBtn) closePriceModalBtn.addEventListener('click', () => {
-        priceAlertModal.style.display = 'none';
-        localStorage.setItem('hasShownPriceAlert_Aridago', 'true');
-        hasShownPriceAlert = true;
-    });
     
     if(closeLinkModalBtn) closeLinkModalBtn.addEventListener('click', () => {
         linkAlertModal.style.display = 'none';
@@ -758,10 +746,9 @@ document.addEventListener('DOMContentLoaded', function() {
         const formData = new FormData(devisForm);
         const data = Object.fromEntries(formData.entries());
         let devisText = "";
-        let totalCny = 0;
         const devisId = `ADG-${Date.now().toString().slice(-6)}`;
         
-        devisText += `*Nouvelle Demande de Devis - ARIDAGO*\n\n*Référence:* ${devisId}\n*Client:* ${data.nom} ${data.prenom}\n*WhatsApp:* ${data.whatsapp}\n`;
+        devisText += `*Nouvelle Demande de Devis - ARIDAGO*\n\n*Référence:* ${devisId}\n*Client:* ${data.nom} ${data.prenom}\n*WhatsApp:* ${data.whatsapp}\n*Adresse de livraison:* ${data.adresse}\n`;
         
         if (data.email) devisText += `*Email:* ${data.email}\n`;
         devisText += `-----------------------------------\n\n`;
@@ -776,22 +763,16 @@ document.addEventListener('DOMContentLoaded', function() {
                     name: formData.get(`product_name_${id}`),
                     link: formData.get(`product_link_${id}`),
                     spec: formData.get(`product_spec_${id}`),
-                    price: parseFloat(formData.get(`product_price_${id}`)),
                     quantity: parseInt(formData.get(`product_quantity_${id}`), 10)
                 });
             }
         });
         
         products.forEach((p, index) => {
-            const subTotal = p.price * p.quantity;
-            totalCny += subTotal;
-            devisText += `*Produit ${index + 1}:* ${p.name}\n*Spécification:* ${p.spec}\n*Prix Unitaire:* ${p.price.toFixed(2)} CNY\n*Quantité:* ${p.quantity}\n*Lien:* ${p.link}\n*Sous-total:* ${subTotal.toFixed(2)} CNY\n\n`;
+            devisText += `*Produit ${index + 1}:* ${p.name}\n*Spécification:* ${p.spec}\n*Quantité:* ${p.quantity}\n*Lien:* ${p.link}\n\n`;
         });
         
-        const fraisService = totalCny * 0.10;
-        const totalFinalCny = totalCny + fraisService;
-        const totalAriary = totalFinalCny * 700;
-        devisText += `-----------------------------------\n*Total Produits:* ${totalCny.toFixed(2)} CNY\n*Frais de service (10%):* ${fraisService.toFixed(2)} CNY\n*Total en Yuan:* ${totalFinalCny.toFixed(2)} CNY\n\n*Total en Ariary:* ${totalAriary.toLocaleString('fr-FR')} Ar\n\n*NOTE IMPORTANTE:*\nLes frais de transport Chine à Madagascar ne sont pas inclus dans ce devis.`;
+        devisText += `-----------------------------------\n\n*NOTE IMPORTANTE:*\nLes frais de service et de transport (Chine à Madagascar) vous seront communiqués dans le devis final.`;
         
         whatsappLink.href = `https://wa.me/8615600021123?text=${encodeURIComponent(devisText)}`;
         confirmationModal.style.display = 'flex';
@@ -1056,5 +1037,3 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
-
-
