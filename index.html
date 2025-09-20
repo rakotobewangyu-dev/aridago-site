@@ -89,7 +89,7 @@
                      <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="h-14 md:h-16 w-auto">
                 </a>
                 <nav class="flex items-center space-x-2 text-xs sm:space-x-4 md:space-x-6 sm:text-sm md:text-base">
-                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline nav-link-active" data-page="accueil">Accueil</a>
+                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline" data-page="accueil">Accueil</a>
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline" data-page="boutique">Boutique</a>
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline" data-page="devis">Devis</a>
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline" data-page="apropos">À Propos</a>
@@ -471,32 +471,81 @@ document.addEventListener('DOMContentLoaded', function() {
     const productsCollection = db.collection('products');
 
     let boutiqueProducts = [];
-    
-    // ================== GESTION DE LA NAVIGATION (Single Page App) ==================
     const pages = document.querySelectorAll('.page-content');
     const navLinks = document.querySelectorAll('.nav-link');
-
-    function showPage(pageId) {
+    
+    // ================== GESTION DE LA NAVIGATION (Single Page App) ==================
+    
+    /**
+     * Affiche une page spécifique et met à jour l'URL du navigateur.
+     * @param {string} pageId - L'ID de la section de la page à afficher (ex: 'page-boutique').
+     * @param {boolean} [fromPopState=false] - Indique si l'appel provient d'un événement de l'historique (back/forward).
+     */
+    function showPage(pageId, fromPopState = false) {
+        let pageFound = false;
         pages.forEach(page => {
             const isTargetPage = page.id === pageId;
             page.classList.toggle('hidden', !isTargetPage);
+            if (isTargetPage) pageFound = true;
         });
-        
+
+        if (!pageFound) {
+            pageId = 'page-accueil';
+            document.getElementById('page-accueil').classList.remove('hidden');
+        }
+
         document.querySelectorAll('header .nav-link, footer .nav-link').forEach(link => {
-             const isTargetLink = `page-${link.dataset.page}` === pageId;
+            const isTargetLink = `page-${link.dataset.page}` === pageId;
             link.classList.toggle('nav-link-active', isTargetLink);
-             if (link.closest('header')) {
+            if (link.closest('header')) {
                 link.classList.toggle('text-red-600', isTargetLink);
-             }
+            }
         });
+
+        if (!fromPopState) {
+            const pageName = pageId.replace('page-', '');
+            history.pushState({ pageId: pageId }, '', `#${pageName}`);
+        }
 
         window.scrollTo(0, 0);
+        if (pageId === 'page-boutique') renderBoutique();
+    }
+    
+    /**
+     * Affiche la page de détail d'un produit spécifique.
+     * @param {string} productId - L'ID du produit à afficher.
+     */
+    function viewProduct(productId) {
+        renderProductDetail(productId);
+        pages.forEach(p => p.classList.add('hidden'));
+        document.getElementById('page-detail').classList.remove('hidden');
+        history.pushState({ pageId: 'page-detail', productId: productId }, '', `#detail/${productId}`);
+        window.scrollTo(0, 0);
+    }
+    
+    /**
+     * Gère les changements d'URL (chargement initial, back/forward).
+     */
+    function router() {
+        const hash = window.location.hash.substring(1);
+        const [pageName, id] = hash.split('/');
 
-        if (pageId === 'page-boutique') {
-            renderBoutique();
+        if (pageName === 'detail' && id) {
+            if (boutiqueProducts.length > 0) {
+                renderProductDetail(id);
+                showPage('page-detail', true);
+            } else {
+                // Si les produits ne sont pas encore chargés, on redirige vers la boutique.
+                // Le chargement se fera et l'utilisateur pourra retrouver son produit.
+                showPage('page-boutique', true);
+            }
+        } else {
+            const pageId = `page-${pageName || 'accueil'}`;
+            showPage(pageId, true);
         }
     }
 
+    // Ajout des écouteurs d'événements pour la navigation
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -505,7 +554,12 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    document.getElementById('admin-link-header').addEventListener('click', () => showPage('page-admin'));
+    document.getElementById('admin-link-header').addEventListener('click', (e) => {
+        e.preventDefault();
+        showPage('page-admin');
+    });
+
+    window.addEventListener('popstate', router);
     
     // Initialisation
     document.getElementById('year').textContent = new Date().getFullYear();
@@ -539,6 +593,9 @@ document.addEventListener('DOMContentLoaded', function() {
             if(document.getElementById('loading-products')) {
                 document.getElementById('loading-products').textContent = 'Erreur de chargement des produits.';
             }
+        } finally {
+            // Une fois les produits chargés, on peut gérer la route initiale.
+            router();
         }
     }
 
@@ -566,8 +623,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.querySelectorAll('.view-product-btn').forEach(btn => {
             btn.addEventListener('click', e => {
                 const productId = e.currentTarget.dataset.id;
-                renderProductDetail(productId);
-                showPage('page-detail');
+                viewProduct(productId);
             });
         });
     }
@@ -631,7 +687,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function renderProductDetail(productId) {
         const product = boutiqueProducts.find(p => p.id === productId); 
-        if (!product) return;
+        if (!product) {
+            showPage('page-boutique'); // Redirect if product not found
+            return;
+        };
         
         let thumbnailsHTML = (product.images || []).map((img, index) => `<img src="${img}" class="w-16 h-16 md:w-20 md:h-20 object-contain bg-slate-100 rounded-md cursor-pointer border-2 ${index === 0 ? 'border-red-500' : 'border-transparent'} thumbnail" data-index="${index}">`).join('');
         
@@ -1144,12 +1203,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     // ================== APPEL INITIAL ==================
-    showPage('page-accueil');
     loadAndRenderProducts();
     initSearchFunctionality();
 });
 </script>
 </body>
 </html>
-
-
