@@ -159,7 +159,7 @@
             <div class="container mx-auto px-4 py-12 md:py-16">
                  <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold mb-2">Notre Boutique</h2>
-                    <p class="text-slate-600 text-lg">Commandez directement nos articles sélectionnés pour vous, déjà à Madagascar.</p>
+                    <p class="text-slate-600 text-lg">Commandez directement nos articles sélectionnés pour vous.</p>
                      <div class="mt-6 max-w-lg mx-auto relative flex items-center">
                         <input type="text" id="search-bar" placeholder="Rechercher par nom de produit..." class="w-full pl-6 pr-12 py-3 border-2 border-slate-200 rounded-full focus:outline-none focus:ring-2 focus:ring-red-400 transition">
                         <button id="search-btn" class="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-white rounded-r-full hover:opacity-90" style="background-color: var(--secondary-color);">
@@ -526,7 +526,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function viewProduct(productId) {
         renderProductDetail(productId);
-        showPage('page-detail', true); // Use showPage to hide others
+        showPage('page-detail', true); 
         history.pushState({ pageId: 'page-detail', productId: productId }, '', `#detail/${productId}`);
         window.scrollTo(0, 0);
     }
@@ -577,14 +577,7 @@ document.addEventListener('DOMContentLoaded', function() {
         try {
             const snapshot = await productsCollection.orderBy("name").get();
             
-            if (snapshot.empty) {
-                boutiqueProducts = [
-                    { id: 'mock1', name: 'Sac à dos de voyage Pro', description: 'Imperméable, grande capacité avec de multiples compartiments. Idéal pour les voyages et le quotidien.', price: 125000, images: ['https://i.imgur.com/v14n2v4.jpeg', 'https://i.imgur.com/1z4kY9M.jpeg'] },
-                    { id: 'mock2', name: 'Thermos intelligent LED', description: 'Affiche la température, conserve la chaleur pendant 12h. Acier inoxydable de haute qualité.', price: 65000, images: ['https://i.imgur.com/5J7Rz72.jpeg'] },
-                ];
-            } else {
-                boutiqueProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            }
+            boutiqueProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             
             renderBoutique();
             renderPopularProducts(boutiqueProducts.slice(0, 4));
@@ -609,10 +602,23 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function createProductCard(product) {
         const imageUrl = product.images && product.images.length > 0 ? product.images[0] : 'https://placehold.co/600x400/cccccc/ffffff?text=Image';
+        const stockBadge = product.inStockMadagascar !== false
+            ? `<div class="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center"><i class="fas fa-check-circle mr-1"></i> En stock</div>`
+            : `<div class="absolute top-2 left-2 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center"><i class="fas fa-shipping-fast mr-1"></i> Sur commande</div>`;
+
         return `
             <div class="bg-white rounded-xl shadow-lg overflow-hidden group transform hover:-translate-y-1 transition-transform duration-300 view-product-btn cursor-pointer" data-id="${product.id}">
-                <div class="relative"><img src="${imageUrl}" alt="${product.name}" class="w-full h-40 sm:h-48 md:h-56 object-contain p-2 sm:p-4"><div class="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center"><i class="fas fa-check-circle mr-1"></i> En stock</div><div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span class="text-white btn-primary py-2 px-5 rounded-full transform hover:scale-105 transition-transform text-sm">Voir</span></div></div>
-                <div class="p-2 sm:p-4 text-center"><h3 class="font-semibold text-sm sm:text-base mb-1 sm:mb-2 truncate">${product.name}</h3><p class="text-gradient font-extrabold text-base sm:text-xl">${product.price.toLocaleString('fr-FR')} Ar</p></div>
+                <div class="relative">
+                    <img src="${imageUrl}" alt="${product.name}" class="w-full h-40 sm:h-48 md:h-56 object-contain p-2 sm:p-4">
+                    ${stockBadge}
+                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        <span class="text-white btn-primary py-2 px-5 rounded-full transform hover:scale-105 transition-transform text-sm">Voir</span>
+                    </div>
+                </div>
+                <div class="p-2 sm:p-4 text-center">
+                    <h3 class="font-semibold text-sm sm:text-base mb-1 sm:mb-2 truncate">${product.name}</h3>
+                    <p class="text-gradient font-extrabold text-base sm:text-xl">${product.price.toLocaleString('fr-FR')} Ar</p>
+                </div>
             </div>`;
     }
 
@@ -654,9 +660,13 @@ document.addEventListener('DOMContentLoaded', function() {
         const product = boutiqueProducts.find(p => p.id === productId); 
         if (!product) { showPage('page-boutique'); return; }
         
+        const availabilityText = product.inStockMadagascar !== false
+            ? `<div class="mt-4 flex items-center text-green-600 font-semibold"><i class="fas fa-check-circle mr-2"></i>Produit disponible à Madagascar</div>`
+            : `<div class="mt-4 flex items-center text-yellow-600 font-semibold"><i class="fas fa-shipping-fast mr-2"></i>Produit disponible sur commande</div>`;
+        
         const thumbnailsHTML = (product.images || []).map((img, i) => `<img src="${img}" class="w-16 h-16 md:w-20 md:h-20 object-contain bg-slate-100 rounded-md cursor-pointer border-2 ${i === 0 ? 'border-red-500' : 'border-transparent'} thumbnail" data-index="${i}">`).join('');
         const detailSection = document.getElementById('page-detail');
-        detailSection.innerHTML = `<div class="container mx-auto px-4"><button class="nav-link font-semibold mb-8 inline-flex items-center" data-page="boutique"><i class="fas fa-arrow-left mr-2"></i>Retour à la boutique</button><div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"><div><div class="bg-slate-100 rounded-xl shadow-lg mb-4"><img id="main-product-image" src="${product.images[0]}" alt="${product.name}" class="w-full h-80 md:h-96 object-contain rounded-xl p-4"></div><div id="thumbnail-container" class="flex flex-wrap gap-4 justify-center">${thumbnailsHTML}</div></div><div><h1 class="text-3xl md:text-4xl font-bold text-slate-800">${product.name}</h1><p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">${product.price.toLocaleString('fr-FR')} Ar</p><div class="mt-4 flex items-center text-green-600 font-semibold"><i class="fas fa-check-circle mr-2"></i>Disponible à Madagascar</div><p class="mt-4 text-slate-600 whitespace-pre-wrap">${product.description}</p><div class="mt-8"><a href="#" data-id="${product.id}" class="order-now-btn w-full inline-flex items-center justify-center text-center btn-secondary transition text-white font-bold py-4 px-4 rounded-xl text-lg"><i class="fab fa-whatsapp mr-3 text-2xl"></i>Commander maintenant</a></div></div></div></div>`;
+        detailSection.innerHTML = `<div class="container mx-auto px-4"><button class="nav-link font-semibold mb-8 inline-flex items-center" data-page="boutique"><i class="fas fa-arrow-left mr-2"></i>Retour à la boutique</button><div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"><div><div class="bg-slate-100 rounded-xl shadow-lg mb-4"><img id="main-product-image" src="${product.images[0]}" alt="${product.name}" class="w-full h-80 md:h-96 object-contain rounded-xl p-4"></div><div id="thumbnail-container" class="flex flex-wrap gap-4 justify-center">${thumbnailsHTML}</div></div><div><h1 class="text-3xl md:text-4xl font-bold text-slate-800">${product.name}</h1><p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">${product.price.toLocaleString('fr-FR')} Ar</p>${availabilityText}<p class="mt-4 text-slate-600 whitespace-pre-wrap">${product.description}</p><div class="mt-8"><a href="#" data-id="${product.id}" class="order-now-btn w-full inline-flex items-center justify-center text-center btn-secondary transition text-white font-bold py-4 px-4 rounded-xl text-lg"><i class="fab fa-whatsapp mr-3 text-2xl"></i>Commander maintenant</a></div></div></div></div>`;
         
         detailSection.querySelector('.nav-link').addEventListener('click', (e) => { e.preventDefault(); showPage('page-boutique'); });
         detailSection.querySelector('.order-now-btn').addEventListener('click', e => { e.preventDefault(); window.open(`https://wa.me/8615600021123?text=${encodeURIComponent(`*COMMANDE DIRECTE ARIDAGO*\n\n- Produit: ${product.name}\n- Prix: ${product.price.toLocaleString('fr-FR')} Ar`)}`, '_blank'); });
@@ -720,7 +730,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ================== LOGIQUE ADMIN ==================
     const adminSection = document.getElementById('page-admin');
-    adminSection.innerHTML = `<div class="bg-slate-800 text-white p-6 md:p-10 rounded-3xl shadow-lg"><div id="admin-login"><h2 class="font-poppins text-3xl font-bold text-center mb-4">Accès Administrateur</h2><div class="max-w-sm mx-auto"><div class="mb-4"><label for="admin-email" class="block text-sm font-semibold mb-1">Email</label><input type="email" id="admin-email" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div><div class="mb-4"><label for="admin-password" class="block text-sm font-semibold mb-1">Mot de passe</label><input type="password" id="admin-password" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div><button id="admin-login-btn" class="mt-4 w-full btn-primary font-bold py-3 px-4 rounded-xl">Se connecter</button><p id="admin-error" class="text-red-400 text-center mt-2 hidden"></p></div></div><div id="admin-dashboard" class="hidden"><h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2><div class="bg-gray-700 p-6 rounded-2xl mb-8"><h3 id="admin-form-title" class="text-xl font-bold mb-4">Fiche Produit</h3><form id="admin-product-form" class="space-y-4"><input type="hidden" id="product-id"><div><label>Nom</label><input type="text" id="product-name" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div><div><label>Description</label><textarea id="product-description" required class="w-full bg-gray-600 rounded-lg p-2 text-white" rows="6"></textarea></div><div><label>Prix (Ar)</label><input type="number" id="product-price" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div><div><label>Image(s)</label><div class="flex flex-wrap gap-2 mt-2 items-center"><div id="image-preview-container" class="flex flex-wrap gap-2"></div><label for="product-image-upload" class="cursor-pointer w-16 h-16 bg-gray-600 rounded flex items-center justify-center text-gray-400 hover:bg-gray-500"><i class="fas fa-plus"></i></label></div><input type="file" id="product-image-upload" multiple accept="image/*" class="hidden"><input type="hidden" id="product-images-json"><p id="upload-status" class="text-sm text-yellow-400 mt-1"></p></div><div class="flex gap-4"><button type="submit" id="admin-submit-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg">Ajouter</button><button type="button" id="admin-cancel-btn" class="w-full bg-gray-500 font-bold py-2 px-4 rounded-lg hidden">Annuler</button></div></form></div><div><h3 class="text-xl font-bold mb-4">Produits existants</h3><div id="admin-product-list" class="space-y-4"></div></div><div class="mt-8 flex flex-wrap gap-4 items-center"><button id="admin-logout-btn" class="bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded-lg">Se déconnecter</button><a href="https://rakotobewangyu-dev.github.io/Facturation/" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center"><i class="fas fa-file-invoice-dollar mr-2"></i>Facturation</a></div></div></div>`;
+    adminSection.innerHTML = `<div class="bg-slate-800 text-white p-6 md:p-10 rounded-3xl shadow-lg"><div id="admin-login"><h2 class="font-poppins text-3xl font-bold text-center mb-4">Accès Administrateur</h2><div class="max-w-sm mx-auto"><div class="mb-4"><label for="admin-email" class="block text-sm font-semibold mb-1">Email</label><input type="email" id="admin-email" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div><div class="mb-4"><label for="admin-password" class="block text-sm font-semibold mb-1">Mot de passe</label><input type="password" id="admin-password" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div><button id="admin-login-btn" class="mt-4 w-full btn-primary font-bold py-3 px-4 rounded-xl">Se connecter</button><p id="admin-error" class="text-red-400 text-center mt-2 hidden"></p></div></div><div id="admin-dashboard" class="hidden"><h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2><div class="bg-gray-700 p-6 rounded-2xl mb-8"><h3 id="admin-form-title" class="text-xl font-bold mb-4">Fiche Produit</h3><form id="admin-product-form" class="space-y-4"><input type="hidden" id="product-id"><div><label>Nom</label><input type="text" id="product-name" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div><div><label>Description</label><textarea id="product-description" required class="w-full bg-gray-600 rounded-lg p-2 text-white" rows="6"></textarea></div><div><label>Prix (Ar)</label><input type="number" id="product-price" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div><div class="flex items-center"><input type="checkbox" id="product-in-stock" class="w-4 h-4 text-red-600 bg-gray-700 border-gray-600 rounded focus:ring-red-500"><label for="product-in-stock" class="ml-2 text-sm font-medium text-white">Disponible à Madagascar</label></div><div><label>Image(s)</label><div class="flex flex-wrap gap-2 mt-2 items-center"><div id="image-preview-container" class="flex flex-wrap gap-2"></div><label for="product-image-upload" class="cursor-pointer w-16 h-16 bg-gray-600 rounded flex items-center justify-center text-gray-400 hover:bg-gray-500"><i class="fas fa-plus"></i></label></div><input type="file" id="product-image-upload" multiple accept="image/*" class="hidden"><input type="hidden" id="product-images-json"><p id="upload-status" class="text-sm text-yellow-400 mt-1"></p></div><div class="flex gap-4"><button type="submit" id="admin-submit-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg">Ajouter</button><button type="button" id="admin-cancel-btn" class="w-full bg-gray-500 font-bold py-2 px-4 rounded-lg hidden">Annuler</button></div></form></div><div><h3 class="text-xl font-bold mb-4">Produits existants</h3><div id="admin-product-list" class="space-y-4"></div></div><div class="mt-8 flex flex-wrap gap-4 items-center"><button id="admin-logout-btn" class="bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded-lg">Se déconnecter</button><a href="https://rakotobewangyu-dev.github.io/Facturation/" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center"><i class="fas fa-file-invoice-dollar mr-2"></i>Facturation</a></div></div></div>`;
 
     const adminLogin = document.getElementById('admin-login');
     const adminDashboard = document.getElementById('admin-dashboard');
@@ -782,6 +792,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function resetAdminForm() {
         adminProductForm.reset();
         document.getElementById('product-id').value = '';
+        document.getElementById('product-in-stock').checked = true;
         document.getElementById('product-images-json').value = '[]';
         document.getElementById('upload-status').textContent = '';
         renderImagePreviews([]);
@@ -796,6 +807,7 @@ document.addEventListener('DOMContentLoaded', function() {
             name: document.getElementById('product-name').value,
             description: document.getElementById('product-description').value,
             price: parseFloat(document.getElementById('product-price').value),
+            inStockMadagascar: document.getElementById('product-in-stock').checked,
             images: JSON.parse(document.getElementById('product-images-json').value || '[]')
         };
         try {
@@ -819,7 +831,24 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function renderAdminList() {
         if (!adminProductList) return;
-        adminProductList.innerHTML = boutiqueProducts.map(p => `<div class="bg-gray-600 p-3 rounded-lg flex items-center justify-between"><div><p class="font-bold">${p.name}</p></div><div class="flex space-x-2"><button class="edit-product-btn bg-blue-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Modifier</button><button class="delete-product-btn bg-red-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Supprimer</button></div></div>`).join('');
+        adminProductList.innerHTML = boutiqueProducts.map(p => {
+            const statusIndicator = p.inStockMadagascar !== false
+                ? `<span class="h-3 w-3 rounded-full bg-green-500 flex-shrink-0" title="Disponible à Madagascar"></span>`
+                : `<span class="h-3 w-3 rounded-full bg-yellow-500 flex-shrink-0" title="Sur commande"></span>`;
+            return `
+                <div class="bg-gray-600 p-3 rounded-lg flex items-center justify-between">
+                    <div class="flex items-center gap-3 overflow-hidden">
+                        ${statusIndicator}
+                        <div class="truncate">
+                            <p class="font-bold truncate">${p.name}</p>
+                        </div>
+                    </div>
+                    <div class="flex space-x-2 flex-shrink-0">
+                        <button class="edit-product-btn bg-blue-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Modifier</button>
+                        <button class="delete-product-btn bg-red-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Supprimer</button>
+                    </div>
+                </div>`;
+        }).join('');
         
         adminProductList.querySelectorAll('.edit-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
             const p = boutiqueProducts.find(prod => prod.id === e.currentTarget.dataset.id);
@@ -827,6 +856,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('product-name').value = p.name;
             document.getElementById('product-description').value = p.description;
             document.getElementById('product-price').value = p.price;
+            document.getElementById('product-in-stock').checked = p.inStockMadagascar !== false;
             document.getElementById('product-images-json').value = JSON.stringify(p.images || []);
             renderImagePreviews(p.images || []);
             document.getElementById('admin-submit-btn').textContent = 'Mettre à jour';
