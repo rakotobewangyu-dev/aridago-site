@@ -88,7 +88,7 @@
                 <a href="#" class="nav-link flex-shrink-0" data-page="accueil">
                      <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="h-14 md:h-16 w-auto">
                 </a>
-                <nav class="flex items-center space-x-2 text-xs sm:space-x-4 md:space-x-6 sm:text-sm md:text-base">
+                <nav class="hidden sm:flex items-center space-x-2 text-xs sm:space-x-4 md:space-x-6 sm:text-sm md:text-base">
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline" data-page="accueil">Accueil</a>
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline" data-page="boutique">Boutique</a>
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline" data-page="devis">Devis</a>
@@ -98,7 +98,17 @@
             
             <div class="flex items-center">
                 <button id="admin-link-header" class="text-slate-700 hover:text-red-600 text-lg p-2"><i class="fas fa-user-shield"></i></button>
+                <button id="mobile-menu-button" class="sm:hidden text-slate-700 hover:text-red-600 text-lg p-2 ml-2"><i class="fas fa-bars"></i></button>
             </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden sm:hidden bg-white/95 backdrop-blur-md">
+            <nav class="flex flex-col items-center space-y-4 py-4">
+                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 nav-link" data-page="accueil">Accueil</a>
+                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 nav-link" data-page="boutique">Boutique</a>
+                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 nav-link" data-page="devis">Devis</a>
+                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 nav-link" data-page="apropos">À Propos</a>
+            </nav>
         </div>
     </header>
 
@@ -473,14 +483,11 @@ document.addEventListener('DOMContentLoaded', function() {
     let boutiqueProducts = [];
     const pages = document.querySelectorAll('.page-content');
     const navLinks = document.querySelectorAll('.nav-link');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
     
     // ================== GESTION DE LA NAVIGATION (Single Page App) ==================
     
-    /**
-     * Affiche une page spécifique et met à jour l'URL du navigateur.
-     * @param {string} pageId - L'ID de la section de la page à afficher (ex: 'page-boutique').
-     * @param {boolean} [fromPopState=false] - Indique si l'appel provient d'un événement de l'historique (back/forward).
-     */
     function showPage(pageId, fromPopState = false) {
         let pageFound = false;
         pages.forEach(page => {
@@ -494,50 +501,46 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('page-accueil').classList.remove('hidden');
         }
 
-        document.querySelectorAll('header .nav-link, footer .nav-link').forEach(link => {
+        document.querySelectorAll('header .nav-link, footer .nav-link, #mobile-menu .nav-link').forEach(link => {
             const isTargetLink = `page-${link.dataset.page}` === pageId;
-            link.classList.toggle('nav-link-active', isTargetLink);
-            if (link.closest('header')) {
-                link.classList.toggle('text-red-600', isTargetLink);
+            if (link.closest('header nav') || link.closest('#mobile-menu')) {
+                 link.classList.toggle('nav-link-active', isTargetLink);
+                 link.classList.toggle('text-red-600', isTargetLink);
+            } else if(link.closest('footer')) {
+                 link.classList.toggle('text-white', isTargetLink);
             }
         });
 
         if (!fromPopState) {
             const pageName = pageId.replace('page-', '');
-            history.pushState({ pageId: pageId }, '', `#${pageName}`);
+            const currentHash = window.location.hash.substring(1).split('/')[0];
+            if(pageName !== currentHash) {
+                history.pushState({ pageId: pageId }, '', `#${pageName}`);
+            }
         }
-
+        
+        mobileMenu.classList.add('hidden');
         window.scrollTo(0, 0);
         if (pageId === 'page-boutique') renderBoutique();
     }
     
-    /**
-     * Affiche la page de détail d'un produit spécifique.
-     * @param {string} productId - L'ID du produit à afficher.
-     */
     function viewProduct(productId) {
         renderProductDetail(productId);
-        pages.forEach(p => p.classList.add('hidden'));
-        document.getElementById('page-detail').classList.remove('hidden');
+        showPage('page-detail', true); // Use showPage to hide others
         history.pushState({ pageId: 'page-detail', productId: productId }, '', `#detail/${productId}`);
         window.scrollTo(0, 0);
     }
     
-    /**
-     * Gère les changements d'URL (chargement initial, back/forward).
-     */
     function router() {
         const hash = window.location.hash.substring(1);
         const [pageName, id] = hash.split('/');
 
         if (pageName === 'detail' && id) {
             if (boutiqueProducts.length > 0) {
-                renderProductDetail(id);
-                showPage('page-detail', true);
+                 renderProductDetail(id);
+                 showPage('page-detail', true);
             } else {
-                // Si les produits ne sont pas encore chargés, on redirige vers la boutique.
-                // Le chargement se fera et l'utilisateur pourra retrouver son produit.
-                showPage('page-boutique', true);
+                 window.initialRoute = { pageId: 'page-detail', productId: id };
             }
         } else {
             const pageId = `page-${pageName || 'accueil'}`;
@@ -545,7 +548,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Ajout des écouteurs d'événements pour la navigation
     navLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
@@ -559,24 +561,26 @@ document.addEventListener('DOMContentLoaded', function() {
         showPage('page-admin');
     });
 
-    window.addEventListener('popstate', router);
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+    });
+
+    window.addEventListener('popstate', (event) => {
+        router();
+    });
     
-    // Initialisation
     document.getElementById('year').textContent = new Date().getFullYear();
     document.querySelector('.current-year').textContent = new Date().getFullYear();
 
-    // ================== LOGIQUE BOUTIQUE (Dynamique avec Firebase) ==================
+    // ================== LOGIQUE BOUTIQUE ==================
     async function loadAndRenderProducts() {
         try {
             const snapshot = await productsCollection.orderBy("name").get();
             
             if (snapshot.empty) {
-                console.log("Firebase est vide. Utilisation des produits d'exemple.");
                 boutiqueProducts = [
                     { id: 'mock1', name: 'Sac à dos de voyage Pro', description: 'Imperméable, grande capacité avec de multiples compartiments. Idéal pour les voyages et le quotidien.', price: 125000, images: ['https://i.imgur.com/v14n2v4.jpeg', 'https://i.imgur.com/1z4kY9M.jpeg'] },
                     { id: 'mock2', name: 'Thermos intelligent LED', description: 'Affiche la température, conserve la chaleur pendant 12h. Acier inoxydable de haute qualité.', price: 65000, images: ['https://i.imgur.com/5J7Rz72.jpeg'] },
-                    { id: 'mock3', name: 'Montre connectée Sport', description: 'Suivi cardiaque, GPS intégré, étanche IP68 et multiples modes sportifs.', price: 210000, images: ['https://i.imgur.com/eBq62vJ.jpeg', 'https://i.imgur.com/b5k9g7g.jpeg'] },
-                    { id: 'mock4', name: 'Mini-projecteur portable HD', description: 'Transformez n\'importe quel mur en cinéma. Compact, léger et compatible avec tous vos appareils.', price: 350000, images: ['https://i.imgur.com/e692w9d.jpeg'] }
                 ];
             } else {
                 boutiqueProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
@@ -585,17 +589,21 @@ document.addEventListener('DOMContentLoaded', function() {
             renderBoutique();
             renderPopularProducts(boutiqueProducts.slice(0, 4));
 
-            if (auth.currentUser) {
-                renderAdminList();
-            }
+            if (auth.currentUser) renderAdminList();
+
         } catch (error) {
             console.error("Erreur de chargement: ", error);
             if(document.getElementById('loading-products')) {
                 document.getElementById('loading-products').textContent = 'Erreur de chargement des produits.';
             }
         } finally {
-            // Une fois les produits chargés, on peut gérer la route initiale.
-            router();
+            if (window.initialRoute) {
+                renderProductDetail(window.initialRoute.productId);
+                showPage(window.initialRoute.pageId, true);
+                window.initialRoute = null;
+            } else {
+                 router();
+            }
         }
     }
 
@@ -603,19 +611,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const imageUrl = product.images && product.images.length > 0 ? product.images[0] : 'https://placehold.co/600x400/cccccc/ffffff?text=Image';
         return `
             <div class="bg-white rounded-xl shadow-lg overflow-hidden group transform hover:-translate-y-1 transition-transform duration-300 view-product-btn cursor-pointer" data-id="${product.id}">
-                <div class="relative">
-                    <img src="${imageUrl}" alt="${product.name}" class="w-full h-40 sm:h-48 md:h-56 object-contain p-2 sm:p-4">
-                    <div class="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center">
-                        <i class="fas fa-check-circle mr-1"></i> En stock
-                    </div>
-                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <span class="text-white btn-primary py-2 px-5 rounded-full transform hover:scale-105 transition-transform text-sm">Voir</span>
-                    </div>
-                </div>
-                <div class="p-2 sm:p-4 text-center">
-                    <h3 class="font-semibold text-sm sm:text-base mb-1 sm:mb-2 truncate">${product.name}</h3>
-                    <p class="text-gradient font-extrabold text-base sm:text-xl">${product.price.toLocaleString('fr-FR')} Ar</p>
-                </div>
+                <div class="relative"><img src="${imageUrl}" alt="${product.name}" class="w-full h-40 sm:h-48 md:h-56 object-contain p-2 sm:p-4"><div class="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center"><i class="fas fa-check-circle mr-1"></i> En stock</div><div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300"><span class="text-white btn-primary py-2 px-5 rounded-full transform hover:scale-105 transition-transform text-sm">Voir</span></div></div>
+                <div class="p-2 sm:p-4 text-center"><h3 class="font-semibold text-sm sm:text-base mb-1 sm:mb-2 truncate">${product.name}</h3><p class="text-gradient font-extrabold text-base sm:text-xl">${product.price.toLocaleString('fr-FR')} Ar</p></div>
             </div>`;
     }
 
@@ -629,579 +626,218 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function normalizeString(str) {
-        if (!str) return '';
-        return str
-            .toLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "");
+        return str ? str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : '';
     }
 
     function renderBoutique() {
         const productGrid = document.getElementById('product-grid');
         const loadingText = document.getElementById('loading-products');
         const searchBar = document.getElementById('search-bar');
-        
-        const normalizedSearchTerm = normalizeString(searchBar ? searchBar.value : '');
-        const searchKeywords = normalizedSearchTerm.split(' ').filter(k => k);
-
-        const filteredProducts = boutiqueProducts.filter(p => {
-            const productName = p.name || '';
-            const normalizedProductName = normalizeString(productName);
-            return searchKeywords.every(keyword => normalizedProductName.includes(keyword));
-        });
+        const searchTerm = normalizeString(searchBar ? searchBar.value : '');
+        const filteredProducts = boutiqueProducts.filter(p => normalizeString(p.name).includes(searchTerm));
         
         if (loadingText) loadingText.style.display = 'none';
-
-        if (boutiqueProducts.length === 0) {
-            productGrid.innerHTML = `<p class="text-center text-gray-500 col-span-full">Aucun produit n'a été publié pour le moment.</p>`;
-        } else if (filteredProducts.length === 0) {
-            productGrid.innerHTML = `<p class="text-center text-gray-500 col-span-full">Aucun produit ne correspond à votre recherche pour "${searchBar.value}".</p>`;
-        } else {
-            productGrid.innerHTML = filteredProducts.map(createProductCard).join('');
-        }
-        
+        productGrid.innerHTML = filteredProducts.length > 0
+            ? filteredProducts.map(createProductCard).join('')
+            : `<p class="text-center text-gray-500 col-span-full">Aucun produit ne correspond à votre recherche.</p>`;
         addProductCardListeners();
     }
     
     function renderPopularProducts(products) {
         const container = document.getElementById('popular-products-accueil');
-        if (!container) return;
-
-        if (products.length === 0) {
-            container.innerHTML = '';
-            return;
-        }
-
-        container.innerHTML = `
-             <div class="container mx-auto px-4">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-2">Produits Populaires</h2>
-                    <p class="text-slate-600 text-lg">Les articles les plus demandés par nos clients</p>
-                </div>
-                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
-                    ${products.map(createProductCard).join('')}
-                </div>
-            </div>`;
+        if (!container || products.length === 0) return;
+        container.innerHTML = `<div class="container mx-auto px-4"><div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold mb-2">Produits Populaires</h2><p class="text-slate-600 text-lg">Les articles les plus demandés</p></div><div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">${products.map(createProductCard).join('')}</div></div>`;
         addProductCardListeners();
     }
 
     function renderProductDetail(productId) {
         const product = boutiqueProducts.find(p => p.id === productId); 
-        if (!product) {
-            showPage('page-boutique'); // Redirect if product not found
-            return;
-        };
+        if (!product) { showPage('page-boutique'); return; }
         
-        let thumbnailsHTML = (product.images || []).map((img, index) => `<img src="${img}" class="w-16 h-16 md:w-20 md:h-20 object-contain bg-slate-100 rounded-md cursor-pointer border-2 ${index === 0 ? 'border-red-500' : 'border-transparent'} thumbnail" data-index="${index}">`).join('');
+        const thumbnailsHTML = (product.images || []).map((img, i) => `<img src="${img}" class="w-16 h-16 md:w-20 md:h-20 object-contain bg-slate-100 rounded-md cursor-pointer border-2 ${i === 0 ? 'border-red-500' : 'border-transparent'} thumbnail" data-index="${i}">`).join('');
+        const detailSection = document.getElementById('page-detail');
+        detailSection.innerHTML = `<div class="container mx-auto px-4"><button class="nav-link font-semibold mb-8 inline-flex items-center" data-page="boutique"><i class="fas fa-arrow-left mr-2"></i>Retour à la boutique</button><div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"><div><div class="bg-slate-100 rounded-xl shadow-lg mb-4"><img id="main-product-image" src="${product.images[0]}" alt="${product.name}" class="w-full h-80 md:h-96 object-contain rounded-xl p-4"></div><div id="thumbnail-container" class="flex flex-wrap gap-4 justify-center">${thumbnailsHTML}</div></div><div><h1 class="text-3xl md:text-4xl font-bold text-slate-800">${product.name}</h1><p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">${product.price.toLocaleString('fr-FR')} Ar</p><div class="mt-4 flex items-center text-green-600 font-semibold"><i class="fas fa-check-circle mr-2"></i>Disponible à Madagascar</div><p class="mt-4 text-slate-600 whitespace-pre-wrap">${product.description}</p><div class="mt-8"><a href="#" data-id="${product.id}" class="order-now-btn w-full inline-flex items-center justify-center text-center btn-secondary transition text-white font-bold py-4 px-4 rounded-xl text-lg"><i class="fab fa-whatsapp mr-3 text-2xl"></i>Commander maintenant</a></div></div></div></div>`;
         
-        const productDetailSection = document.getElementById('page-detail');
-        productDetailSection.innerHTML = `
-        <div class="container mx-auto px-4">
-            <button class="nav-link font-semibold mb-8 inline-flex items-center" data-page="boutique"><i class="fas fa-arrow-left mr-2"></i>Retour à la boutique</button>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12">
-                <div>
-                    <div class="bg-slate-100 rounded-xl shadow-lg mb-4">
-                        <img id="main-product-image" src="${product.images[0]}" alt="${product.name}" class="w-full h-80 md:h-96 object-contain rounded-xl p-4">
-                    </div>
-                    <div id="thumbnail-container" class="flex flex-wrap gap-4 justify-center">${thumbnailsHTML}</div>
-                </div>
-                <div>
-                    <h1 class="text-3xl md:text-4xl font-bold text-slate-800">${product.name}</h1>
-                    <p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">${product.price.toLocaleString('fr-FR')} Ar</p>
-                    <div class="mt-4 flex items-center text-green-600 font-semibold">
-                        <i class="fas fa-check-circle mr-2"></i>Produit disponible à Madagascar
-                    </div>
-                    <p class="mt-4 text-slate-600 whitespace-pre-wrap">${product.description}</p>
-                    <div class="mt-8">
-                        <a href="#" data-id="${product.id}" class="order-now-btn w-full inline-flex items-center justify-center text-center btn-secondary transition text-white font-bold py-4 px-4 rounded-xl text-lg"><i class="fab fa-whatsapp mr-3 text-2xl"></i>Commander maintenant</a>
-                    </div>
-                </div>
-            </div>
-        </div>`;
+        detailSection.querySelector('.nav-link').addEventListener('click', (e) => { e.preventDefault(); showPage('page-boutique'); });
+        detailSection.querySelector('.order-now-btn').addEventListener('click', e => { e.preventDefault(); window.open(`https://wa.me/8615600021123?text=${encodeURIComponent(`*COMMANDE DIRECTE ARIDAGO*\n\n- Produit: ${product.name}\n- Prix: ${product.price.toLocaleString('fr-FR')} Ar`)}`, '_blank'); });
         
-        productDetailSection.querySelector('.nav-link').addEventListener('click', (e) => {
-            e.preventDefault();
-            showPage('page-boutique');
-        });
-        
-        productDetailSection.querySelector('.order-now-btn').addEventListener('click', e => {
-            e.preventDefault();
-            const id = e.currentTarget.dataset.id;
-            const p = boutiqueProducts.find(p => p.id === id);
-            let orderText = `*COMMANDE DIRECTE ARIDAGO*\n\n- Produit: ${p.name}\n- Prix: ${p.price.toLocaleString('fr-FR')} Ar\n\n(Frais de Livraison non inclus)`;
-            window.open(`https://wa.me/8615600021123?text=${encodeURIComponent(orderText)}`, '_blank');
-        });
-
         const mainImage = document.getElementById('main-product-image');
-        const thumbnails = document.querySelectorAll('.thumbnail');
-        thumbnails.forEach(thumb => {
-            thumb.addEventListener('click', e => {
-                const index = parseInt(e.currentTarget.dataset.index);
-                mainImage.src = product.images[index];
-                thumbnails.forEach(t => t.classList.remove('border-red-500'));
-                e.currentTarget.classList.add('border-red-500');
-            });
-        });
+        const thumbnails = detailSection.querySelectorAll('.thumbnail');
+        thumbnails.forEach(thumb => thumb.addEventListener('click', e => {
+            mainImage.src = product.images[e.currentTarget.dataset.index];
+            thumbnails.forEach(t => t.classList.remove('border-red-500'));
+            e.currentTarget.classList.add('border-red-500');
+        }));
     }
 
     function initSearchFunctionality() {
         const searchBar = document.getElementById('search-bar');
         const searchBtn = document.getElementById('search-btn');
-        
         if (searchBar && searchBtn) {
-            const performSearch = () => {
-                 if (document.getElementById('page-boutique').offsetParent !== null) {
-                    renderBoutique();
-                }
-            };
+            const performSearch = () => { if (!document.getElementById('page-boutique').classList.contains('hidden')) renderBoutique(); };
             searchBar.addEventListener('input', performSearch);
             searchBtn.addEventListener('click', performSearch);
-            searchBar.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    e.preventDefault();
-                    performSearch();
-                }
-            });
+            searchBar.addEventListener('keypress', e => { if (e.key === 'Enter') { e.preventDefault(); performSearch(); } });
         }
     }
     
-    // ================== LOGIQUE DEVIS SUR MESURE ==================
+    // ================== LOGIQUE DEVIS ==================
     const devisForm = document.getElementById('devis-form');
     const productList = document.getElementById('product-list');
     const addProductBtn = document.getElementById('add-product');
-    const confirmationModal = document.getElementById('confirmation-modal');
-    const whatsappLink = document.getElementById('whatsapp-link');
-    const linkAlertModal = document.getElementById('link-alert-modal');
-    const closeLinkModalBtn = document.getElementById('close-link-modal-btn');
-    
     let productCount = 0;
-    let hasShownLinkAlert = localStorage.getItem('hasShownLinkAlert_Aridago');
 
     function createProductBlock() {
         productCount++;
-        const productDiv = document.createElement('div');
-        productDiv.className = 'p-5 border-2 border-gray-200 rounded-xl bg-gray-50/50 relative';
-        productDiv.innerHTML = `<h4 class="font-bold text-md text-gray-800 mb-4">Produit ${productCount}</h4> ${productCount > 1 ? '<button type="button" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold remove-product">&times;</button>' : ''}<div class="space-y-4"><div><label class="text-sm font-semibold text-gray-600">Nom du produit</label><input type="text" name="product_name_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Lien du produit</label><input type="url" name="product_link_${productCount}" required class="link-input w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Spécification du Produit (ex: Couleur, Taille)</label><textarea name="product_spec_${productCount}" rows="2" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></textarea></div><div><label class="text-sm font-semibold text-gray-600">Quantité</label><input type="number" name="product_quantity_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div></div>`;
-        productList.appendChild(productDiv);
-        
-        productDiv.querySelector('.link-input').addEventListener('focus', () => {
-            if (!hasShownLinkAlert) linkAlertModal.style.display = 'flex';
-        });
-        
-        const removeBtn = productDiv.querySelector('.remove-product');
-        if (removeBtn) removeBtn.addEventListener('click', () => productDiv.remove());
+        const div = document.createElement('div');
+        div.className = 'p-5 border-2 border-gray-200 rounded-xl bg-gray-50/50 relative';
+        div.innerHTML = `<h4 class="font-bold text-md text-gray-800 mb-4">Produit ${productCount}</h4> ${productCount > 1 ? '<button type="button" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold remove-product">&times;</button>' : ''}<div class="space-y-4"><div><label class="text-sm font-semibold text-gray-600">Nom</label><input type="text" name="product_name_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Lien</label><input type="url" name="product_link_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Spécification</label><textarea name="product_spec_${productCount}" rows="2" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></textarea></div><div><label class="text-sm font-semibold text-gray-600">Quantité</label><input type="number" name="product_quantity_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div></div>`;
+        productList.appendChild(div);
+        if(div.querySelector('.remove-product')) div.querySelector('.remove-product').addEventListener('click', () => div.remove());
     }
 
     if(addProductBtn) addProductBtn.addEventListener('click', createProductBlock);
     
-    if(closeLinkModalBtn) closeLinkModalBtn.addEventListener('click', () => {
-        linkAlertModal.style.display = 'none';
-        localStorage.setItem('hasShownLinkAlert_Aridago', 'true');
-        hasShownLinkAlert = true;
-    });
-    
     if(devisForm) devisForm.addEventListener('submit', function(e) {
         e.preventDefault();
         const formData = new FormData(devisForm);
-        const data = Object.fromEntries(formData.entries());
-        let devisText = "";
-        const devisId = `ADG-${Date.now().toString().slice(-6)}`;
+        let text = `*Nouvelle Demande de Devis - ARIDAGO*\n\n*Référence:* ADG-${Date.now().toString().slice(-6)}\n*Client:* ${formData.get('nom')} ${formData.get('prenom')}\n*WhatsApp:* ${formData.get('whatsapp')}\n*Adresse:* ${formData.get('adresse')}\n`;
+        if (formData.get('email')) text += `*Email:* ${formData.get('email')}\n`;
+        text += `-----------------------------------\n\n`;
         
-        devisText += `*Nouvelle Demande de Devis - ARIDAGO*\n\n*Référence:* ${devisId}\n*Client:* ${data.nom} ${data.prenom}\n*WhatsApp:* ${data.whatsapp}\n*Adresse de livraison:* ${data.adresse}\n`;
-        
-        if (data.email) devisText += `*Email:* ${data.email}\n`;
-        devisText += `-----------------------------------\n\n`;
-        
-        const products = [];
-        const productElements = productList.querySelectorAll('.p-5');
-        productElements.forEach((p_el) => {
-            const nameInput = p_el.querySelector('input[name^="product_name_"]');
-            if (nameInput && nameInput.value) {
-                const id = nameInput.name.split('_').pop();
-                products.push({
-                    name: formData.get(`product_name_${id}`),
-                    link: formData.get(`product_link_${id}`),
-                    spec: formData.get(`product_spec_${id}`),
-                    quantity: parseInt(formData.get(`product_quantity_${id}`), 10)
-                });
+        for (let i = 1; i <= productCount; i++) {
+            if (formData.get(`product_name_${i}`)) {
+                text += `*Produit ${i}:* ${formData.get(`product_name_${i}`)}\n*Spécification:* ${formData.get(`product_spec_${i}`)}\n*Quantité:* ${formData.get(`product_quantity_${i}`)}\n*Lien:* ${formData.get(`product_link_${i}`)}\n\n`;
             }
-        });
-        
-        products.forEach((p, index) => {
-            devisText += `*Produit ${index + 1}:* ${p.name}\n*Spécification:* ${p.spec}\n*Quantité:* ${p.quantity}\n*Lien:* ${p.link}\n\n`;
-        });
-        
-        devisText += `-----------------------------------\n\n*NOTE IMPORTANTE:*\nLes frais de service et de transport (Chine à Madagascar) vous seront communiqués dans le devis final.`;
-        
-        whatsappLink.href = `https://wa.me/8615600021123?text=${encodeURIComponent(devisText)}`;
-        confirmationModal.style.display = 'flex';
-    });
-    
-    if(confirmationModal) confirmationModal.addEventListener('click', e => {
-        if (e.target === confirmationModal) {
-            confirmationModal.style.display = 'none';
-            devisForm.reset();
-            productList.innerHTML = '';
-            createProductBlock();
         }
+        
+        document.getElementById('whatsapp-link').href = `https://wa.me/8615600021123?text=${encodeURIComponent(text)}`;
+        document.getElementById('confirmation-modal').style.display = 'flex';
     });
     
     if(productList) createProductBlock();
-    
-    document.querySelectorAll('.faq-question').forEach(button => {
-        button.addEventListener('click', () => {
-            const answer = button.nextElementSibling;
-            const icon = button.querySelector('svg, i');
-            answer.classList.toggle('hidden');
-            icon.classList.toggle('rotate-180');
-        });
-    });
+    document.querySelectorAll('.faq-question').forEach(btn => btn.addEventListener('click', () => btn.nextElementSibling.classList.toggle('hidden')));
 
     // ================== LOGIQUE ADMIN ==================
     const adminSection = document.getElementById('page-admin');
-    adminSection.innerHTML = `
-        <div class="bg-slate-800 text-white p-6 md:p-10 rounded-3xl shadow-lg">
-            <div id="admin-login">
-                <h2 class="font-poppins text-3xl font-bold text-center mb-4">Accès Administrateur</h2>
-                <div class="max-w-sm mx-auto">
-                    <div class="mb-4"><label for="admin-email" class="block text-sm font-semibold mb-1">Email</label><input type="email" id="admin-email" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-red-400 transition"></div>
-                    <div class="mb-4"><label for="admin-password" class="block text-sm font-semibold mb-1">Mot de passe</label><input type="password" id="admin-password" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white focus:outline-none focus:ring-2 focus:ring-red-400 transition"></div>
-                    <button id="admin-login-btn" class="mt-4 w-full btn-primary font-bold py-3 px-4 rounded-xl">Se connecter</button>
-                    <p id="admin-error" class="text-red-400 text-center mt-2 hidden"></p>
-                </div>
-            </div>
-            <div id="admin-dashboard" class="hidden">
-                <h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2>
-
-                <!-- AI Text Generator Section -->
-                <div class="bg-gray-700 p-6 rounded-2xl mb-8 border-2 border-dashed border-yellow-400">
-                    <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-magic mr-3 text-yellow-400"></i>Générateur de Fiche Produit par IA</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-semibold mb-1">Nom ou mots-clés du produit</label>
-                            <input type="text" id="ai-text-name" placeholder="Ex: Sac à dos de voyage, Thermos intelligent..." class="w-full bg-gray-600 rounded-lg p-2 text-white">
-                        </div>
-                        <button id="ai-generate-text-btn" class="w-full btn-primary font-bold py-2 px-4 rounded-lg flex items-center justify-center disabled:opacity-50">
-                            <i class="fas fa-rocket mr-2"></i>Générer la description
-                        </button>
-                        <p id="ai-text-status" class="text-sm text-yellow-400 mt-1 text-center h-4"></p>
-                    </div>
-                </div>
-
-                <div class="bg-gray-700 p-6 rounded-2xl mb-8">
-                    <h3 id="admin-form-title" class="text-xl font-bold mb-4">Fiche Produit</h3>
-                    <form id="admin-product-form" class="space-y-4">
-                        <input type="hidden" id="product-id">
-                        <div><label class="block text-sm font-semibold mb-1">Nom</label><input type="text" id="product-name" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
-                        <div><label class="block text-sm font-semibold mb-1">Description</label><textarea id="product-description" required class="w-full bg-gray-600 rounded-lg p-2 text-white" rows="6"></textarea></div>
-                        <div><label class="block text-sm font-semibold mb-1">Prix (Ar)</label><input type="number" id="product-price" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
-                        <div>
-                            <label class="block text-sm font-semibold mb-1">Image(s)</label>
-                            <div class="flex flex-wrap gap-2 mt-2 items-center">
-                                <div id="image-preview-container" class="flex flex-wrap gap-2"></div>
-                                <label for="product-image-upload" class="cursor-pointer w-16 h-16 bg-gray-600 rounded flex items-center justify-center text-gray-400 hover:bg-gray-500 hover:text-white transition"><i class="fas fa-plus"></i></label>
-                            </div>
-                            <input type="file" id="product-image-upload" multiple accept="image/*" class="hidden">
-                            <input type="hidden" id="product-images-json">
-                            <p id="upload-status" class="text-sm text-yellow-400 mt-1"></p>
-                        </div>
-                        <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
-                            <button type="submit" id="admin-submit-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg disabled:opacity-50">Ajouter / Mettre à jour</button>
-                            <button type="button" id="admin-cancel-btn" class="w-full bg-gray-500 font-bold py-2 px-4 rounded-lg hidden">Annuler</button>
-                        </div>
-                    </form>
-                </div>
-                <div>
-                     <h3 class="text-xl font-bold mb-4">Produits existants</h3>
-                     <div id="admin-product-list" class="space-y-4"></div>
-                </div>
-                 <button id="admin-logout-btn" class="mt-8 bg-red-600 font-bold py-2 px-4 rounded-lg mr-4">Se déconnecter</button>
-            </div>
-        </div>
-    `;
+    adminSection.innerHTML = `<div class="bg-slate-800 text-white p-6 md:p-10 rounded-3xl shadow-lg"><div id="admin-login"><h2 class="font-poppins text-3xl font-bold text-center mb-4">Accès Administrateur</h2><div class="max-w-sm mx-auto"><div class="mb-4"><label for="admin-email" class="block text-sm font-semibold mb-1">Email</label><input type="email" id="admin-email" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div><div class="mb-4"><label for="admin-password" class="block text-sm font-semibold mb-1">Mot de passe</label><input type="password" id="admin-password" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div><button id="admin-login-btn" class="mt-4 w-full btn-primary font-bold py-3 px-4 rounded-xl">Se connecter</button><p id="admin-error" class="text-red-400 text-center mt-2 hidden"></p></div></div><div id="admin-dashboard" class="hidden"><h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2><div class="bg-gray-700 p-6 rounded-2xl mb-8"><h3 id="admin-form-title" class="text-xl font-bold mb-4">Fiche Produit</h3><form id="admin-product-form" class="space-y-4"><input type="hidden" id="product-id"><div><label>Nom</label><input type="text" id="product-name" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div><div><label>Description</label><textarea id="product-description" required class="w-full bg-gray-600 rounded-lg p-2 text-white" rows="6"></textarea></div><div><label>Prix (Ar)</label><input type="number" id="product-price" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div><div><label>Image(s)</label><div class="flex flex-wrap gap-2 mt-2 items-center"><div id="image-preview-container" class="flex flex-wrap gap-2"></div><label for="product-image-upload" class="cursor-pointer w-16 h-16 bg-gray-600 rounded flex items-center justify-center text-gray-400 hover:bg-gray-500"><i class="fas fa-plus"></i></label></div><input type="file" id="product-image-upload" multiple accept="image/*" class="hidden"><input type="hidden" id="product-images-json"><p id="upload-status" class="text-sm text-yellow-400 mt-1"></p></div><div class="flex gap-4"><button type="submit" id="admin-submit-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg">Ajouter</button><button type="button" id="admin-cancel-btn" class="w-full bg-gray-500 font-bold py-2 px-4 rounded-lg hidden">Annuler</button></div></form></div><div><h3 class="text-xl font-bold mb-4">Produits existants</h3><div id="admin-product-list" class="space-y-4"></div></div><div class="mt-8 flex flex-wrap gap-4 items-center"><button id="admin-logout-btn" class="bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded-lg">Se déconnecter</button><a href="https://rakotobewangyu-dev.github.io/Facturation/" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center"><i class="fas fa-file-invoice-dollar mr-2"></i>Facturation</a></div></div></div>`;
 
     const adminLogin = document.getElementById('admin-login');
     const adminDashboard = document.getElementById('admin-dashboard');
-    const adminEmailInput = document.getElementById('admin-email');
-    const adminPasswordInput = document.getElementById('admin-password');
     const adminLoginBtn = document.getElementById('admin-login-btn');
-    const adminError = document.getElementById('admin-error');
     const adminLogoutBtn = document.getElementById('admin-logout-btn');
     const adminProductForm = document.getElementById('admin-product-form');
     const adminProductList = document.getElementById('admin-product-list');
-    
-    const deleteConfirmModal = document.getElementById('delete-confirm-modal');
     const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
     const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
-
+    const deleteConfirmModal = document.getElementById('delete-confirm-modal');
+    
     auth.onAuthStateChanged(user => {
-        if (user) {
-            adminLogin.classList.add('hidden');
-            adminDashboard.classList.remove('hidden');
-            renderAdminList();
-            initAiFeatures(); 
-        } else {
-            adminLogin.classList.remove('hidden');
-            adminDashboard.classList.add('hidden');
-        }
+        adminLogin.classList.toggle('hidden', !!user);
+        adminDashboard.classList.toggle('hidden', !user);
+        if (user) renderAdminList();
     });
 
     adminLoginBtn.addEventListener('click', () => {
-        const email = adminEmailInput.value;
-        const password = adminPasswordInput.value;
-        auth.signInWithEmailAndPassword(email, password)
-            .catch(error => {
-                adminError.textContent = "Email ou mot de passe incorrect.";
-                adminError.classList.remove('hidden');
-            });
+        auth.signInWithEmailAndPassword(document.getElementById('admin-email').value, document.getElementById('admin-password').value)
+            .catch(err => document.getElementById('admin-error').textContent = "Email ou mot de passe incorrect.");
     });
-
-    adminLogoutBtn.addEventListener('click', () => {
-        auth.signOut();
-        showPage('page-accueil');
-    });
-
-    const productImageUpload = document.getElementById('product-image-upload');
-    const uploadStatus = document.getElementById('upload-status');
-    const hiddenImagesJson = document.getElementById('product-images-json');
-    const imagePreviewContainer = document.getElementById('image-preview-container');
+    adminLogoutBtn.addEventListener('click', () => auth.signOut());
 
     async function uploadToImgBB(file) {
         const formData = new FormData();
         formData.append('image', file);
-        const response = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
-        if (!response.ok) throw new Error('Échec du téléversement');
-        const data = await response.json();
+        const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
+        if (!res.ok) throw new Error('Échec du téléversement');
+        const data = await res.json();
         return data.data.url;
     }
-
-    productImageUpload.addEventListener('change', async (e) => {
-        const files = e.target.files;
-        if (!files.length) return;
-        uploadStatus.textContent = `Téléversement de ${files.length} image(s)...`;
-        document.getElementById('admin-submit-btn').disabled = true;
-        
-        let currentImages = hiddenImagesJson.value ? JSON.parse(hiddenImagesJson.value) : [];
-
+    
+    document.getElementById('product-image-upload').addEventListener('change', async (e) => {
+        if (!e.target.files.length) return;
+        document.getElementById('upload-status').textContent = `Téléversement en cours...`;
         try {
-            const uploadPromises = Array.from(files).map(uploadToImgBB);
-            const imageUrls = await Promise.all(uploadPromises);
-            currentImages.push(...imageUrls);
-            hiddenImagesJson.value = JSON.stringify(currentImages);
+            const urls = await Promise.all(Array.from(e.target.files).map(uploadToImgBB));
+            let currentImages = JSON.parse(document.getElementById('product-images-json').value || '[]');
+            currentImages.push(...urls);
+            document.getElementById('product-images-json').value = JSON.stringify(currentImages);
             renderImagePreviews(currentImages);
-            uploadStatus.textContent = `${currentImages.length} image(s) prête(s).`;
+            document.getElementById('upload-status').textContent = `Prêt.`;
         } catch (error) {
-            uploadStatus.textContent = `Erreur: ${error.message}`;
-        } finally {
-            document.getElementById('admin-submit-btn').disabled = false;
-            e.target.value = '';
+            document.getElementById('upload-status').textContent = `Erreur: ${error.message}`;
         }
     });
 
     function renderImagePreviews(images) {
-        imagePreviewContainer.innerHTML = '';
-        images.forEach((imgUrl, index) => {
-            imagePreviewContainer.innerHTML += `<div class="relative"><img src="${imgUrl}" class="w-16 h-16 object-cover rounded"><button type="button" class="absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold delete-img-btn" data-index="${index}">&times;</button></div>`;
-        });
-        document.querySelectorAll('.delete-img-btn').forEach(btn => btn.addEventListener('click', (e) => {
-            const index = parseInt(e.currentTarget.dataset.index, 10);
-            let currentImages = JSON.parse(hiddenImagesJson.value);
-            currentImages.splice(index, 1);
-            hiddenImagesJson.value = JSON.stringify(currentImages);
+        const container = document.getElementById('image-preview-container');
+        container.innerHTML = images.map((url, i) => `<div class="relative"><img src="${url}" class="w-16 h-16 object-cover rounded"><button type="button" class="absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs delete-img-btn" data-index="${i}">&times;</button></div>`).join('');
+        container.querySelectorAll('.delete-img-btn').forEach(btn => btn.addEventListener('click', e => {
+            let currentImages = JSON.parse(document.getElementById('product-images-json').value);
+            currentImages.splice(e.currentTarget.dataset.index, 1);
+            document.getElementById('product-images-json').value = JSON.stringify(currentImages);
             renderImagePreviews(currentImages);
         }));
     }
 
-    const adminFormTitle = document.getElementById('admin-form-title');
-    const adminSubmitBtn = document.getElementById('admin-submit-btn');
-    const adminCancelBtn = document.getElementById('admin-cancel-btn');
-    
-    adminProductForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const id = document.getElementById('product-id').value;
-        const productData = {
-            name: document.getElementById('product-name').value,
-            description: document.getElementById('product-description').value,
-            price: parseFloat(document.getElementById('product-price').value),
-            images: JSON.parse(hiddenImagesJson.value || '[]')
-        };
-
-        adminSubmitBtn.disabled = true;
-        try {
-            if (id) {
-                await productsCollection.doc(id).update(productData);
-            } else {
-                await productsCollection.add(productData);
-            }
-            resetAdminForm();
-            await loadAndRenderProducts();
-        } catch (error) {
-            console.error("Erreur d'écriture Firestore: ", error);
-            alert("Une erreur s'est produite.");
-        } finally {
-            adminSubmitBtn.disabled = false;
-        }
-    });
-
-    adminCancelBtn.addEventListener('click', resetAdminForm);
-
     function resetAdminForm() {
         adminProductForm.reset();
         document.getElementById('product-id').value = '';
-        hiddenImagesJson.value = '[]';
-        uploadStatus.textContent = '';
-        imagePreviewContainer.innerHTML = '';
-        adminSubmitBtn.textContent = 'Ajouter / Mettre à jour';
-        adminFormTitle.textContent = 'Fiche Produit';
-        adminCancelBtn.classList.add('hidden');
-        if(document.getElementById('ai-text-name')) {
-            document.getElementById('ai-text-name').value = '';
-            document.getElementById('ai-text-status').textContent = '';
-        }
+        document.getElementById('product-images-json').value = '[]';
+        document.getElementById('upload-status').textContent = '';
+        renderImagePreviews([]);
+        document.getElementById('admin-submit-btn').textContent = 'Ajouter';
+        document.getElementById('admin-cancel-btn').classList.add('hidden');
     }
-    
-    cancelDeleteBtn.addEventListener('click', () => {
-        deleteConfirmModal.style.display = 'none';
+
+    adminProductForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const id = document.getElementById('product-id').value;
+        const data = {
+            name: document.getElementById('product-name').value,
+            description: document.getElementById('product-description').value,
+            price: parseFloat(document.getElementById('product-price').value),
+            images: JSON.parse(document.getElementById('product-images-json').value || '[]')
+        };
+        try {
+            if (id) await productsCollection.doc(id).update(data);
+            else await productsCollection.add(data);
+            resetAdminForm();
+            loadAndRenderProducts();
+        } catch (error) { console.error("Erreur d'écriture: ", error); }
     });
 
+    document.getElementById('admin-cancel-btn').addEventListener('click', resetAdminForm);
+
+    cancelDeleteBtn.addEventListener('click', () => deleteConfirmModal.style.display = 'none');
     confirmDeleteBtn.addEventListener('click', async () => {
-        const id = confirmDeleteBtn.dataset.id;
-        if (id) {
-            try {
-                await productsCollection.doc(id).delete();
-                await loadAndRenderProducts();
-            } catch (error) {
-                console.error("Erreur de suppression: ", error);
-                alert("Une erreur s'est produite lors de la suppression.");
-            } finally {
-                deleteConfirmModal.style.display = 'none';
-            }
-        }
+        try {
+            await productsCollection.doc(confirmDeleteBtn.dataset.id).delete();
+            loadAndRenderProducts();
+        } catch (error) { console.error("Erreur de suppression: ", error); }
+        finally { deleteConfirmModal.style.display = 'none'; }
     });
-
 
     function renderAdminList() {
         if (!adminProductList) return;
-        adminProductList.innerHTML = '';
-        boutiqueProducts.forEach(p => {
-            adminProductList.innerHTML += `<div class="bg-gray-600 p-3 rounded-lg flex items-center justify-between"><div><p class="font-bold">${p.name}</p><p class="text-sm text-gray-400">${p.price.toLocaleString('fr-FR')} Ar</p></div><div class="flex space-x-2"><button class="edit-product-btn bg-blue-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Modifier</button><button class="delete-product-btn bg-red-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Supprimer</button></div></div>`;
-        });
+        adminProductList.innerHTML = boutiqueProducts.map(p => `<div class="bg-gray-600 p-3 rounded-lg flex items-center justify-between"><div><p class="font-bold">${p.name}</p></div><div class="flex space-x-2"><button class="edit-product-btn bg-blue-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Modifier</button><button class="delete-product-btn bg-red-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Supprimer</button></div></div>`).join('');
         
-        document.querySelectorAll('.edit-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
-            const id = e.currentTarget.dataset.id;
-            const product = boutiqueProducts.find(p => p.id === id);
-            document.getElementById('product-id').value = product.id;
-            document.getElementById('product-name').value = product.name;
-            document.getElementById('product-description').value = product.description;
-            document.getElementById('product-price').value = product.price;
-            hiddenImagesJson.value = JSON.stringify(product.images || []);
-            renderImagePreviews(product.images || []);
-            adminFormTitle.textContent = 'Modifier le produit';
-            adminSubmitBtn.textContent = 'Mettre à jour';
-            adminCancelBtn.classList.remove('hidden');
-            adminSection.scrollIntoView({ behavior: 'smooth' });
+        adminProductList.querySelectorAll('.edit-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
+            const p = boutiqueProducts.find(prod => prod.id === e.currentTarget.dataset.id);
+            document.getElementById('product-id').value = p.id;
+            document.getElementById('product-name').value = p.name;
+            document.getElementById('product-description').value = p.description;
+            document.getElementById('product-price').value = p.price;
+            document.getElementById('product-images-json').value = JSON.stringify(p.images || []);
+            renderImagePreviews(p.images || []);
+            document.getElementById('admin-submit-btn').textContent = 'Mettre à jour';
+            document.getElementById('admin-cancel-btn').classList.remove('hidden');
         }));
-
-        document.querySelectorAll('.delete-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
-            const id = e.currentTarget.dataset.id;
-            confirmDeleteBtn.dataset.id = id;
+        adminProductList.querySelectorAll('.delete-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
+            confirmDeleteBtn.dataset.id = e.currentTarget.dataset.id;
             deleteConfirmModal.style.display = 'flex';
         }));
     }
     
-    // ================== AI FEATURES LOGIC ==================
-    function initAiFeatures() {
-        const aiTextName = document.getElementById('ai-text-name');
-        const aiGenerateTextBtn = document.getElementById('ai-generate-text-btn');
-        const aiTextStatus = document.getElementById('ai-text-status');
-
-        async function callGenerativeApi(url, payload, maxRetries = 3) {
-            let attempt = 0;
-            while (attempt < maxRetries) {
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    const responseText = await response.text();
-                    
-                    if (!response.ok) {
-                        let errorDetails = `(Status: ${response.status})`;
-                        try {
-                            const errorResult = JSON.parse(responseText);
-                            errorDetails = errorResult?.error?.message || `(Status: ${response.status})`;
-                        } catch (e) {
-                           errorDetails = responseText || response.statusText;
-                        }
-                        throw new Error(`Erreur API ${errorDetails}`);
-                    }
-                    
-                    const result = JSON.parse(responseText);
-
-                    if (!result.candidates || result.candidates.length === 0) {
-                        if (result.promptFeedback) {
-                            const blockReason = result.promptFeedback.blockReason;
-                            console.error("Prompt bloqué:", result.promptFeedback);
-                            throw new Error(`La requête a été bloquée: ${blockReason}`);
-                        }
-                        throw new Error("La réponse de l'API ne contient aucun résultat valide.");
-                    }
-
-                    return result;
-
-                } catch (error) {
-                    console.error(`Tentative ${attempt + 1} échouée:`, error);
-                    attempt++;
-                    if (attempt >= maxRetries) {
-                        throw error; 
-                    }
-                    const delay = Math.pow(2, attempt) * 200; 
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                }
-            }
-        }
-
-        aiGenerateTextBtn.addEventListener('click', async () => {
-            const productName = aiTextName.value.trim();
-            if (!productName) {
-                aiTextStatus.textContent = 'Veuillez fournir un nom ou des mots-clés.';
-                return;
-            }
-
-            aiTextStatus.textContent = 'Génération du texte en cours...';
-            aiGenerateTextBtn.disabled = true;
-
-            try {
-                // IMPORTANT: Collez votre clé API Google AI ici.
-                const apiKey = "AIzaSyDeTIQtd0xLZAIamRfajdQd2vAGrjIWGi4"; 
-                
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-                const prompt = `En tant qu'assistant de fiche produit, génère une description pour "${productName}". La description doit commencer par une seule phrase d'accroche courte et percutante. Juste après, à la ligne, continue avec une liste à puces concise (- Caractéristique : Valeur) des spécifications techniques et des caractéristiques clés. La réponse doit être en texte brut, sans formatage Markdown. Format attendu : NOM : [Nom clair du produit] ;;; DESCRIPTION : [Phrase d'accroche.]\n\n- Spécification : ...\n- Autre Spécification : ...`;
-
-                const payload = { contents: [{ parts: [{ text: prompt }] }] };
-
-                const result = await callGenerativeApi(apiUrl, payload);
-                const text = result.candidates[0].content.parts[0].text;
-                
-                const parts = text.split(';;;');
-                const generatedName = parts[0].replace('NOM :', '').trim();
-                const generatedDesc = parts[1].replace('DESCRIPTION :', '').trim();
-
-                document.getElementById('product-name').value = generatedName;
-                document.getElementById('product-description').value = generatedDesc;
-                aiTextStatus.textContent = 'Description générée avec succès !';
-
-            } catch (error) {
-                console.error('Erreur du générateur de texte IA:', error);
-                aiTextStatus.textContent = `Erreur: ${error.message}`;
-            } finally {
-                aiGenerateTextBtn.disabled = false;
-            }
-        });
-    }
-
     // ================== APPEL INITIAL ==================
     loadAndRenderProducts();
     initSearchFunctionality();
@@ -1209,3 +845,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
