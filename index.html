@@ -434,7 +434,19 @@
     <!-- Modals -->
     <div id="price-alert-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4"><h3 class="text-lg font-bold text-gray-800">Attention sur le Prix Unitaire</h3><p class="text-gray-600 mt-2 text-sm">Afin de s'assurer que nous parlons bien du même produit au bon prix, veuillez indiquer le prix exact d'achat sur le site que vous avez choisi pour qu'au moment de notre achat il n'y ait pas d'erreur de commande.</p><button id="close-price-modal-btn" class="mt-6 w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg">Compris</button></div></div>
     <div id="link-alert-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4"><h3 class="text-lg font-bold text-gray-800">Comment copier le lien ?</h3><p class="text-gray-600 mt-2 text-sm">Copiez-collez le lien du produit que vous souhaitez acheter sur les sites chinois suivants afin que nous puissions l'identifier et l'acheter pour vous : Alibaba, Taobao, 1688, JingDong, XianYu, etc.</p><button id="close-link-modal-btn" class="mt-6 w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg">Compris</button></div></div>
-    <div id="confirmation-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 text-center m-4"><div class="mx-auto bg-green-100 rounded-full h-24 w-24 flex items-center justify-center"><svg class="h-16 w-16 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg></div><h2 class="mt-6 text-3xl font-extrabold text-gray-800">C'est presque fini !</h2><p class="mt-4 text-gray-600">Votre devis a été préparé. Cliquez ci-dessous pour nous l'envoyer sur WhatsApp.</p><a id="whatsapp-link" href="#" target="_blank" class="mt-8 inline-flex items-center justify-center w-full py-4 px-8 text-base font-bold rounded-xl text-white btn-primary">Confirmer et Envoyer sur WhatsApp</a></div></div>
+    
+    <div id="confirmation-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 text-center m-4 relative">
+            <button id="close-confirmation-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
+            <div class="mx-auto bg-green-100 rounded-full h-24 w-24 flex items-center justify-center">
+                <svg class="h-16 w-16 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+            </div>
+            <h2 class="mt-6 text-3xl font-extrabold text-gray-800">C'est presque fini !</h2>
+            <p class="mt-4 text-gray-600">Votre devis a été préparé. Cliquez ci-dessous pour nous l'envoyer sur WhatsApp.</p>
+            <a id="whatsapp-link" href="#" target="_blank" class="mt-8 inline-flex items-center justify-center w-full py-4 px-8 text-base font-bold rounded-xl text-white btn-primary">Confirmer et Envoyer sur WhatsApp</a>
+        </div>
+    </div>
+
     <div id="delete-confirm-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop">
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4">
             <h3 class="text-lg font-bold text-gray-800">Confirmer la suppression</h3>
@@ -597,7 +609,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const priceHTML = product.price && product.price > 0
             ? `<p class="text-gradient font-extrabold text-base sm:text-xl">${product.price.toLocaleString('fr-FR')} Ar</p>`
-            : `<p class="text-gradient font-extrabold text-base sm:text-xl">Prix sur devis</p>`; // MODIFICATION: Changed classes
+            : `<p class="text-gradient font-extrabold text-base sm:text-xl">Prix sur devis</p>`;
 
         return `
             <div class="bg-white rounded-xl shadow-lg overflow-hidden group transform hover:-translate-y-1 transition-transform duration-300 view-product-btn cursor-pointer" data-id="${product.id}">
@@ -663,7 +675,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const priceDetailHTML = product.price && product.price > 0
             ? `<p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">${product.price.toLocaleString('fr-FR')} Ar</p>`
-            : `<p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">Prix sur devis</p>`; // MODIFICATION: Changed classes
+            : `<p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">Prix sur devis</p>`;
 
         const thumbnailsHTML = (product.images || []).map((img, i) => `<img src="${img}" class="w-16 h-16 md:w-20 md:h-20 object-contain bg-slate-100 rounded-md cursor-pointer border-2 ${i === 0 ? 'border-red-500' : 'border-transparent'} thumbnail" data-index="${i}">`).join('');
         const detailSection = document.getElementById('page-detail');
@@ -705,34 +717,80 @@ document.addEventListener('DOMContentLoaded', function() {
     const productList = document.getElementById('product-list');
     const addProductBtn = document.getElementById('add-product');
     let productCount = 0;
+    
+    // CORRECTION: Logique d'avertissement restaurée
+    const linkAlertModal = document.getElementById('link-alert-modal');
+    const closeLinkModalBtn = document.getElementById('close-link-modal-btn');
+    let hasShownLinkAlert = localStorage.getItem('hasShownLinkAlert_Aridago');
 
     function createProductBlock() {
         productCount++;
         const div = document.createElement('div');
         div.className = 'p-5 border-2 border-gray-200 rounded-xl bg-gray-50/50 relative';
-        div.innerHTML = `<h4 class="font-bold text-md text-gray-800 mb-4">Produit ${productCount}</h4> ${productCount > 1 ? '<button type="button" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold remove-product">&times;</button>' : ''}<div class="space-y-4"><div><label class="text-sm font-semibold text-gray-600">Nom</label><input type="text" name="product_name_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Lien</label><input type="url" name="product_link_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Spécification</label><textarea name="product_spec_${productCount}" rows="2" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></textarea></div><div><label class="text-sm font-semibold text-gray-600">Quantité</label><input type="number" name="product_quantity_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div></div>`;
+        div.innerHTML = `<h4 class="font-bold text-md text-gray-800 mb-4">Produit ${productCount}</h4> ${productCount > 1 ? '<button type="button" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold remove-product">&times;</button>' : ''}<div class="space-y-4"><div><label class="text-sm font-semibold text-gray-600">Nom</label><input type="text" name="product_name_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Lien</label><input type="url" name="product_link_${productCount}" required class="link-input w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Spécification</label><textarea name="product_spec_${productCount}" rows="2" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></textarea></div><div><label class="text-sm font-semibold text-gray-600">Quantité</label><input type="number" name="product_quantity_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div></div>`;
         productList.appendChild(div);
+
+        div.querySelector('.link-input').addEventListener('focus', () => {
+            if (!hasShownLinkAlert) {
+                linkAlertModal.style.display = 'flex';
+            }
+        });
+
         if(div.querySelector('.remove-product')) div.querySelector('.remove-product').addEventListener('click', () => div.remove());
+    }
+
+    if(closeLinkModalBtn) {
+        closeLinkModalBtn.addEventListener('click', () => {
+            linkAlertModal.style.display = 'none';
+            localStorage.setItem('hasShownLinkAlert_Aridago', 'true');
+            hasShownLinkAlert = true;
+        });
     }
 
     if(addProductBtn) addProductBtn.addEventListener('click', createProductBlock);
     
-    if(devisForm) devisForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const formData = new FormData(devisForm);
-        let text = `*Nouvelle Demande de Devis - ARIDAGO*\n\n*Référence:* ADG-${Date.now().toString().slice(-6)}\n*Client:* ${formData.get('nom')} ${formData.get('prenom')}\n*WhatsApp:* ${formData.get('whatsapp')}\n*Adresse:* ${formData.get('adresse')}\n`;
-        if (formData.get('email')) text += `*Email:* ${formData.get('email')}\n`;
-        text += `-----------------------------------\n\n`;
-        
-        for (let i = 1; i <= productCount; i++) {
-            if (formData.get(`product_name_${i}`)) {
-                text += `*Produit ${i}:* ${formData.get(`product_name_${i}`)}\n*Spécification:* ${formData.get(`product_spec_${i}`)}\n*Quantité:* ${formData.get(`product_quantity_${i}`)}\n*Lien:* ${formData.get(`product_link_${i}`)}\n\n`;
-            }
+    if(devisForm) {
+        const confirmationModal = document.getElementById('confirmation-modal');
+        const whatsappLink = document.getElementById('whatsapp-link');
+        const closeConfirmationBtn = document.getElementById('close-confirmation-modal');
+
+        function closeAndResetDevisModal() {
+            confirmationModal.style.display = 'none';
+            devisForm.reset();
+            productList.innerHTML = '';
+            productCount = 0;
+            createProductBlock();
         }
+
+        devisForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const formData = new FormData(devisForm);
+            let text = `*Nouvelle Demande de Devis - ARIDAGO*\n\n*Référence:* ADG-${Date.now().toString().slice(-6)}\n*Client:* ${formData.get('nom')} ${formData.get('prenom')}\n*WhatsApp:* ${formData.get('whatsapp')}\n*Adresse:* ${formData.get('adresse')}\n`;
+            if (formData.get('email')) text += `*Email:* ${formData.get('email')}\n`;
+            text += `-----------------------------------\n\n`;
+            
+            for (let i = 1; i <= productCount; i++) {
+                if (formData.get(`product_name_${i}`)) {
+                    text += `*Produit ${i}:* ${formData.get(`product_name_${i}`)}\n*Spécification:* ${formData.get(`product_spec_${i}`)}\n*Quantité:* ${formData.get(`product_quantity_${i}`)}\n*Lien:* ${formData.get(`product_link_${i}`)}\n\n`;
+                }
+            }
+            
+            whatsappLink.href = `https://wa.me/8615600021123?text=${encodeURIComponent(text)}`;
+            confirmationModal.style.display = 'flex';
+        });
+
+        whatsappLink.addEventListener('click', () => {
+            setTimeout(closeAndResetDevisModal, 1500);
+        });
         
-        document.getElementById('whatsapp-link').href = `https://wa.me/8615600021123?text=${encodeURIComponent(text)}`;
-        document.getElementById('confirmation-modal').style.display = 'flex';
-    });
+        closeConfirmationBtn.addEventListener('click', closeAndResetDevisModal);
+
+        confirmationModal.addEventListener('click', (e) => {
+            if (e.target === confirmationModal) {
+                closeAndResetDevisModal();
+            }
+        });
+    }
     
     if(productList) createProductBlock();
     document.querySelectorAll('.faq-question').forEach(btn => btn.addEventListener('click', () => btn.nextElementSibling.classList.toggle('hidden')));
