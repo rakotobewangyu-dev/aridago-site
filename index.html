@@ -563,9 +563,15 @@ document.addEventListener('DOMContentLoaded', function() {
             boutiqueProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             
             renderBoutique();
-            renderPopularProducts(boutiqueProducts.slice(0, 4));
+            
+            const featuredProducts = boutiqueProducts.filter(p => p.isFeatured === true).slice(0, 4);
+            renderPopularProducts(featuredProducts);
 
-            if (auth.currentUser) renderAdminList();
+            if (auth.currentUser) {
+                renderAdminList();
+                initIAGenerator();
+                initAiFeatures();
+            }
 
         } catch (error) {
             console.error("Erreur de chargement: ", error);
@@ -588,6 +594,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const stockBadge = product.inStockMadagascar !== false
             ? `<div class="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center"><i class="fas fa-check-circle mr-1"></i> En stock</div>`
             : `<div class="absolute top-2 left-2 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center"><i class="fas fa-shipping-fast mr-1"></i> Sur commande</div>`;
+        
+        const priceHTML = product.price && product.price > 0
+            ? `<p class="text-gradient font-extrabold text-base sm:text-xl">${product.price.toLocaleString('fr-FR')} Ar</p>`
+            : `<p class="text-gradient font-extrabold text-base sm:text-xl">Prix sur devis</p>`; // MODIFICATION: Changed classes
 
         return `
             <div class="bg-white rounded-xl shadow-lg overflow-hidden group transform hover:-translate-y-1 transition-transform duration-300 view-product-btn cursor-pointer" data-id="${product.id}">
@@ -600,7 +610,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </div>
                 <div class="p-2 sm:p-4 text-center">
                     <h3 class="font-semibold text-sm sm:text-base mb-1 sm:mb-2 truncate">${product.name}</h3>
-                    <p class="text-gradient font-extrabold text-base sm:text-xl">${product.price.toLocaleString('fr-FR')} Ar</p>
+                    ${priceHTML}
                 </div>
             </div>`;
     }
@@ -634,7 +644,11 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function renderPopularProducts(products) {
         const container = document.getElementById('popular-products-accueil');
-        if (!container || products.length === 0) return;
+        if (!container) return;
+        if (products.length === 0) {
+            container.innerHTML = '';
+            return;
+        }
         container.innerHTML = `<div class="container mx-auto px-4"><div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold mb-2">Produits Populaires</h2><p class="text-slate-600 text-lg">Les articles les plus demandés</p></div><div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">${products.map(createProductCard).join('')}</div></div>`;
         addProductCardListeners();
     }
@@ -647,12 +661,24 @@ document.addEventListener('DOMContentLoaded', function() {
             ? `<div class="mt-4 flex items-center text-green-600 font-semibold"><i class="fas fa-check-circle mr-2"></i>Produit disponible à Madagascar</div>`
             : `<div class="mt-4 flex items-center text-yellow-600 font-semibold"><i class="fas fa-shipping-fast mr-2"></i>Produit disponible sur commande</div>`;
         
+        const priceDetailHTML = product.price && product.price > 0
+            ? `<p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">${product.price.toLocaleString('fr-FR')} Ar</p>`
+            : `<p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">Prix sur devis</p>`; // MODIFICATION: Changed classes
+
         const thumbnailsHTML = (product.images || []).map((img, i) => `<img src="${img}" class="w-16 h-16 md:w-20 md:h-20 object-contain bg-slate-100 rounded-md cursor-pointer border-2 ${i === 0 ? 'border-red-500' : 'border-transparent'} thumbnail" data-index="${i}">`).join('');
         const detailSection = document.getElementById('page-detail');
-        detailSection.innerHTML = `<div class="container mx-auto px-4"><button class="nav-link font-semibold mb-8 inline-flex items-center" data-page="boutique"><i class="fas fa-arrow-left mr-2"></i>Retour à la boutique</button><div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"><div><div class="bg-slate-100 rounded-xl shadow-lg mb-4"><img id="main-product-image" src="${product.images[0]}" alt="${product.name}" class="w-full h-80 md:h-96 object-contain rounded-xl p-4"></div><div id="thumbnail-container" class="flex flex-wrap gap-4 justify-center">${thumbnailsHTML}</div></div><div><h1 class="text-3xl md:text-4xl font-bold text-slate-800">${product.name}</h1><p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">${product.price.toLocaleString('fr-FR')} Ar</p>${availabilityText}<p class="mt-4 text-slate-600 whitespace-pre-wrap">${product.description}</p><div class="mt-8"><a href="#" data-id="${product.id}" class="order-now-btn w-full inline-flex items-center justify-center text-center btn-secondary transition text-white font-bold py-4 px-4 rounded-xl text-lg"><i class="fab fa-whatsapp mr-3 text-2xl"></i>Commander maintenant</a></div></div></div></div>`;
+        detailSection.innerHTML = `<div class="container mx-auto px-4"><button class="nav-link font-semibold mb-8 inline-flex items-center" data-page="boutique"><i class="fas fa-arrow-left mr-2"></i>Retour à la boutique</button><div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"><div><div class="bg-slate-100 rounded-xl shadow-lg mb-4"><img id="main-product-image" src="${product.images[0]}" alt="${product.name}" class="w-full h-80 md:h-96 object-contain rounded-xl p-4"></div><div id="thumbnail-container" class="flex flex-wrap gap-4 justify-center">${thumbnailsHTML}</div></div><div><h1 class="text-3xl md:text-4xl font-bold text-slate-800">${product.name}</h1>${priceDetailHTML}${availabilityText}<p class="mt-4 text-slate-600 whitespace-pre-wrap">${product.description}</p><div class="mt-8"><a href="#" data-id="${product.id}" class="order-now-btn w-full inline-flex items-center justify-center text-center btn-secondary transition text-white font-bold py-4 px-4 rounded-xl text-lg"><i class="fab fa-whatsapp mr-3 text-2xl"></i>Commander maintenant</a></div></div></div></div>`;
         
         detailSection.querySelector('.nav-link').addEventListener('click', (e) => { e.preventDefault(); showPage('page-boutique'); });
-        detailSection.querySelector('.order-now-btn').addEventListener('click', e => { e.preventDefault(); window.open(`https://wa.me/8615600021123?text=${encodeURIComponent(`*COMMANDE DIRECTE ARIDAGO*\n\n- Produit: ${product.name}\n- Prix: ${product.price.toLocaleString('fr-FR')} Ar`)}`, '_blank'); });
+        
+        detailSection.querySelector('.order-now-btn').addEventListener('click', e => { 
+            e.preventDefault();
+            let orderText = `*COMMANDE DIRECTE ARIDAGO*\n\n- Produit: ${product.name}`;
+            if (product.price && product.price > 0) {
+                orderText += `\n- Prix: ${product.price.toLocaleString('fr-FR')} Ar`;
+            }
+             window.open(`https://wa.me/8615600021123?text=${encodeURIComponent(orderText)}`, '_blank');
+        });
         
         const mainImage = document.getElementById('main-product-image');
         const thumbnails = detailSection.querySelectorAll('.thumbnail');
@@ -713,7 +739,66 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ================== LOGIQUE ADMIN ==================
     const adminSection = document.getElementById('page-admin');
-    adminSection.innerHTML = `<div class="bg-slate-800 text-white p-6 md:p-10 rounded-3xl shadow-lg"><div id="admin-login"><h2 class="font-poppins text-3xl font-bold text-center mb-4">Accès Administrateur</h2><div class="max-w-sm mx-auto"><div class="mb-4"><label for="admin-email" class="block text-sm font-semibold mb-1">Email</label><input type="email" id="admin-email" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div><div class="mb-4"><label for="admin-password" class="block text-sm font-semibold mb-1">Mot de passe</label><input type="password" id="admin-password" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div><button id="admin-login-btn" class="mt-4 w-full btn-primary font-bold py-3 px-4 rounded-xl">Se connecter</button><p id="admin-error" class="text-red-400 text-center mt-2 hidden"></p></div></div><div id="admin-dashboard" class="hidden"><h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2><div class="bg-gray-700 p-6 rounded-2xl mb-8"><h3 id="admin-form-title" class="text-xl font-bold mb-4">Fiche Produit</h3><form id="admin-product-form" class="space-y-4"><input type="hidden" id="product-id"><div><label>Nom</label><input type="text" id="product-name" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div><div><label>Description</label><textarea id="product-description" required class="w-full bg-gray-600 rounded-lg p-2 text-white" rows="6"></textarea></div><div><label>Prix (Ar)</label><input type="number" id="product-price" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div><div class="flex items-center"><input type="checkbox" id="product-in-stock" class="w-4 h-4 text-red-600 bg-gray-700 border-gray-600 rounded focus:ring-red-500"><label for="product-in-stock" class="ml-2 text-sm font-medium text-white">Disponible à Madagascar</label></div><div><label>Image(s)</label><div class="flex flex-wrap gap-2 mt-2 items-center"><div id="image-preview-container" class="flex flex-wrap gap-2"></div><label for="product-image-upload" class="cursor-pointer w-16 h-16 bg-gray-600 rounded flex items-center justify-center text-gray-400 hover:bg-gray-500"><i class="fas fa-plus"></i></label></div><input type="file" id="product-image-upload" multiple accept="image/*" class="hidden"><input type="hidden" id="product-images-json"><p id="upload-status" class="text-sm text-yellow-400 mt-1"></p></div><div class="flex gap-4"><button type="submit" id="admin-submit-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg">Ajouter</button><button type="button" id="admin-cancel-btn" class="w-full bg-gray-500 font-bold py-2 px-4 rounded-lg hidden">Annuler</button></div></form></div><div><h3 class="text-xl font-bold mb-4">Produits existants</h3><div id="admin-product-list" class="space-y-4"></div></div><div class="mt-8 flex flex-wrap gap-4 items-center"><button id="admin-logout-btn" class="bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded-lg">Se déconnecter</button><a href="https://rakotobewangyu-dev.github.io/Facturation/" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center"><i class="fas fa-file-invoice-dollar mr-2"></i>Facturation</a></div></div></div>`;
+    adminSection.innerHTML = `<div class="bg-slate-800 text-white p-6 md:p-10 rounded-3xl shadow-lg">
+        <div id="admin-login">
+            <h2 class="font-poppins text-3xl font-bold text-center mb-4">Accès Administrateur</h2>
+            <div class="max-w-sm mx-auto">
+                <div class="mb-4"><label for="admin-email" class="block text-sm font-semibold mb-1">Email</label><input type="email" id="admin-email" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div>
+                <div class="mb-4"><label for="admin-password" class="block text-sm font-semibold mb-1">Mot de passe</label><input type="password" id="admin-password" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div>
+                <button id="admin-login-btn" class="mt-4 w-full btn-primary font-bold py-3 px-4 rounded-xl">Se connecter</button>
+                <p id="admin-error" class="text-red-400 text-center mt-2 hidden"></p>
+            </div>
+        </div>
+        <div id="admin-dashboard" class="hidden">
+            <h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2>
+            
+            <div class="bg-gray-700 p-6 rounded-2xl mb-8 border-2 border-dashed border-yellow-400">
+                <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-magic mr-3 text-yellow-400"></i>Générateur de Fiche Produit par IA</h3>
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-semibold mb-1">Nom ou mots-clés du produit</label>
+                        <input type="text" id="ai-text-name" placeholder="Ex: Sac à dos de voyage, Thermos intelligent..." class="w-full bg-gray-600 rounded-lg p-2 text-white">
+                    </div>
+                    <button id="ai-generate-text-btn" class="w-full btn-primary font-bold py-2 px-4 rounded-lg flex items-center justify-center disabled:opacity-50">
+                        <i class="fas fa-rocket mr-2"></i>Générer la description
+                    </button>
+                    <p id="ai-text-status" class="text-sm text-yellow-400 mt-1 text-center h-4"></p>
+                </div>
+            </div>
+
+            <div class="bg-gray-700 p-6 rounded-2xl mb-8">
+                <h3 id="admin-form-title" class="text-xl font-bold mb-4">Fiche Produit</h3>
+                <form id="admin-product-form" class="space-y-4">
+                    <input type="hidden" id="product-id">
+                    <div><label>Nom</label><input type="text" id="product-name" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
+                    <div><label>Description</label><textarea id="product-description" required class="w-full bg-gray-600 rounded-lg p-2 text-white" rows="6"></textarea></div>
+                    <div><label>Prix (Ar)</label><input type="number" id="product-price" class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center"><input type="checkbox" id="product-in-stock" class="w-4 h-4 text-red-600 bg-gray-700 border-gray-600 rounded focus:ring-red-500"><label for="product-in-stock" class="ml-2 text-sm font-medium text-white">Disponible à Mada</label></div>
+                        <div class="flex items-center"><input type="checkbox" id="product-featured" class="w-4 h-4 text-yellow-400 bg-gray-700 border-gray-600 rounded focus:ring-yellow-500"><label for="product-featured" class="ml-2 text-sm font-medium text-white">Mettre en avant</label></div>
+                    </div>
+                    <div><label>Image(s)</label><div class="flex flex-wrap gap-2 mt-2 items-center"><div id="image-preview-container" class="flex flex-wrap gap-2"></div><label for="product-image-upload" class="cursor-pointer w-16 h-16 bg-gray-600 rounded flex items-center justify-center text-gray-400 hover:bg-gray-500"><i class="fas fa-plus"></i></label></div><input type="file" id="product-image-upload" multiple accept="image/*" class="hidden"><input type="hidden" id="product-images-json"><p id="upload-status" class="text-sm text-yellow-400 mt-1"></p></div>
+                    <div class="flex gap-4"><button type="submit" id="admin-submit-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg">Ajouter</button><button type="button" id="admin-cancel-btn" class="w-full bg-gray-500 font-bold py-2 px-4 rounded-lg hidden">Annuler</button></div>
+                </form>
+            </div>
+            <div>
+                <h3 class="text-xl font-bold mb-4">Produits existants</h3>
+                <div id="admin-product-list" class="space-y-4"></div>
+            </div>
+            <div class="bg-gray-700 p-6 rounded-2xl mt-8">
+                <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-robot mr-2 text-yellow-400"></i>Générateur de Publication IA</h3>
+                <div class="space-y-4">
+                    <div><label for="ia-product-select" class="block text-sm font-semibold mb-1">Choisir un produit</label><select id="ia-product-select" class="w-full bg-gray-600 rounded-lg p-2 text-white"></select></div>
+                    <button id="ia-generate-btn" class="w-full bg-yellow-500 hover:bg-yellow-600 font-bold py-2 px-4 rounded-lg flex items-center justify-center"><i class="fas fa-magic mr-2"></i>Générer la publication</button>
+                    <div><label for="ia-generated-post" class="block text-sm font-semibold mb-1">Résultat</label><div class="relative"><textarea id="ia-generated-post" readonly class="w-full bg-gray-800 rounded-lg p-3 text-white h-48 resize-none"></textarea><button id="ia-copy-btn" class="absolute top-2 right-2 bg-gray-600 hover:bg-gray-500 text-white font-bold py-1 px-2 rounded-md text-xs hidden"><i class="fas fa-copy mr-1"></i>Copier</button></div><p id="ia-status" class="text-sm text-gray-400 mt-1"></p></div>
+                </div>
+            </div>
+            <div class="mt-8 flex flex-wrap gap-4 items-center">
+                <button id="admin-logout-btn" class="bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded-lg">Se déconnecter</button>
+                <a href="https://rakotobewangyu-dev.github.io/Facturation/" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center"><i class="fas fa-file-invoice-dollar mr-2"></i>Facturation</a>
+            </div>
+        </div>
+    </div>`;
 
     const adminLogin = document.getElementById('admin-login');
     const adminDashboard = document.getElementById('admin-dashboard');
@@ -728,7 +813,11 @@ document.addEventListener('DOMContentLoaded', function() {
     auth.onAuthStateChanged(user => {
         adminLogin.classList.toggle('hidden', !!user);
         adminDashboard.classList.toggle('hidden', !user);
-        if (user) renderAdminList();
+        if (user) {
+            renderAdminList();
+            initIAGenerator(); 
+            initAiFeatures();
+        }
     });
 
     adminLoginBtn.addEventListener('click', () => {
@@ -776,6 +865,7 @@ document.addEventListener('DOMContentLoaded', function() {
         adminProductForm.reset();
         document.getElementById('product-id').value = '';
         document.getElementById('product-in-stock').checked = true;
+        document.getElementById('product-featured').checked = false;
         document.getElementById('product-images-json').value = '[]';
         document.getElementById('upload-status').textContent = '';
         renderImagePreviews([]);
@@ -786,11 +876,14 @@ document.addEventListener('DOMContentLoaded', function() {
     adminProductForm.addEventListener('submit', async (e) => {
         e.preventDefault();
         const id = document.getElementById('product-id').value;
+        const priceValue = document.getElementById('product-price').value;
+        
         const data = {
             name: document.getElementById('product-name').value,
             description: document.getElementById('product-description').value,
-            price: parseFloat(document.getElementById('product-price').value),
+            price: priceValue ? parseFloat(priceValue) : null,
             inStockMadagascar: document.getElementById('product-in-stock').checked,
+            isFeatured: document.getElementById('product-featured').checked,
             images: JSON.parse(document.getElementById('product-images-json').value || '[]')
         };
         try {
@@ -818,10 +911,14 @@ document.addEventListener('DOMContentLoaded', function() {
             const statusIndicator = p.inStockMadagascar !== false
                 ? `<span class="h-3 w-3 rounded-full bg-green-500 flex-shrink-0" title="Disponible à Madagascar"></span>`
                 : `<span class="h-3 w-3 rounded-full bg-yellow-500 flex-shrink-0" title="Sur commande"></span>`;
+            const featuredIndicator = p.isFeatured
+                ? `<i class="fas fa-star text-yellow-400" title="Produit en avant"></i>`
+                : `<i class="fas fa-star text-gray-400/20"></i>`;
             return `
                 <div class="bg-gray-600 p-3 rounded-lg flex items-center justify-between">
                     <div class="flex items-center gap-3 overflow-hidden">
                         ${statusIndicator}
+                        ${featuredIndicator}
                         <div class="truncate">
                             <p class="font-bold truncate">${p.name}</p>
                         </div>
@@ -838,12 +935,14 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('product-id').value = p.id;
             document.getElementById('product-name').value = p.name;
             document.getElementById('product-description').value = p.description;
-            document.getElementById('product-price').value = p.price;
+            document.getElementById('product-price').value = p.price || '';
             document.getElementById('product-in-stock').checked = p.inStockMadagascar !== false;
+            document.getElementById('product-featured').checked = p.isFeatured === true;
             document.getElementById('product-images-json').value = JSON.stringify(p.images || []);
             renderImagePreviews(p.images || []);
             document.getElementById('admin-submit-btn').textContent = 'Mettre à jour';
             document.getElementById('admin-cancel-btn').classList.remove('hidden');
+            window.scrollTo(0, 0);
         }));
         adminProductList.querySelectorAll('.delete-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
             confirmDeleteBtn.dataset.id = e.currentTarget.dataset.id;
@@ -851,6 +950,182 @@ document.addEventListener('DOMContentLoaded', function() {
         }));
     }
     
+    // ================== LOGIQUE GÉNÉRATEUR IA ==================
+
+    async function generateAIPost(product) {
+        const apiKey = "";
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+
+        const systemPrompt = `Tu es un gestionnaire de réseaux sociaux expert pour "Aridago", une entreprise qui facilite les achats en Chine pour des clients à Madagascar. Ta mission est de créer des publications Facebook engageantes, professionnelles et vendeuses.`;
+        const userQuery = `Génère une publication Facebook pour le produit suivant. Mets en avant ses avantages de manière créative et termine par un appel à l'action clair. Utilise des emojis pertinents pour rendre la publication attractive.\n\n- Nom du produit: ${product.name}\n- Prix: ${product.price ? product.price.toLocaleString('fr-FR') + ' Ariary' : 'Prix sur devis'}\n- Description: ${product.description}\n\nLa publication doit être en français.`;
+
+        const payload = {
+            contents: [{ parts: [{ text: userQuery }] }],
+            systemInstruction: { parts: [{ text: systemPrompt }] },
+        };
+
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (!response.ok) { throw new Error(`Erreur de l'API: ${response.statusText}`); }
+            const result = await response.json();
+            const candidate = result.candidates?.[0];
+
+            if (candidate && candidate.content?.parts?.[0]?.text) {
+                return candidate.content.parts[0].text;
+            } else {
+                return "Désolé, la réponse de l'IA était vide.";
+            }
+        } catch (error) {
+            console.error('Erreur API Gemini:', error);
+            return `Désolé, une erreur est survenue. Détails: ${error.message}`;
+        }
+    }
+
+    function initIAGenerator() {
+        const productSelect = document.getElementById('ia-product-select');
+        const generateBtn = document.getElementById('ia-generate-btn');
+        const resultTextarea = document.getElementById('ia-generated-post');
+        const statusP = document.getElementById('ia-status');
+        const copyBtn = document.getElementById('ia-copy-btn');
+
+        if (!productSelect) return;
+
+        productSelect.innerHTML = '<option value="">-- Sélectionnez un produit --</option>' +
+            boutiqueProducts.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
+
+        generateBtn.addEventListener('click', async () => {
+            const selectedProductId = productSelect.value;
+            if (!selectedProductId) {
+                statusP.textContent = "Veuillez d'abord sélectionner un produit.";
+                statusP.className = "text-sm text-red-400 mt-1";
+                return;
+            }
+            const product = boutiqueProducts.find(p => p.id === selectedProductId);
+
+            statusP.textContent = "Génération en cours... L'IA réfléchit ✨";
+            statusP.className = "text-sm text-yellow-400 mt-1 animate-pulse";
+            resultTextarea.value = "";
+            generateBtn.disabled = true;
+            generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Génération...';
+            copyBtn.classList.add('hidden');
+
+            const generatedText = await generateAIPost(product);
+
+            resultTextarea.value = generatedText;
+            resultTextarea.readOnly = false;
+            statusP.textContent = "Génération terminée ! Vous pouvez modifier le texte.";
+            statusP.className = "text-sm text-green-400 mt-1";
+            generateBtn.disabled = false;
+            generateBtn.innerHTML = '<i class="fas fa-magic mr-2"></i>Générer une autre publication';
+            copyBtn.classList.remove('hidden');
+        });
+        
+        copyBtn.addEventListener('click', () => {
+            resultTextarea.select();
+            document.execCommand('copy');
+            copyBtn.innerHTML = '<i class="fas fa-check mr-1"></i>Copié !';
+            setTimeout(() => { copyBtn.innerHTML = '<i class="fas fa-copy mr-1"></i>Copier'; }, 2000);
+        });
+    }
+
+    function initAiFeatures() {
+        const aiTextName = document.getElementById('ai-text-name');
+        const aiGenerateTextBtn = document.getElementById('ai-generate-text-btn');
+        const aiTextStatus = document.getElementById('ai-text-status');
+
+        if(!aiGenerateTextBtn) return;
+
+        async function callGenerativeApi(url, payload, maxRetries = 3) {
+            let attempt = 0;
+            while (attempt < maxRetries) {
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const responseText = await response.text();
+                    
+                    if (!response.ok) {
+                        let errorDetails = `(Status: ${response.status})`;
+                        try {
+                            const errorResult = JSON.parse(responseText);
+                            errorDetails = errorResult?.error?.message || `(Status: ${response.status})`;
+                        } catch (e) {
+                           errorDetails = responseText || response.statusText;
+                        }
+                        throw new Error(`Erreur API ${errorDetails}`);
+                    }
+                    
+                    const result = JSON.parse(responseText);
+
+                    if (!result.candidates || result.candidates.length === 0) {
+                        if (result.promptFeedback) {
+                            const blockReason = result.promptFeedback.blockReason;
+                            console.error("Prompt bloqué:", result.promptFeedback);
+                            throw new Error(`La requête a été bloquée: ${blockReason}`);
+                        }
+                        throw new Error("La réponse de l'API ne contient aucun résultat valide.");
+                    }
+
+                    return result;
+
+                } catch (error) {
+                    console.error(`Tentative ${attempt + 1} échouée:`, error);
+                    attempt++;
+                    if (attempt >= maxRetries) {
+                        throw error; 
+                    }
+                    const delay = Math.pow(2, attempt) * 200; 
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+        }
+
+        aiGenerateTextBtn.addEventListener('click', async () => {
+            const productName = aiTextName.value.trim();
+            if (!productName) {
+                aiTextStatus.textContent = 'Veuillez fournir un nom ou des mots-clés.';
+                return;
+            }
+
+            aiTextStatus.textContent = 'Génération du texte en cours...';
+            aiGenerateTextBtn.disabled = true;
+
+            try {
+                const apiKey = "AIzaSyDeTIQtd0xLZAIamRfajdQd2vAGrjIWGi4";
+                
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                const prompt = `En tant qu'assistant de fiche produit, génère une description pour "${productName}". La description doit commencer par une seule phrase d'accroche courte et percutante. Juste après, à la ligne, continue avec une liste à puces concise (- Caractéristique : Valeur) des spécifications techniques et des caractéristiques clés. La réponse doit être en texte brut, sans formatage Markdown. Format attendu : NOM : [Nom clair du produit] ;;; DESCRIPTION : [Phrase d'accroche.]\n\n- Spécification : ...\n- Autre Spécification : ...`;
+
+                const payload = { contents: [{ parts: [{ text: prompt }] }] };
+
+                const result = await callGenerativeApi(apiUrl, payload);
+                const text = result.candidates[0].content.parts[0].text;
+                
+                const parts = text.split(';;;');
+                const generatedName = parts[0].replace('NOM :', '').trim();
+                const generatedDesc = parts[1].replace('DESCRIPTION :', '').trim();
+
+                document.getElementById('product-name').value = generatedName;
+                document.getElementById('product-description').value = generatedDesc;
+                aiTextStatus.textContent = 'Description générée avec succès !';
+
+            } catch (error) {
+                console.error('Erreur du générateur de texte IA:', error);
+                aiTextStatus.textContent = `Erreur: ${error.message}`;
+            } finally {
+                aiGenerateTextBtn.disabled = false;
+            }
+        });
+    }
+
     // ================== APPEL INITIAL ==================
     loadAndRenderProducts();
     initSearchFunctionality();
