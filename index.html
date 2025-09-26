@@ -86,7 +86,6 @@
         <div class="container mx-auto px-2 sm:px-4 py-2 flex justify-between items-center">
             <div class="flex items-center space-x-2 sm:space-x-4">
                 <a href="#" class="nav-link flex-shrink-0" data-page="accueil">
-                     <!-- CORRECTION: Nouveau logo uniquement ici -->
                      <img src="https://i.ibb.co/4nXZ4R2V/image-removebg-preview.png" alt="Logo Aridago" class="h-12 sm:h-14 md:h-16 w-auto">
                 </a>
                 <nav class="flex items-center space-x-1 sm:space-x-2 md:space-x-4 text-xs sm:text-sm md:text-base">
@@ -111,8 +110,8 @@
 
         <section id="page-accueil" class="page-content">
             <div class="relative bg-slate-900 text-white flex items-center justify-center min-h-[500px] overflow-hidden">
-                <div class="absolute inset-0 bg-cover bg-center opacity-30" style="background-image: url('https://images.unsplash.com/photo-1578575437130-5278ce685a21?auto=format&fit=crop&w=1500&q=80');"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/50 to-transparent"></div>
+                <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://i.ibb.co/8q8LMyF/Gemini-Generated-Image-q83rbmq83rbmq83r.png');"></div>
+                <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
                 <div class="relative text-center max-w-3xl px-4 z-10">
                     <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">Commander en Chine ?<br>C'est maintenant <span class="text-gradient">simple et rapide !</span></h1>
                     <p class="text-lg md:text-xl text-slate-300 mb-8">Nous sommes votre intermédiaire de confiance pour tous vos achats en Chine, livrés à Madagascar.</p>
@@ -271,15 +270,16 @@
         </section>
 
         <section id="page-apropos" class="page-content hidden">
-            <!-- Hero Section -->
+            <!-- ========== SECTION MODIFIÉE ========== -->
             <div class="relative bg-slate-800 text-white flex items-center justify-center pt-24 pb-16 overflow-hidden">
-                <div class="absolute inset-0 bg-cover bg-center opacity-20" style="background-image: url('https://images.unsplash.com/photo-1578575437130-5278ce685a21?auto=format&fit=crop&w=1500&q=80');"></div>
-                <div class="absolute inset-0 bg-gradient-to-t from-slate-800 via-slate-800/70 to-transparent"></div>
+                <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://i.ibb.co/8q8LMyF/Gemini-Generated-Image-q83rbmq83rbmq83r.png');"></div>
+                <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
                 <div class="relative text-center max-w-4xl px-4 z-10">
                     <h2 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight">Votre Partenaire de Confiance Pour la Chine</h2>
                     <p class="text-lg md:text-xl text-slate-300">Nous avons créé Aridago pour rendre les achats en Chine simples, transparents et accessibles à tous depuis Madagascar.</p>
                 </div>
             </div>
+            <!-- ========== FIN DE LA SECTION MODIFIÉE ========== -->
 
             <div class="bg-white">
                 <div class="container mx-auto px-4 py-16 md:py-20">
@@ -719,7 +719,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const addProductBtn = document.getElementById('add-product');
     let productCount = 0;
     
-    // CORRECTION: Logique d'avertissement restaurée
     const linkAlertModal = document.getElementById('link-alert-modal');
     const closeLinkModalBtn = document.getElementById('close-link-modal-btn');
     let hasShownLinkAlert = localStorage.getItem('hasShownLinkAlert_Aridago');
@@ -1012,7 +1011,6 @@ document.addEventListener('DOMContentLoaded', function() {
     // ================== LOGIQUE GÉNÉRATEUR IA ==================
 
     async function generateAIPost(product) {
-        // CORRECTION: Ajout de la clé API.
         const apiKey = "AIzaSyDeTIQtd0xLZAIamRfajdQd2vAGrjIWGi4";
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
 
@@ -1048,7 +1046,6 @@ document.addEventListener('DOMContentLoaded', function() {
             const candidate = result.candidates?.[0];
 
             if (candidate && candidate.content?.parts?.[0]?.text) {
-                // CORRECTION: Nettoyage du texte pour enlever les astérisques de Markdown.
                 return candidate.content.parts[0].text.replace(/\*\*/g, '').replace(/\*/g, '');
             } else {
                  if (result.promptFeedback && result.promptFeedback.blockReason) {
@@ -1209,5 +1206,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
-
 
