@@ -571,7 +571,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         window.scrollTo(0, 0);
         if (pageId === 'page-boutique') renderBoutique();
-        initScrollAnimations(); // Relancer les animations à chaque changement de page
+        initScrollAnimations();
     }
     
     function viewProduct(productId) {
@@ -616,10 +616,6 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     document.getElementById('year').textContent = new Date().getFullYear();
-    if(document.querySelector('.current-year')) {
-        document.querySelector('.current-year').textContent = new Date().getFullYear();
-    }
-
 
     // ================== LOGIQUE BOUTIQUE ==================
     async function loadAndRenderProducts() {
@@ -634,11 +630,11 @@ document.addEventListener('DOMContentLoaded', function() {
             renderPopularProducts(featuredProducts);
 
             if (auth.currentUser) {
+                renderAdminStats();
                 renderAdminList();
                 initIAGenerator();
                 initAiFeatures();
             }
-            
         } catch (error) {
             console.error("Erreur de chargement: ", error);
             if(document.getElementById('loading-products')) {
@@ -896,6 +892,7 @@ document.addEventListener('DOMContentLoaded', function() {
         </div>
         <div id="admin-dashboard" class="hidden">
             <h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2>
+            <div id="admin-stats" class="grid grid-cols-2 gap-4 mb-8"></div>
             
             <div class="bg-gray-700 p-6 rounded-2xl mb-8 border-2 border-dashed border-yellow-400">
                 <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-magic mr-3 text-yellow-400"></i>Générateur de Fiche Produit par IA</h3>
@@ -916,6 +913,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 <form id="admin-product-form" class="space-y-4">
                     <input type="hidden" id="product-id">
                     <div><label>Nom</label><input type="text" id="product-name" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
+                    <div><label>Catégorie</label><input type="text" id="product-category" list="category-suggestions" class="w-full bg-gray-600 rounded-lg p-2 text-white"><datalist id="category-suggestions"></datalist></div>
                     <div><label>Description</label><textarea id="product-description" required class="w-full bg-gray-600 rounded-lg p-2 text-white" rows="6"></textarea></div>
                     <div><label>Prix (Ar)</label><input type="number" id="product-price" class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
                     <div class="grid grid-cols-2 gap-4">
@@ -959,6 +957,7 @@ document.addEventListener('DOMContentLoaded', function() {
         adminLogin.classList.toggle('hidden', !!user);
         adminDashboard.classList.toggle('hidden', !user);
         if (user) {
+            renderAdminStats();
             renderAdminList();
             initIAGenerator(); 
             initAiFeatures();
@@ -1009,6 +1008,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function resetAdminForm() {
         adminProductForm.reset();
         document.getElementById('product-id').value = '';
+        document.getElementById('product-category').value = '';
         document.getElementById('product-in-stock').checked = true;
         document.getElementById('product-featured').checked = false;
         document.getElementById('product-images-json').value = '[]';
@@ -1025,6 +1025,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         const data = {
             name: document.getElementById('product-name').value,
+            category: document.getElementById('product-category').value.trim() || null,
             description: document.getElementById('product-description').value,
             price: priceValue ? parseFloat(priceValue) : null,
             inStockMadagascar: document.getElementById('product-in-stock').checked,
@@ -1049,9 +1050,33 @@ document.addEventListener('DOMContentLoaded', function() {
         } catch (error) { console.error("Erreur de suppression: ", error); }
         finally { deleteConfirmModal.style.display = 'none'; }
     });
+    
+    function renderAdminStats() {
+        const statsContainer = document.getElementById('admin-stats');
+        if (!statsContainer) return;
+        const totalProducts = boutiqueProducts.length;
+        const inStockMada = boutiqueProducts.filter(p => p.inStockMadagascar !== false).length;
+        statsContainer.innerHTML = `
+            <div class="bg-gray-700 p-4 rounded-lg text-center">
+                <p class="text-3xl font-bold">${totalProducts}</p>
+                <p class="text-sm text-gray-400">Produits au total</p>
+            </div>
+            <div class="bg-gray-700 p-4 rounded-lg text-center">
+                <p class="text-3xl font-bold">${inStockMada}</p>
+                <p class="text-sm text-gray-400">En stock à Mada</p>
+            </div>
+        `;
+    }
 
     function renderAdminList() {
         if (!adminProductList) return;
+        
+        const categories = [...new Set(boutiqueProducts.map(p => p.category).filter(Boolean))];
+        const suggestionsContainer = document.getElementById('category-suggestions');
+        if (suggestionsContainer) {
+            suggestionsContainer.innerHTML = categories.map(c => `<option value="${c}"></option>`).join('');
+        }
+
         adminProductList.innerHTML = boutiqueProducts.map(p => {
             const statusIndicator = p.inStockMadagascar !== false
                 ? `<span class="h-3 w-3 rounded-full bg-green-500 flex-shrink-0" title="Disponible à Madagascar"></span>`
@@ -1066,6 +1091,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         ${featuredIndicator}
                         <div class="truncate">
                             <p class="font-bold truncate">${p.name}</p>
+                            <p class="text-xs text-gray-400 truncate">${p.category || 'Sans catégorie'}</p>
                         </div>
                     </div>
                     <div class="flex space-x-2 flex-shrink-0">
@@ -1079,6 +1105,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const p = boutiqueProducts.find(prod => prod.id === e.currentTarget.dataset.id);
             document.getElementById('product-id').value = p.id;
             document.getElementById('product-name').value = p.name;
+            document.getElementById('product-category').value = p.category || '';
             document.getElementById('product-description').value = p.description;
             document.getElementById('product-price').value = p.price || '';
             document.getElementById('product-in-stock').checked = p.inStockMadagascar !== false;
@@ -1292,18 +1319,16 @@ document.addEventListener('DOMContentLoaded', function() {
         if ("IntersectionObserver" in window) {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    // Si l'élément est visible, on ajoute la classe, sinon on l'enlève
                     if (entry.isIntersecting) {
                         entry.target.classList.add('scrolled-in');
                     } else {
                         entry.target.classList.remove('scrolled-in');
                     }
                 });
-            }, { threshold: 0.1 }); // Se déclenche quand 10% de l'élément est visible
+            }, { threshold: 0.1 });
             
             animatedElements.forEach(el => observer.observe(el));
         } else {
-            // Fallback pour les anciens navigateurs
             animatedElements.forEach(el => el.classList.add('scrolled-in'));
         }
     }
