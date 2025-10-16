@@ -702,6 +702,7 @@ document.addEventListener('DOMContentLoaded', function() {
             ? filteredProducts.map(createProductCard).join('')
             : `<p class="text-center text-gray-500 col-span-full">Aucun produit ne correspond à votre recherche.</p>`;
         addProductCardListeners();
+        initScrollAnimations();
     }
     
     function renderPopularProducts(products) {
@@ -713,6 +714,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         container.innerHTML = `<div class="container mx-auto px-4"><div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold mb-2">Produits Populaires</h2><p class="text-slate-600 text-lg">Les articles les plus demandés</p></div><div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">${products.map(createProductCard).join('')}</div></div>`;
         addProductCardListeners();
+        initScrollAnimations();
     }
 
     function renderProductDetail(productId) {
@@ -1124,6 +1126,54 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // ================== LOGIQUE GÉNÉRATEUR IA ==================
 
+    async function callGenerativeApi(url, payload, maxRetries = 3) {
+        let attempt = 0;
+        while (attempt < maxRetries) {
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                const responseText = await response.text();
+                
+                if (!response.ok) {
+                    let errorDetails = `(Status: ${response.status})`;
+                    try {
+                        const errorResult = JSON.parse(responseText);
+                        errorDetails = errorResult?.error?.message || `(Status: ${response.status})`;
+                    } catch (e) {
+                        errorDetails = responseText || response.statusText;
+                    }
+                    throw new Error(`Erreur API ${errorDetails}`);
+                }
+                
+                const result = JSON.parse(responseText);
+
+                if (!result.candidates || result.candidates.length === 0) {
+                    if (result.promptFeedback) {
+                        const blockReason = result.promptFeedback.blockReason;
+                        console.error("Prompt bloqué:", result.promptFeedback);
+                        throw new Error(`La requête a été bloquée: ${blockReason}`);
+                    }
+                    throw new Error("La réponse de l'API ne contient aucun résultat valide.");
+                }
+
+                return result;
+
+            } catch (error) {
+                console.error(`Tentative ${attempt + 1} échouée:`, error);
+                attempt++;
+                if (attempt >= maxRetries) {
+                    throw error; 
+                }
+                const delay = Math.pow(2, attempt) * 200; 
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+        }
+    }
+
     async function generateAIPost(product) {
         const apiKey = "AIzaSyDeTIQtd0xLZAIamRfajdQd2vAGrjIWGi4";
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
@@ -1226,54 +1276,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const aiTextStatus = document.getElementById('ai-text-status');
 
         if(!aiGenerateTextBtn) return;
-
-        async function callGenerativeApi(url, payload, maxRetries = 3) {
-            let attempt = 0;
-            while (attempt < maxRetries) {
-                try {
-                    const response = await fetch(url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-
-                    const responseText = await response.text();
-                    
-                    if (!response.ok) {
-                        let errorDetails = `(Status: ${response.status})`;
-                        try {
-                            const errorResult = JSON.parse(responseText);
-                            errorDetails = errorResult?.error?.message || `(Status: ${response.status})`;
-                        } catch (e) {
-                           errorDetails = responseText || response.statusText;
-                        }
-                        throw new Error(`Erreur API ${errorDetails}`);
-                    }
-                    
-                    const result = JSON.parse(responseText);
-
-                    if (!result.candidates || result.candidates.length === 0) {
-                        if (result.promptFeedback) {
-                            const blockReason = result.promptFeedback.blockReason;
-                            console.error("Prompt bloqué:", result.promptFeedback);
-                            throw new Error(`La requête a été bloquée: ${blockReason}`);
-                        }
-                        throw new Error("La réponse de l'API ne contient aucun résultat valide.");
-                    }
-
-                    return result;
-
-                } catch (error) {
-                    console.error(`Tentative ${attempt + 1} échouée:`, error);
-                    attempt++;
-                    if (attempt >= maxRetries) {
-                        throw error; 
-                    }
-                    const delay = Math.pow(2, attempt) * 200; 
-                    await new Promise(resolve => setTimeout(resolve, delay));
-                }
-            }
-        }
 
         aiGenerateTextBtn.addEventListener('click', async () => {
             const productName = aiTextName.value.trim();
