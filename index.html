@@ -179,7 +179,7 @@
         <section id="page-devis" class="page-content hidden">
             <div class="container mx-auto max-w-4xl p-4 md:p-8">
         
-                <header class="text-center mb-10">
+                <header class="text-center mb-10 scroll-animate">
                     <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="mx-auto h-24 md:h-36 w-auto mb-6">
                     <h1 class="text-3xl md:text-5xl font-extrabold text-gray-800 leading-tight">
                         Commander en Chine ?<br>C'est maintenant <span class="theme-gradient-text">simple et rapide !</span>
@@ -189,7 +189,7 @@
                     </p>
                 </header>
 
-                <section class="mb-12">
+                <section class="mb-12 scroll-animate">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center">
                         <div class="bg-white p-6 rounded-2xl shadow-sm">
                             <div class="theme-gradient-bg w-12 h-12 flex items-center justify-center rounded-full text-white font-bold text-xl mx-auto mb-4">1</div>
@@ -209,7 +209,7 @@
                     </div>
                 </section>
 
-                <main class="bg-white p-6 md:p-10 rounded-3xl shadow-lg">
+                <main class="bg-white p-6 md:p-10 rounded-3xl shadow-lg scroll-animate">
                     <form id="devis-form">
                         <fieldset class="border-b-2 border-gray-100 pb-8">
                             <legend class="text-xl md:text-2xl font-bold text-gray-800 mb-6 flex items-center">
@@ -239,7 +239,7 @@
                     </form>
                 </main>
 
-                <section class="mt-12 bg-white p-6 md:p-10 rounded-3xl shadow-lg">
+                <section class="mt-12 bg-white p-6 md:p-10 rounded-3xl shadow-lg scroll-animate">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Questions fréquentes (FAQ)</h2>
                     <div id="faq-container" class="space-y-2">
                         <div class="faq-item bg-gray-50 rounded-xl">
@@ -290,13 +290,6 @@
                     </div>
                 </section>
                 
-                <footer class="mt-12 text-center text-gray-500 text-sm">
-                    <div class="flex justify-center items-center space-x-6 mb-4">
-                        <a href="https://www.facebook.com/Aridagochine/" target="_blank" class="hover:text-blue-600 transition"><svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z"/></svg></a>
-                    </div>
-                    <p>&copy; <span class="current-year"></span> Aridago - Tous droits réservés.</p>
-                </footer>
-
             </div>
         </section>
 
@@ -578,6 +571,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         window.scrollTo(0, 0);
         if (pageId === 'page-boutique') renderBoutique();
+        initScrollAnimations(); // Relancer les animations à chaque changement de page
     }
     
     function viewProduct(productId) {
@@ -622,7 +616,10 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     document.getElementById('year').textContent = new Date().getFullYear();
-    document.querySelector('.current-year').textContent = new Date().getFullYear();
+    if(document.querySelector('.current-year')) {
+        document.querySelector('.current-year').textContent = new Date().getFullYear();
+    }
+
 
     // ================== LOGIQUE BOUTIQUE ==================
     async function loadAndRenderProducts() {
@@ -641,8 +638,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 initIAGenerator();
                 initAiFeatures();
             }
-            // initScrollAnimations(); // Lancer les animations -> Déplacé pour une meilleure gestion
-
+            
         } catch (error) {
             console.error("Erreur de chargement: ", error);
             if(document.getElementById('loading-products')) {
@@ -710,7 +706,6 @@ document.addEventListener('DOMContentLoaded', function() {
             ? filteredProducts.map(createProductCard).join('')
             : `<p class="text-center text-gray-500 col-span-full">Aucun produit ne correspond à votre recherche.</p>`;
         addProductCardListeners();
-        initScrollAnimations();
     }
     
     function renderPopularProducts(products) {
@@ -722,7 +717,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         container.innerHTML = `<div class="container mx-auto px-4"><div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold mb-2">Produits Populaires</h2><p class="text-slate-600 text-lg">Les articles les plus demandés</p></div><div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">${products.map(createProductCard).join('')}</div></div>`;
         addProductCardListeners();
-        initScrollAnimations();
     }
 
     function renderProductDetail(productId) {
@@ -1296,16 +1290,20 @@ document.addEventListener('DOMContentLoaded', function() {
     function initScrollAnimations() {
         const animatedElements = document.querySelectorAll('.scroll-animate');
         if ("IntersectionObserver" in window) {
-            const observer = new IntersectionObserver((entries, observer) => {
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
+                    // Si l'élément est visible, on ajoute la classe, sinon on l'enlève
                     if (entry.isIntersecting) {
                         entry.target.classList.add('scrolled-in');
-                        observer.unobserve(entry.target);
+                    } else {
+                        entry.target.classList.remove('scrolled-in');
                     }
                 });
-            }, { threshold: 0.1 });
+            }, { threshold: 0.1 }); // Se déclenche quand 10% de l'élément est visible
+            
             animatedElements.forEach(el => observer.observe(el));
         } else {
+            // Fallback pour les anciens navigateurs
             animatedElements.forEach(el => el.classList.add('scrolled-in'));
         }
     }
@@ -1317,5 +1315,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
-
 
