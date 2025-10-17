@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aridago - Boutique, Devis & Échange</title>
+    <title>Aridago - Boutique, Devis & Transfert</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -131,7 +131,7 @@
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="accueil">Accueil</a>
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="boutique">Boutique</a>
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="devis">Devis</a>
-                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="echange">Échange</a>
+                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="echange">Transfert</a>
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="apropos">À Propos</a>
                 </nav>
             </div>
@@ -279,17 +279,16 @@
         </section>
         
        <section id="page-echange" class="page-content hidden">
-            <div class="w-full h-[300px] md:h-[400px] overflow-hidden">
-                 <img src="https://i.ibb.co/gFWLdn0q/Ariary-1.png" alt="Aridago Échange Service" class="w-full h-full object-cover">
-            </div>
-
             <div class="container mx-auto max-w-4xl p-4 md:p-8">
+                <div class="w-full max-w-2xl mx-auto mb-10 mt-8">
+                    <img src="https://i.ibb.co/bM3hhhfC/Ariary-2.png" alt="Aridago Transfert d'argent Service" class="w-full h-auto rounded-2xl shadow-lg">
+                </div>
                  <header class="text-center mb-10 scroll-animate">
                     <h1 class="text-3xl md:text-5xl font-extrabold text-gray-800 leading-tight">
-                        Service d'Échange Simplifié<br><span class="theme-gradient-text">Ariary (MGA) & Yuan (RMB)</span>
+                        Service de Transfert d'Argent<br><span class="theme-gradient-text">Ariary (MGA) & Yuan (RMB)</span>
                     </h1>
                     <p class="mt-4 text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
-                        Échangez vos devises simplement, rapidement et en toute sécurité pour vos transactions entre Madagascar et la Chine.
+                        Transférez votre argent simplement, rapidement et en toute sécurité pour vos transactions entre Madagascar et la Chine.
                     </p>
                 </header>
 
@@ -515,7 +514,7 @@
                         <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="accueil">Accueil</a></li>
                         <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="boutique">Boutique</a></li>
                         <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="devis">Devis sur Mesure</a></li>
-                        <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="echange">Échange</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="echange">Transfert</a></li>
                         <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="apropos">À Propos</a></li>
                      </ul>
                 </div>
@@ -1222,7 +1221,7 @@ document.addEventListener('DOMContentLoaded', function() {
             const paymentValue = selectedPayment.value;
             const receptionValue = selectedReception.value;
 
-            const message = `*NOUVELLE DEMANDE D'ÉCHANGE - ARIDAGO*\n\n` +
+            const message = `*NOUVELLE DEMANDE DE TRANSFERT D'ARGENT - ARIDAGO*\n\n` +
                             `-----------------------------------\n` +
                             `*Montant envoyé :* ${fromAmount} ${fromCurrency}\n` +
                             `*Montant à recevoir :* ${toAmount} ${toCurrency}\n` +
