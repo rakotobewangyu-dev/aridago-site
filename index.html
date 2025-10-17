@@ -78,7 +78,6 @@
         #confirmation-modal, #price-alert-modal, #link-alert-modal, #delete-confirm-modal {
             display: none;
         }
-        /* Améliorations UI */
         .cursor-zoom-in { cursor: zoom-in; }
         .scroll-animate {
             opacity: 0;
@@ -91,19 +90,19 @@
         }
         .category-filter {
             transition: all 0.3s ease-in-out;
-            background-color: #f3f4f6; /* bg-gray-100 */
-            color: #4b5563; /* text-gray-600 */
+            background-color: #f3f4f6;
+            color: #4b5563;
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
         }
         .category-filter:hover {
              transform: translateY(-2px);
              box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-             background-color: #e5e7eb; /* bg-gray-200 */
+             background-color: #e5e7eb;
         }
         .category-filter.active-filter {
-            background: linear-gradient(90deg, #d92a2a, #f7b731); /* Use the theme gradient */
+            background: linear-gradient(90deg, #d92a2a, #f7b731);
             color: white;
-            box-shadow: 0 4px 6px -1px rgba(217, 42, 42, 0.3), 0 2px 4px -2px rgba(247, 183, 49, 0.3); /* shadow-md with theme colors */
+            box-shadow: 0 4px 6px -1px rgba(217, 42, 42, 0.3), 0 2px 4px -2px rgba(247, 183, 49, 0.3);
             transform: translateY(-2px);
         }
         .sr-only {
@@ -129,14 +128,11 @@
 <body class="text-slate-800">
 
     <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
-        <!-- Modification 1: Header layout adjusted -->
-        <div class="container mx-auto px-2 sm:px-4 py-2 flex items-center justify-between md:justify-start relative">
-            <!-- Logo -->
+        <div class="container mx-auto px-2 sm:px-4 py-2 flex items-center justify-between md:justify-start">
             <a href="#" class="nav-link flex-shrink-0" data-page="accueil">
                  <img src="https://i.ibb.co/4nXZ4R2V/image-removebg-preview.png" alt="Logo Aridago" class="h-14 w-auto">
             </a>
             
-            <!-- Navigation Container -->
             <div class="flex-1 flex justify-end md:justify-center">
                  <nav class="flex items-center space-x-1 sm:space-x-2 md:space-x-4 text-[10px] sm:text-sm md:text-base">
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="accueil">Accueil</a>
@@ -154,7 +150,6 @@
     </div>
 
     <main>
-
         <section id="page-accueil" class="page-content">
             <div class="relative bg-slate-900 text-white flex items-center justify-center min-h-[500px] overflow-hidden">
                 <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://i.ibb.co/8q8LMyF/Gemini-Generated-Image-q83rbmq83rbmq83r.png');"></div>
@@ -174,12 +169,12 @@
                             <h3 class="font-bold text-lg mb-2">Recherche de produits</h3>
                             <p class="text-slate-600">Nous trouvons pour vous les meilleurs produits au meilleur prix.</p>
                         </div>
-                        <div class="feature p-4 scroll-animate" style="transition-delay: 100ms;">
+                        <div class="feature p-4 scroll-animate">
                             <i class="fas fa-handshake text-4xl text-red-600 mb-4"></i>
                             <h3 class="font-bold text-lg mb-2">Intermédiaire de confiance</h3>
                             <p class="text-slate-600">Nous gérons l'achat, la vérification et le paiement pour vous.</p>
                         </div>
-                        <div class="feature p-4 scroll-animate" style="transition-delay: 200ms;">
+                        <div class="feature p-4 scroll-animate">
                             <i class="fas fa-shipping-fast text-4xl text-red-600 mb-4"></i>
                             <h3 class="font-bold text-lg mb-2">Transport sécurisé</h3>
                             <p class="text-slate-600">Nous nous occupons de l'expédition de la Chine vers Madagascar.</p>
@@ -188,8 +183,7 @@
                 </div>
             </section>
 
-             <div id="popular-products-accueil" class="py-12 md:py-16 scroll-animate">
-                 </div>
+             <div id="popular-products-accueil" class="py-12 md:py-16 scroll-animate"></div>
         </section>
 
         <section id="page-boutique" class="page-content hidden">
@@ -215,7 +209,6 @@
 
         <section id="page-devis" class="page-content hidden">
             <div class="container mx-auto max-w-4xl p-4 md:p-8">
-        
                 <header class="text-center mb-10 scroll-animate">
                     <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="mx-auto h-24 md:h-36 w-auto mb-6">
                     <h1 class="text-3xl md:text-5xl font-extrabold text-gray-800 leading-tight">
@@ -278,10 +271,8 @@
 
                 <section class="mt-12 bg-white p-6 md:p-10 rounded-3xl shadow-lg scroll-animate">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Questions fréquentes (FAQ)</h2>
-                    <div id="faq-container" class="space-y-2">
-                        </div>
+                    <div id="faq-container" class="space-y-2"></div>
                 </section>
-                
             </div>
         </section>
         
@@ -307,9 +298,7 @@
                             <label id="from-currency-label" for="from-amount" class="block text-sm font-semibold text-gray-500 mb-2">Vous envoyez</label>
                             <div class="relative flex items-center">
                                 <input type="number" id="from-amount" name="from-amount" class="w-full bg-transparent text-3xl font-bold text-slate-800 focus:outline-none" placeholder="0">
-                                <div id="from-currency-badge" class="flex-shrink-0 bg-green-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center">
-                                    MGA
-                                </div>
+                                <div id="from-currency-badge" class="flex-shrink-0 bg-green-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center">MGA</div>
                             </div>
                         </div>
 
@@ -325,27 +314,21 @@
                             <label id="to-currency-label" for="to-amount" class="block text-sm font-semibold text-gray-500 mb-2">Le bénéficiaire reçoit</label>
                             <div class="relative flex items-center">
                                 <input type="number" id="to-amount" name="to-amount" class="w-full bg-transparent text-3xl font-bold text-slate-800 focus:outline-none" placeholder="0">
-                                <div id="to-currency-badge" class="flex-shrink-0 bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center">
-                                     RMB
-                                </div>
+                                <div id="to-currency-badge" class="flex-shrink-0 bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center">RMB</div>
                             </div>
                         </div>
 
-                        <div id="rate-display" class="text-center text-gray-500 font-semibold pt-2 text-lg">
-                            Chargement du taux...
-                        </div>
+                        <div id="rate-display" class="text-center text-gray-500 font-semibold pt-2 text-lg">Chargement du taux...</div>
                     </div>
 
                     <div class="mt-8 pt-6 border-t border-gray-200">
-                         <label class="block text-lg font-semibold text-gray-700 mb-4 text-center">1. Choisissez votre moyen de paiement</label>
-                         <div id="payment-options-from" class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-                         </div>
+                         <label for="payment-method-select" class="block text-lg font-semibold text-gray-700 mb-4 text-center">1. Choisissez votre moyen de paiement</label>
+                         <div id="payment-options-from"></div>
                     </div>
 
                     <div class="mt-8 pt-6 border-t border-gray-200">
-                         <label class="block text-lg font-semibold text-gray-700 mb-4 text-center">2. Choisissez le moyen de réception</label>
-                         <div id="reception-options-to" class="grid grid-cols-2 gap-2 md:gap-4">
-                         </div>
+                         <label for="reception-method-select" class="block text-lg font-semibold text-gray-700 mb-4 text-center">2. Choisissez le moyen de réception</label>
+                         <div id="reception-options-to"></div>
                     </div>
 
                     <div class="mt-10 text-center">
@@ -358,145 +341,11 @@
             </div>
         </section>
 
-        <section id="page-apropos" class="page-content hidden">
-            <div class="relative bg-slate-800 text-white flex items-center justify-center pt-24 pb-16 overflow-hidden">
-                <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://i.ibb.co/8q8LMyF/Gemini-Generated-Image-q83rbmq83rbmq83r.png');"></div>
-                <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-                <div class="relative text-center max-w-4xl px-4 z-10">
-                    <h2 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight text-gradient">Votre Partenaire de Confiance Pour la Chine</h2>
-                    <p class="text-lg md:text-xl text-slate-300">Nous avons créé Aridago pour rendre les achats en Chine simples, transparents et accessibles à tous depuis Madagascar.</p>
-                </div>
-            </div>
-
-            <div class="bg-white">
-                <div class="container mx-auto px-4 py-16 md:py-20">
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16 md:mb-24 scroll-animate">
-                        <div class="order-last md:order-first">
-                            <h3 class="text-3xl font-bold mb-6 text-gradient">Qui sommes-nous ?</h3>
-                            <p class="text-slate-700 mb-4 text-base md:text-lg">
-                                Fondé par des experts en commerce international durablement implantés à Madagascar et en Chine, Aridago est né d'une vision claire : devenir le <strong>partenaire de confiance</strong> des entreprises et particuliers malgaches. Nous avons identifié un besoin fondamental : la nécessité d'un intermédiaire fiable capable de surmonter les barrières linguistiques, culturelles et logistiques.
-                            </p>
-                            <p class="text-slate-700 text-base md:text-lg">
-                                Notre double présence est notre plus grande force. L'équipe en Chine opère au plus près des fabricants, tandis que notre équipe à Madagascar assure une compréhension parfaite de vos besoins. Cette synergie unique nous permet de construire un <strong>pont solide et fiable</strong> entre votre projet et les meilleures opportunités du marché chinois.
-                            </p>
-                        </div>
-                        <div>
-                            <img src="https://i.ibb.co/pvdKjdPG/Capture-d-cran-2025-09-09-183658.png" alt="Équipe Aridago" class="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16 md:mb-24 scroll-animate">
-                        <div>
-                            <img src="https://i.ibb.co/7dZdpFcJ/Untitled-design-1.png" alt="Services Aridago" class="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
-                        </div>
-                        <div>
-                            <h3 class="text-3xl font-bold mb-6 text-gradient">Que faisons-nous ?</h3>
-                            <p class="text-slate-700 mb-4 text-base md:text-lg">
-                                Nous offrons un service complet d'intermédiaire d'achat. Vous avez trouvé un produit ? Nous nous occupons de tout : communication, négociation, et paiement sécurisé.
-                            </p>
-                            <p class="text-slate-700 text-base md:text-lg">
-                                En plus, notre boutique vous propose une sélection de produits déjà en stock à Madagascar, prêts à être récupérés sur place pour une satisfaction immédiate.
-                            </p>
-                        </div>
-                    </div>
-
-                    <div class="text-center mb-16 md:mb-24 scroll-animate">
-                        <h3 class="text-3xl md:text-4xl font-bold mb-12 text-gradient">Nos Domaines d'Expertise</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                            <div class="bg-slate-50 p-6 rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
-                                <h4 class="font-bold text-xl mb-2 text-blue-600">Produits Métallurgiques</h4>
-                                <p class="text-slate-600">Aciers, aluminium, fer. Nous maîtrisons les nuances des matières premières aux produits semi-finis pour l'industrie.</p>
-                            </div>
-                            <div class="bg-slate-50 p-6 rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
-                                <h4 class="font-bold text-xl mb-2 text-blue-600">Produits Industriels</h4>
-                                <p class="text-slate-600">Accès à un large éventail de machines-outils, pièces mécaniques et équipements spécialisés.</p>
-                            </div>
-                            <div class="bg-slate-50 p-6 rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
-                                <h4 class="font-bold text-xl mb-2 text-blue-600">Matériaux de Construction</h4>
-                                <p class="text-slate-600">Partenaire de vos chantiers, nous sourçons tous les matériaux, du gros œuvre aux finitions.</p>
-                            </div>
-                            <div class="bg-slate-50 p-6 rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
-                                <h4 class="font-bold text-xl mb-2 text-blue-600">Meubles & Équipements de Maison</h4>
-                                <p class="text-slate-600">Nous identifions les fabricants de qualité pour vos projets d'ameublement et vos appareils électroménagers.</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="text-center mb-16 md:mb-24 scroll-animate">
-                        <h3 class="text-3xl md:text-4xl font-bold mb-4">Notre Processus Simplifié</h3>
-                        <p class="text-slate-600 text-base md:text-lg max-w-2xl mx-auto">En quatre étapes claires, nous vous accompagnons de la recherche à la livraison.</p>
-                        <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 relative">
-                            <div class="hidden md:block absolute top-10 left-0 w-full h-px bg-slate-200" style="z-index: 0;"></div>
-                            
-                            <div class="relative z-10 flex flex-col items-center p-4 md:p-6">
-                                <div class="theme-gradient-bg w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-2xl md:text-3xl mx-auto mb-4 shadow-lg border-4 border-white">1</div>
-                                <h4 class="font-bold text-lg text-gray-800">Votre Demande</h4>
-                                <p class="text-gray-500 text-sm mt-1">Vous soumettez votre demande via notre formulaire de devis détaillé.</p>
-                            </div>
-                            <div class="relative z-10 flex flex-col items-center p-4 md:p-6">
-                                <div class="theme-gradient-bg w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-2xl md:text-3xl mx-auto mb-4 shadow-lg border-4 border-white">2</div>
-                                <h4 class="font-bold text-lg text-gray-800">Devis & Validation</h4>
-                                <p class="text-gray-500 text-sm mt-1">Nous vous envoyons un devis clair. Après votre accord et un acompte, nous sécurisons l'achat.</p>
-                            </div>
-                            <div class="relative z-10 flex flex-col items-center p-4 md:p-6">
-                                <div class="theme-gradient-bg w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-2xl md:text-3xl mx-auto mb-4 shadow-lg border-4 border-white">3</div>
-                                <h4 class="font-bold text-lg text-gray-800">Vérification</h4>
-                                <p class="text-gray-500 text-sm mt-1">Nos équipes effectuent un contrôle qualité rigoureux et vous envoient photos et vidéos pour validation.</p>
-                            </div>
-                            <div class="relative z-10 flex flex-col items-center p-4 md:p-6">
-                                <div class="theme-gradient-bg w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-2xl md:text-3xl mx-auto mb-4 shadow-lg border-4 border-white">4</div>
-                                <h4 class="font-bold text-lg text-gray-800">Expédition</h4>
-                                <p class="text-gray-500 text-sm mt-1">Nous organisons le transport et le dédouanement pour une livraison fluide à Madagascar.</p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="bg-slate-50 rounded-2xl p-8 md:p-12 mb-16 md:mb-24 scroll-animate">
-                        <h3 class="text-3xl md:text-4xl font-bold mb-12 text-center text-gradient">Nos Engagements</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                            <div class="text-center p-8 bg-white rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
-                                <div class="w-16 h-16 md:w-20 md:h-20 mx-auto mb-6 rounded-full bg-red-100 flex items-center justify-center">
-                                    <i class="fas fa-shield-alt text-3xl text-red-600"></i>
-                                </div>
-                                <h4 class="font-bold text-xl mb-2">Confiance</h4>
-                                <p class="text-slate-600">Transparence totale dans nos processus et nos tarifs pour une collaboration sereine.</p>
-                            </div>
-                            <div class="text-center p-8 bg-white rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
-                                <div class="w-16 h-16 md:w-20 md:h-20 mx-auto mb-6 rounded-full bg-yellow-100 flex items-center justify-center">
-                                    <i class="fas fa-bolt text-3xl text-yellow-600"></i>
-                                </div>
-                                <h4 class="font-bold text-xl mb-2">Efficacité</h4>
-                                <p class="text-slate-600">Nous optimisons chaque étape pour vous garantir des délais de traitement rapides.</p>
-                            </div>
-                            <div class="text-center p-8 bg-white rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
-                                <div class="w-16 h-16 md:w-20 md:h-20 mx-auto mb-6 rounded-full bg-green-100 flex items-center justify-center">
-                                    <i class="fas fa-hands-helping text-3xl text-green-600"></i>
-                                </div>
-                                <h4 class="font-bold text-xl mb-2">Accompagnement</h4>
-                                <p class="text-slate-600">Nous offrons un support personnalisé et réactif à chaque étape de votre commande.</p>
-                            </div>
-                        </div>
-                         <p class="text-center text-slate-700 mt-12 text-lg">Choisir Aridago, c'est choisir la sérénité. Nous assurons une <strong>sélection rigoureuse</strong> des fournisseurs, la <strong>négociation des meilleurs prix</strong>, une <strong>transparence totale</strong> et un <strong>service après-vente réactif</strong>.</p>
-                    </div>
-
-                    <div class="text-center theme-gradient-bg rounded-2xl p-10 text-white shadow-2xl">
-                        <h3 class="text-3xl md:text-4xl font-bold mb-4">Prêt à simplifier vos achats ?</h3>
-                        <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Rejoignez les dizaines de clients qui nous font confiance pour leurs approvisionnements en Chine.</p>
-                        <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                            <a href="#" class="bg-white text-red-600 font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 shadow-lg nav-link" data-page="devis">Demander un devis</a>
-                            <a href="#" class="border-2 border-white text-white font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 hover:bg-white hover:text-red-600 nav-link" data-page="boutique">Explorer la Boutique</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
+        <section id="page-apropos" class="page-content hidden"></section>
 
         <section id="page-detail" class="page-content hidden bg-white py-12"></section>
 
-        <section id="page-admin" class="page-content hidden container mx-auto px-4 py-16">
-        </section>
-
+        <section id="page-admin" class="page-content hidden container mx-auto px-4 py-16"></section>
     </main>
     
     <footer class="bg-slate-900 text-white">
@@ -568,7 +417,6 @@
         </div>
     </div>
 
-    <!-- Lightbox Modal -->
     <div id="image-lightbox" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
         <button id="close-lightbox-btn" class="absolute top-4 right-4 text-white text-4xl font-bold hover:opacity-75">&times;</button>
         <img id="lightbox-img" src="" alt="Agrandissement du produit" class="max-w-full max-h-full object-contain rounded-lg">
@@ -581,7 +429,6 @@
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    // ================== CONFIGURATION FIREBASE & IMGBB ==================
     const firebaseConfig = {
       apiKey: "AIzaSyBa93ZQ34S4JEz6lc7yt_2ZrIiTc2Jqh9c",
       authDomain: "boutique-aridago.firebaseapp.com",
@@ -592,53 +439,39 @@ document.addEventListener('DOMContentLoaded', function() {
     };
     const IMGBB_API_KEY = '7dfb12ff69d1e1f349a28e4a788f2c1d';
 
-    // Initialisation de Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const auth = firebase.auth();
     const productsCollection = db.collection('products');
     const settingsCollection = db.collection('settings');
 
-
     let boutiqueProducts = [];
     const pages = document.querySelectorAll('.page-content');
     const navLinks = document.querySelectorAll('.nav-link');
     
-    // ================== GESTION DE LA NAVIGATION (Single Page App) ==================
-    
     function showPage(pageId, fromPopState = false) {
-        let pageFound = false;
-        pages.forEach(page => {
-            const isTargetPage = page.id === pageId;
-            page.classList.toggle('hidden', !isTargetPage);
-            if (isTargetPage) pageFound = true;
-        });
-
-        if (!pageFound) {
-            pageId = 'page-accueil';
-            document.getElementById('page-accueil').classList.remove('hidden');
-        }
+        pages.forEach(page => page.classList.add('hidden'));
+        const targetPage = document.getElementById(pageId) || document.getElementById('page-accueil');
+        targetPage.classList.remove('hidden');
+        
+        const activePageId = targetPage.id;
 
         document.querySelectorAll('header nav .nav-link, footer .nav-link').forEach(link => {
-            const isTargetLink = `page-${link.dataset.page}` === pageId;
-            if (link.closest('header nav')) {
-                 link.classList.toggle('nav-link-active', isTargetLink);
-                 link.classList.toggle('text-red-600', isTargetLink);
-            } else if(link.closest('footer')) {
-                 link.classList.toggle('text-white', isTargetLink);
-            }
+            const isTargetLink = `page-${link.dataset.page}` === activePageId;
+            link.classList.toggle('nav-link-active', isTargetLink);
+            link.classList.toggle('text-red-600', isTargetLink && link.closest('header'));
+            link.classList.toggle('text-white', isTargetLink && link.closest('footer'));
         });
 
         if (!fromPopState) {
-            const pageName = pageId.replace('page-', '');
-            const currentHash = window.location.hash.substring(1).split('/')[0];
-            if(pageName !== currentHash) {
-                history.pushState({ pageId: pageId }, '', `#${pageName}`);
+            const pageName = activePageId.replace('page-', '');
+            if (`#${pageName}` !== window.location.hash) {
+                history.pushState({ pageId: activePageId }, '', `#${pageName}`);
             }
         }
         
         window.scrollTo(0, 0);
-        if (pageId === 'page-boutique') renderBoutique();
+        if (activePageId === 'page-boutique') renderBoutique();
         initScrollAnimations();
     }
     
@@ -679,37 +512,20 @@ document.addEventListener('DOMContentLoaded', function() {
         showPage('page-admin');
     });
 
-    window.addEventListener('popstate', (event) => {
-        router();
-    });
-    
+    window.addEventListener('popstate', (event) => router());
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // ================== LOGIQUE BOUTIQUE ==================
     async function loadAndRenderProducts() {
         try {
             const snapshot = await productsCollection.orderBy("name").get();
-            
             boutiqueProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-            
             renderCategoryFilters();
             renderBoutique();
-            
-            const featuredProducts = boutiqueProducts.filter(p => p.isFeatured === true).slice(0, 4);
-            renderPopularProducts(featuredProducts);
-
-            if (auth.currentUser) {
-                renderAdminStats();
-                renderAdminList();
-                initIAGenerator();
-                initAiFeatures();
-                initAdminRateManagement();
-            }
+            renderPopularProducts(boutiqueProducts.filter(p => p.isFeatured).slice(0, 4));
         } catch (error) {
             console.error("Erreur de chargement: ", error);
-            if(document.getElementById('loading-products')) {
-                document.getElementById('loading-products').textContent = 'Erreur de chargement des produits.';
-            }
+            const loadingEl = document.getElementById('loading-products');
+            if(loadingEl) loadingEl.textContent = 'Erreur de chargement des produits.';
         } finally {
             if (window.initialRoute) {
                 renderProductDetail(window.initialRoute.productId);
@@ -722,42 +538,25 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function createProductCard(product) {
-        const imageUrl = product.images && product.images.length > 0 ? product.images[0] : 'https://placehold.co/600x400/cccccc/ffffff?text=Image';
-        const stockBadge = product.inStockMadagascar !== false
+        const imageUrl = product.images?.[0] || 'https://placehold.co/600x400/cccccc/ffffff?text=Image';
+        const stockBadge = product.inStockMadagascar
             ? `<div class="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center"><i class="fas fa-check-circle mr-1"></i> En stock</div>`
             : `<div class="absolute top-2 left-2 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center"><i class="fas fa-shipping-fast mr-1"></i> Sur commande</div>`;
-        
-        const priceHTML = product.price && product.price > 0
+        const priceHTML = product.price > 0
             ? `<p class="text-gradient font-extrabold text-base sm:text-xl">${product.price.toLocaleString('fr-FR')} Ar</p>`
             : `<p class="text-gradient font-extrabold text-base sm:text-xl">Prix sur devis</p>`;
 
-        return `
-            <div class="bg-white rounded-xl shadow-lg overflow-hidden group transform hover:-translate-y-1 transition-transform duration-300 view-product-btn cursor-pointer scroll-animate" data-id="${product.id}">
-                <div class="relative">
-                    <img src="${imageUrl}" alt="${product.name}" class="w-full h-40 sm:h-48 md:h-56 object-contain p-2 sm:p-4">
-                    ${stockBadge}
-                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                        <span class="text-white btn-primary py-2 px-5 rounded-full transform hover:scale-105 transition-transform text-sm">Voir</span>
-                    </div>
-                </div>
-                <div class="p-2 sm:p-4 text-center">
-                    <h3 class="font-semibold text-sm sm:text-base mb-1 sm:mb-2 truncate">${product.name}</h3>
-                    ${priceHTML}
-                </div>
-            </div>`;
+        return `<div class="bg-white rounded-xl shadow-lg overflow-hidden group transform hover:-translate-y-1 transition-transform duration-300 view-product-btn cursor-pointer scroll-animate" data-id="${product.id}"><div class="relative"><img src="${imageUrl}" alt="${product.name}" class="w-full h-40 sm:h-48 md:h-56 object-contain p-2 sm:p-4">${stockBadge}<div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"><span class="text-white btn-primary py-2 px-5 rounded-full transform hover:scale-105 transition-transform text-sm">Voir</span></div></div><div class="p-2 sm:p-4 text-center"><h3 class="font-semibold text-sm sm:text-base mb-1 sm:mb-2 truncate">${product.name}</h3>${priceHTML}</div></div>`;
     }
 
     function addProductCardListeners() {
         document.querySelectorAll('.view-product-btn').forEach(btn => {
-            btn.addEventListener('click', e => {
-                const productId = e.currentTarget.dataset.id;
-                viewProduct(productId);
-            });
+            btn.addEventListener('click', e => viewProduct(e.currentTarget.dataset.id));
         });
     }
 
     function normalizeString(str) {
-        return str ? str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : '';
+        return str?.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") || '';
     }
 
     function renderCategoryFilters() {
@@ -766,7 +565,6 @@ document.addEventListener('DOMContentLoaded', function() {
         container.innerHTML = `<span class="font-semibold text-slate-600 mr-3 flex-shrink-0">Filtre :</span>` + categories.map((cat, index) => 
             `<button class="category-filter flex-shrink-0 px-4 py-2 text-sm font-semibold rounded-full ${index === 0 ? 'active-filter' : ''}" data-category="${cat}">${cat}</button>`
         ).join('');
-
         container.querySelectorAll('.category-filter').forEach(btn => {
             btn.addEventListener('click', () => {
                 container.querySelector('.active-filter')?.classList.remove('active-filter');
@@ -778,23 +576,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function renderBoutique() {
         const productGrid = document.getElementById('product-grid');
-        const loadingText = document.getElementById('loading-products');
-        const searchBar = document.getElementById('search-bar');
-        
+        const searchTerm = normalizeString(document.getElementById('search-bar')?.value);
         const activeCategory = document.querySelector('#category-filters .active-filter')?.dataset.category;
-        const searchTerm = normalizeString(searchBar ? searchBar.value : '');
         
-        let filteredProducts = boutiqueProducts;
+        let filteredProducts = boutiqueProducts.filter(p => {
+            const nameMatch = !searchTerm || normalizeString(p.name).includes(searchTerm);
+            const categoryMatch = !activeCategory || activeCategory === 'Tous' || p.category === activeCategory;
+            return nameMatch && categoryMatch;
+        });
 
-        if (activeCategory && activeCategory !== 'Tous') {
-            filteredProducts = filteredProducts.filter(p => p.category === activeCategory);
-        }
-        
-        if (searchTerm) {
-            filteredProducts = filteredProducts.filter(p => normalizeString(p.name).includes(searchTerm));
-        }
-
-        if (loadingText) loadingText.style.display = 'none';
+        document.getElementById('loading-products').style.display = 'none';
         productGrid.innerHTML = filteredProducts.length > 0
             ? filteredProducts.map(createProductCard).join('')
             : `<p class="text-center text-gray-500 col-span-full">Aucun produit ne correspond à votre recherche.</p>`;
@@ -804,11 +595,7 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function renderPopularProducts(products) {
         const container = document.getElementById('popular-products-accueil');
-        if (!container) return;
-        if (products.length === 0) {
-            container.innerHTML = '';
-            return;
-        }
+        if (!container || products.length === 0) return;
         container.innerHTML = `<div class="container mx-auto px-4"><div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold mb-2">Produits Populaires</h2><p class="text-slate-600 text-lg">Les articles les plus demandés</p></div><div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">${products.map(createProductCard).join('')}</div></div>`;
         addProductCardListeners();
         initScrollAnimations();
@@ -818,27 +605,18 @@ document.addEventListener('DOMContentLoaded', function() {
         const product = boutiqueProducts.find(p => p.id === productId); 
         if (!product) { showPage('page-boutique'); return; }
         
-        const availabilityText = product.inStockMadagascar !== false
-            ? `<div class="mt-4 flex items-center text-green-600 font-semibold"><i class="fas fa-check-circle mr-2"></i>Produit disponible à Madagascar</div>`
-            : `<div class="mt-4 flex items-center text-yellow-600 font-semibold"><i class="fas fa-shipping-fast mr-2"></i>Produit disponible sur commande</div>`;
-        
-        const priceDetailHTML = product.price && product.price > 0
-            ? `<p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">${product.price.toLocaleString('fr-FR')} Ar</p>`
-            : `<p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">Prix sur devis</p>`;
-
+        const availabilityText = product.inStockMadagascar ? `<div class="mt-4 flex items-center text-green-600 font-semibold"><i class="fas fa-check-circle mr-2"></i>Produit disponible à Madagascar</div>` : `<div class="mt-4 flex items-center text-yellow-600 font-semibold"><i class="fas fa-shipping-fast mr-2"></i>Produit disponible sur commande</div>`;
+        const priceDetailHTML = product.price > 0 ? `<p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">${product.price.toLocaleString('fr-FR')} Ar</p>` : `<p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">Prix sur devis</p>`;
         const thumbnailsHTML = (product.images || []).map((img, i) => `<img src="${img}" class="w-16 h-16 md:w-20 md:h-20 object-contain bg-slate-100 rounded-md cursor-pointer border-2 ${i === 0 ? 'border-red-500' : 'border-transparent'} thumbnail" data-index="${i}">`).join('');
+        
         const detailSection = document.getElementById('page-detail');
-        detailSection.innerHTML = `<div class="container mx-auto px-4"><button class="nav-link font-semibold mb-8 inline-flex items-center" data-page="boutique"><i class="fas fa-arrow-left mr-2"></i>Retour à la boutique</button><div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"><div><div class="bg-slate-100 rounded-xl shadow-lg mb-4 cursor-zoom-in"><img id="main-product-image" src="${product.images[0]}" alt="${product.name}" class="w-full h-80 md:h-96 object-contain rounded-xl p-4"></div><div id="thumbnail-container" class="flex flex-wrap gap-4 justify-center">${thumbnailsHTML}</div></div><div><h1 class="text-3xl md:text-4xl font-bold text-slate-800">${product.name}</h1>${priceDetailHTML}${availabilityText}<p class="mt-4 text-slate-600 whitespace-pre-wrap">${product.description}</p><div class="mt-8"><a href="#" data-id="${product.id}" class="order-now-btn w-full inline-flex items-center justify-center text-center btn-secondary transition text-white font-bold py-4 px-4 rounded-xl text-lg"><i class="fab fa-whatsapp mr-3 text-2xl"></i>Commander maintenant</a></div></div></div></div>`;
+        detailSection.innerHTML = `<div class="container mx-auto px-4"><button class="nav-link font-semibold mb-8 inline-flex items-center" data-page="boutique"><i class="fas fa-arrow-left mr-2"></i>Retour à la boutique</button><div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"><div><div class="bg-slate-100 rounded-xl shadow-lg mb-4 cursor-zoom-in"><img id="main-product-image" src="${product.images?.[0]}" alt="${product.name}" class="w-full h-80 md:h-96 object-contain rounded-xl p-4"></div><div id="thumbnail-container" class="flex flex-wrap gap-4 justify-center">${thumbnailsHTML}</div></div><div><h1 class="text-3xl md:text-4xl font-bold text-slate-800">${product.name}</h1>${priceDetailHTML}${availabilityText}<p class="mt-4 text-slate-600 whitespace-pre-wrap">${product.description}</p><div class="mt-8"><a href="#" data-id="${product.id}" class="order-now-btn w-full inline-flex items-center justify-center text-center btn-secondary transition text-white font-bold py-4 px-4 rounded-xl text-lg"><i class="fab fa-whatsapp mr-3 text-2xl"></i>Commander maintenant</a></div></div></div></div>`;
         
         detailSection.querySelector('.nav-link').addEventListener('click', (e) => { e.preventDefault(); showPage('page-boutique'); });
-        
         detailSection.querySelector('.order-now-btn').addEventListener('click', e => { 
             e.preventDefault();
-            let orderText = `*COMMANDE DIRECTE ARIDAGO*\n\n- Produit: ${product.name}`;
-            if (product.price && product.price > 0) {
-                orderText += `\n- Prix: ${product.price.toLocaleString('fr-FR')} Ar`;
-            }
-             window.open(`https://wa.me/8615600021123?text=${encodeURIComponent(orderText)}`, '_blank');
+            let orderText = `*COMMANDE DIRECTE ARIDAGO*\n\n- Produit: ${product.name}${product.price > 0 ? `\n- Prix: ${product.price.toLocaleString('fr-FR')} Ar` : ''}`;
+            window.open(`https://wa.me/8615600021123?text=${encodeURIComponent(orderText)}`, '_blank');
         });
         
         const mainImage = document.getElementById('main-product-image');
@@ -849,29 +627,16 @@ document.addEventListener('DOMContentLoaded', function() {
             e.currentTarget.classList.add('border-red-500');
         }));
 
-        const mainImageContainer = detailSection.querySelector('.cursor-zoom-in');
         const lightbox = document.getElementById('image-lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const closeLightboxBtn = document.getElementById('close-lightbox-btn');
-
         const openLightbox = () => {
-            lightboxImg.src = mainImage.src;
+            document.getElementById('lightbox-img').src = mainImage.src;
             lightbox.classList.remove('hidden');
             lightbox.classList.add('flex');
         };
-
-        const closeLightbox = () => {
-            lightbox.classList.add('hidden');
-            lightbox.classList.remove('flex');
-        };
-
-        mainImageContainer.addEventListener('click', openLightbox);
-        closeLightboxBtn.addEventListener('click', closeLightbox);
-        lightbox.addEventListener('click', (e) => {
-            if (e.target === lightbox) {
-                closeLightbox();
-            }
-        });
+        const closeLightbox = () => lightbox.classList.add('hidden');
+        detailSection.querySelector('.cursor-zoom-in').addEventListener('click', openLightbox);
+        document.getElementById('close-lightbox-btn').addEventListener('click', closeLightbox);
+        lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeLightbox(); });
     }
 
     function initSearchFunctionality() {
@@ -885,143 +650,55 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    // ================== LOGIQUE DEVIS ==================
+    // LOGIQUE DEVIS
     const devisForm = document.getElementById('devis-form');
-    const productList = document.getElementById('product-list');
-    const addProductBtn = document.getElementById('add-product');
-    let productCount = 0;
-    
-    const linkAlertModal = document.getElementById('link-alert-modal');
-    const closeLinkModalBtn = document.getElementById('close-link-modal-btn');
-    let hasShownLinkAlert = localStorage.getItem('hasShownLinkAlert_Aridago');
+    if (devisForm) {
+        const productList = document.getElementById('product-list');
+        const addProductBtn = document.getElementById('add-product');
+        let productCount = 0;
+        
+        const createProductBlock = () => {
+            productCount++;
+            const div = document.createElement('div');
+            div.className = 'p-5 border-2 border-gray-200 rounded-xl bg-gray-50/50 relative';
+            div.innerHTML = `<h4 class="font-bold text-md text-gray-800 mb-4">Produit ${productCount}</h4> ${productCount > 1 ? '<button type="button" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold remove-product">&times;</button>' : ''}<div class="space-y-4"><div><label class="text-sm font-semibold text-gray-600">Nom</label><input type="text" name="product_name_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Lien</label><input type="url" name="product_link_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Spécification</label><textarea name="product_spec_${productCount}" rows="2" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></textarea></div><div><label class="text-sm font-semibold text-gray-600">Quantité</label><input type="number" name="product_quantity_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div></div>`;
+            productList.appendChild(div);
+            div.querySelector('.remove-product')?.addEventListener('click', () => div.remove());
+        };
+        addProductBtn.addEventListener('click', createProductBlock);
 
-    function createProductBlock() {
-        productCount++;
-        const div = document.createElement('div');
-        div.className = 'p-5 border-2 border-gray-200 rounded-xl bg-gray-50/50 relative';
-        div.innerHTML = `<h4 class="font-bold text-md text-gray-800 mb-4">Produit ${productCount}</h4> ${productCount > 1 ? '<button type="button" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold remove-product">&times;</button>' : ''}<div class="space-y-4"><div><label class="text-sm font-semibold text-gray-600">Nom</label><input type="text" name="product_name_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Lien</label><input type="url" name="product_link_${productCount}" required class="link-input w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Spécification</label><textarea name="product_spec_${productCount}" rows="2" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></textarea></div><div><label class="text-sm font-semibold text-gray-600">Quantité</label><input type="number" name="product_quantity_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div></div>`;
-        productList.appendChild(div);
-
-        div.querySelector('.link-input').addEventListener('focus', () => {
-            if (!hasShownLinkAlert) {
-                linkAlertModal.style.display = 'flex';
-            }
-        });
-
-        if(div.querySelector('.remove-product')) div.querySelector('.remove-product').addEventListener('click', () => div.remove());
-    }
-    
-    function renderDevisFaq() {
-        const faqContainer = document.querySelector('#page-devis #faq-container');
-        if (!faqContainer) return;
-        faqContainer.innerHTML = `
-            <div class="faq-item bg-gray-50 rounded-xl">
-                <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
-                    <span>Quels sont les frais de transport Chine-Madagascar ?</span>
-                    <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-                    <p>Les frais de transport ne sont pas inclus dans le devis initial. Ils dépendent du poids et du volume total de votre commande. Nous vous fournirons une estimation détaillée de ces frais lors de la confirmation de votre commande.</p>
-                </div>
-            </div>
-            <div class="faq-item bg-gray-50 rounded-xl">
-                <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
-                    <span>Quels sont les délais de livraison estimés ?</span>
-                    <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-                    <p>Les délais varient en fonction du type de transport choisi (aérien ou maritime). En général, comptez entre 3 à 10 jours pour le transport aérien et 30 à 60 jours pour le transport maritime, après réception de tous vos articles dans notre entrepôt en Chine.</p>
-                </div>
-            </div>
-            <div class="faq-item bg-gray-50 rounded-xl">
-                <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
-                    <span>Quels sont les moyens de paiement acceptés ?</span>
-                    <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-                    <p>Pour les paiements en <b>Yuan (CNY)</b>, nous acceptons : Alipay et WeChatPay.<br>Pour les paiements en <b>Ariary (MGA)</b>, nous acceptons : Espèce, MVola, Orange Money et Airtel Money.<br>Les détails vous seront communiqués lors de la validation de votre devis.</p>
-                </div>
-            </div>
-            <div class="faq-item bg-gray-50 rounded-xl">
-                <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
-                    <span>Comment garantissez-vous la qualité des produits ?</span>
-                    <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                </button>
-                <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-                    <p>La qualité est notre priorité. Nos équipes en Chine effectuent un contrôle qualité systématique avant toute expédition. Nous vous envoyons des photos et des vidéos des produits pour que vous puissiez valider la conformité de votre commande avant son envoi.</p>
-                </div>
-            </div>
-        `;
-        document.querySelectorAll('#page-devis .faq-question').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const answer = btn.nextElementSibling;
-                const icon = btn.querySelector('svg');
-                answer.classList.toggle('hidden');
-                icon.classList.toggle('rotate-180');
-            });
-        });
-    }
-
-    if(closeLinkModalBtn) {
-        closeLinkModalBtn.addEventListener('click', () => {
-            linkAlertModal.style.display = 'none';
-            localStorage.setItem('hasShownLinkAlert_Aridago', 'true');
-            hasShownLinkAlert = true;
-        });
-    }
-
-    if(addProductBtn) addProductBtn.addEventListener('click', createProductBlock);
-    
-    if(devisForm) {
         const confirmationModal = document.getElementById('confirmation-modal');
-        const whatsappLink = document.getElementById('whatsapp-link');
-        const closeConfirmationBtn = document.getElementById('close-confirmation-modal');
-
-        function closeAndResetDevisModal() {
+        const closeAndResetDevisModal = () => {
             confirmationModal.style.display = 'none';
             devisForm.reset();
             productList.innerHTML = '';
             productCount = 0;
             createProductBlock();
-        }
-
+        };
+        
         devisForm.addEventListener('submit', function(e) {
             e.preventDefault();
             const formData = new FormData(devisForm);
-            let text = `*Nouvelle Demande de Devis - ARIDAGO*\n\n*Référence:* ADG-${Date.now().toString().slice(-6)}\n*Client:* ${formData.get('nom')}\n`;
-            if (formData.get('entreprise')) text += `*Entreprise:* ${formData.get('entreprise')}\n`;
-            text += `*WhatsApp:* ${formData.get('whatsapp')}\n*Adresse:* ${formData.get('adresse')}\n`;
-            if (formData.get('email')) text += `*Email:* ${formData.get('email')}\n`;
-            text += `-----------------------------------\n\n`;
-            
+            let text = `*Nouvelle Demande de Devis - ARIDAGO*\n\n*Client:* ${formData.get('nom')}\n*WhatsApp:* ${formData.get('whatsapp')}\n*Adresse:* ${formData.get('adresse')}\n-----------------------------------\n\n`;
             for (let i = 1; i <= productCount; i++) {
                 if (formData.get(`product_name_${i}`)) {
                     text += `*Produit ${i}:* ${formData.get(`product_name_${i}`)}\n*Spécification:* ${formData.get(`product_spec_${i}`)}\n*Quantité:* ${formData.get(`product_quantity_${i}`)}\n*Lien:* ${formData.get(`product_link_${i}`)}\n\n`;
                 }
             }
-            
-            whatsappLink.href = `https://wa.me/8615600021123?text=${encodeURIComponent(text)}`;
+            document.getElementById('whatsapp-link').href = `https://wa.me/8615600021123?text=${encodeURIComponent(text)}`;
             confirmationModal.style.display = 'flex';
         });
 
-        whatsappLink.addEventListener('click', () => {
-            setTimeout(closeAndResetDevisModal, 1500);
-        });
-        
-        closeConfirmationBtn.addEventListener('click', closeAndResetDevisModal);
-
-        confirmationModal.addEventListener('click', (e) => {
-            if (e.target === confirmationModal) {
-                closeAndResetDevisModal();
-            }
-        });
+        document.getElementById('whatsapp-link').addEventListener('click', () => setTimeout(closeAndResetDevisModal, 1500));
+        document.getElementById('close-confirmation-modal').addEventListener('click', closeAndResetDevisModal);
+        createProductBlock();
     }
     
-    if(productList) createProductBlock();
-
-    // ================== LOGIQUE ÉCHANGE ==================
+    // LOGIQUE ÉCHANGE
     function initExchangeCalculator() {
         const fromAmountInput = document.getElementById('from-amount');
+        if (!fromAmountInput) return;
+
         const toAmountInput = document.getElementById('to-amount');
         const fromCurrencyBadge = document.getElementById('from-currency-badge');
         const toCurrencyBadge = document.getElementById('to-currency-badge');
@@ -1031,8 +708,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const paymentOptionsContainer = document.getElementById('payment-options-from');
         const receptionOptionsContainer = document.getElementById('reception-options-to');
 
-        if (!fromAmountInput) return;
-
         let rates = { RMB_TO_MGA: 615, MGA_TO_RMB_DIVISOR: 625 };
         let isRmbToMga = false;
 
@@ -1040,107 +715,48 @@ document.addEventListener('DOMContentLoaded', function() {
             RMB: [{ id: 'alipay', name: 'Alipay' }, { id: 'wechatpay', name: 'WeChat Pay' }],
             MGA: [{ id: 'espece', name: 'Espèce' }, { id: 'mvola', name: 'MVola' }, { id: 'orangemoney', name: 'Orange Money' }, { id: 'airtelmoney', name: 'Airtel Money' }]
         };
-        
         const receptionMethods = {
             RMB: [{ id: 'recept-alipay', name: 'Alipay' }, { id: 'recept-wechatpay', name: 'WeChat Pay' }],
             MGA: [{ id: 'recept-espece', name: 'Espèce' }, { id: 'recept-mvola', name: 'MVola' }, { id: 'recept-orangemoney', name: 'Orange Money' }, { id: 'recept-airtelmoney', name: 'Airtel Money' }]
         };
 
-        async function fetchRates() {
-            try {
-                const doc = await settingsCollection.doc('exchangeRates').get();
-                if (doc.exists) {
-                    const data = doc.data();
-                    rates.RMB_TO_MGA = data.rmbToMga || rates.RMB_TO_MGA;
-                    rates.MGA_TO_RMB_DIVISOR = data.mgaToRmbDivisor || rates.MGA_TO_RMB_DIVISOR;
-                }
-            } catch (error) {
-                console.error("Impossible de charger les taux, utilisation des valeurs par défaut.", error);
-            } finally {
-                updateDisplay();
-                calculate(true);
-            }
-        }
-        
-        function renderPaymentOptions() {
-            const currency = isRmbToMga ? 'RMB' : 'MGA';
-            // Modification 2: Removed transition-colors
-            paymentOptionsContainer.innerHTML = paymentMethods[currency].map((opt, index) => `
-                <label for="payment-${opt.id}" class="payment-label flex items-center justify-center text-center bg-gray-100 p-3 rounded-lg cursor-pointer hover:bg-gray-200">
-                    <input type="radio" id="payment-${opt.id}" name="payment-method" value="${opt.name}" class="sr-only" ${index === 0 ? 'checked' : ''}>
-                    <span class="font-medium text-gray-700">${opt.name}</span>
-                </label>`).join('');
+        const renderSelect = (container, id, methods) => {
+            container.innerHTML = `<div class="relative">
+                <select id="${id}" name="${id}" class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 pr-10 focus:outline-none focus:ring-2 focus:ring-yellow-400 appearance-none">
+                    ${methods.map(opt => `<option value="${opt.name}">${opt.name}</option>`).join('')}
+                </select>
+                <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700">
+                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/></svg>
+                </div>
+            </div>`;
+        };
+
+        const updateDisplay = () => {
+            const fromCurrency = isRmbToMga ? 'RMB' : 'MGA';
+            const toCurrency = isRmbToMga ? 'MGA' : 'RMB';
             
-            const checkedPayment = paymentOptionsContainer.querySelector('input:checked');
-            if (checkedPayment) {
-                checkedPayment.parentElement.classList.add('bg-red-100', 'font-bold', 'text-red-700');
-            }
-        }
+            fromCurrencyBadge.textContent = fromCurrency;
+            toCurrencyBadge.textContent = toCurrency;
+            fromCurrencyBadge.className = `flex-shrink-0 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center ${isRmbToMga ? 'bg-red-600' : 'bg-green-600'}`;
+            toCurrencyBadge.className = `flex-shrink-0 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center ${isRmbToMga ? 'bg-green-600' : 'bg-red-600'}`;
+            rateDisplay.textContent = isRmbToMga ? `Taux : 1 RMB ≈ ${rates.RMB_TO_MGA} MGA` : `Taux : ${rates.MGA_TO_RMB_DIVISOR} MGA ≈ 1 RMB`;
 
-        function renderReceptionOptions() {
-            const currency = isRmbToMga ? 'MGA' : 'RMB';
-            // Modification 2: Removed transition-colors
-            receptionOptionsContainer.innerHTML = receptionMethods[currency].map((opt, index) => `
-                 <label for="reception-${opt.id}" class="reception-label flex items-center justify-center text-center bg-gray-100 p-3 rounded-lg cursor-pointer hover:bg-gray-200">
-                    <input type="radio" id="reception-${opt.id}" name="reception-method" value="${opt.name}" class="sr-only" ${index === 0 ? 'checked' : ''}>
-                    <span class="font-medium text-gray-700">${opt.name}</span>
-                </label>`).join('');
-            
-            const checkedReception = receptionOptionsContainer.querySelector('input:checked');
-            if(checkedReception) {
-                checkedReception.parentElement.classList.add('bg-green-100', 'font-bold', 'text-green-700');
-            }
-        }
-        
-        // Modification 2: Instant click feedback
-        paymentOptionsContainer.addEventListener('click', (e) => {
-            const targetLabel = e.target.closest('.payment-label');
-            if (!targetLabel) return;
-            paymentOptionsContainer.querySelectorAll('.payment-label').forEach(l => l.classList.remove('bg-red-100', 'font-bold', 'text-red-700'));
-            targetLabel.classList.add('bg-red-100', 'font-bold', 'text-red-700');
-        });
+            renderSelect(paymentOptionsContainer, 'payment-method-select', paymentMethods[fromCurrency]);
+            renderSelect(receptionOptionsContainer, 'reception-method-select', receptionMethods[toCurrency]);
+        };
 
-        receptionOptionsContainer.addEventListener('click', (e) => {
-            const targetLabel = e.target.closest('.reception-label');
-            if (!targetLabel) return;
-            receptionOptionsContainer.querySelectorAll('.reception-label').forEach(l => l.classList.remove('bg-green-100', 'font-bold', 'text-green-700'));
-            targetLabel.classList.add('bg-green-100', 'font-bold', 'text-green-700');
-        });
-
-
-        function updateDisplay() {
-            if (isRmbToMga) {
-                fromCurrencyBadge.innerHTML = 'RMB';
-                fromCurrencyBadge.className = 'flex-shrink-0 bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center';
-                toCurrencyBadge.innerHTML = 'MGA';
-                toCurrencyBadge.className = 'flex-shrink-0 bg-green-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center';
-                rateDisplay.textContent = `Taux actuel : 1 RMB ≈ ${rates.RMB_TO_MGA} MGA`;
-            } else {
-                fromCurrencyBadge.innerHTML = 'MGA';
-                fromCurrencyBadge.className = 'flex-shrink-0 bg-green-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center';
-                toCurrencyBadge.innerHTML = 'RMB';
-                toCurrencyBadge.className = 'flex-shrink-0 bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center';
-                rateDisplay.textContent = `Taux actuel : ${rates.MGA_TO_RMB_DIVISOR} MGA ≈ 1 RMB`;
-            }
-            renderPaymentOptions();
-            renderReceptionOptions();
-        }
-
-        function calculate(isFromInput) {
+        const calculate = (isFromInput) => {
             const fromValue = parseFloat(fromAmountInput.value);
-            const toValue = parseFloat(toAmountInput.value);
             const rateMgaToRmb = 1 / rates.MGA_TO_RMB_DIVISOR;
-
             if (isFromInput) {
-                if (isNaN(fromValue) || fromValue <= 0) { toAmountInput.value = ''; return; }
-                let calculatedToValue = isRmbToMga ? fromValue * rates.RMB_TO_MGA : fromValue * rateMgaToRmb;
-                toAmountInput.value = calculatedToValue.toFixed(2);
+                if (!fromValue > 0) { toAmountInput.value = ''; return; }
+                toAmountInput.value = (isRmbToMga ? fromValue * rates.RMB_TO_MGA : fromValue * rateMgaToRmb).toFixed(2);
             } else {
-                 if (isNaN(toValue) || toValue <= 0) { fromAmountInput.value = ''; return; }
-                let calculatedFromValue = isRmbToMga ? toValue / rates.RMB_TO_MGA : toValue / rateMgaToRmb;
-                fromAmountInput.value = calculatedFromValue.toFixed(2);
+                const toValue = parseFloat(toAmountInput.value);
+                if (!toValue > 0) { fromAmountInput.value = ''; return; }
+                fromAmountInput.value = (isRmbToMga ? toValue / rates.RMB_TO_MGA : toValue / rateMgaToRmb).toFixed(2);
             }
-        }
+        };
 
         fromAmountInput.addEventListener('input', () => calculate(true));
         toAmountInput.addEventListener('input', () => calculate(false));
@@ -1152,564 +768,38 @@ document.addEventListener('DOMContentLoaded', function() {
 
         exchangeWhatsappBtn.addEventListener('click', () => {
             const fromAmount = fromAmountInput.value;
-            const toAmount = toAmountInput.value;
-            const fromCurrency = isRmbToMga ? 'RMB' : 'MGA';
-            const toCurrency = isRmbToMga ? 'MGA' : 'RMB';
-            const selectedPayment = document.querySelector('input[name="payment-method"]:checked');
-            const selectedReception = document.querySelector('input[name="reception-method"]:checked');
-
-            if (!fromAmount || !toAmount || parseFloat(fromAmount) <= 0) { alert("Veuillez entrer un montant valide."); return; }
-            if (!selectedPayment) { alert("Veuillez choisir un moyen de paiement."); return; }
-            if (!selectedReception) { alert("Veuillez choisir un moyen de réception."); return; }
-
-            const message = `*NOUVELLE DEMANDE DE TRANSFERT D'ARGENT - ARIDAGO*\n\n` +
-                            `-----------------------------------\n` +
-                            `*Montant envoyé :* ${fromAmount} ${fromCurrency}\n` +
-                            `*Montant à recevoir :* ${toAmount} ${toCurrency}\n` +
-                            `-----------------------------------\n` +
-                            `*Moyen de paiement :* ${selectedPayment.value}\n` +
-                            `*Moyen de réception :* ${selectedReception.value}\n\n` +
-                            `Merci de me confirmer les instructions pour finaliser la transaction.`;
-
+            const paymentValue = document.getElementById('payment-method-select').value;
+            const receptionValue = document.getElementById('reception-method-select').value;
+            if (!fromAmount > 0) { alert("Veuillez entrer un montant valide."); return; }
+            const message = `*DEMANDE DE TRANSFERT - ARIDAGO*\n\n*Montant envoyé :* ${fromAmount} ${isRmbToMga ? 'RMB' : 'MGA'}\n*Moyen de paiement :* ${paymentValue}\n*Moyen de réception :* ${receptionValue}`;
             window.open(`https://wa.me/8615600021123?text=${encodeURIComponent(message)}`, '_blank');
         });
-
-        fetchRates();
-    }
-
-
-    // ================== LOGIQUE ADMIN ==================
-    const adminSection = document.getElementById('page-admin');
-    if (adminSection) {
-        adminSection.innerHTML = `<div class="bg-slate-800 text-white p-6 md:p-10 rounded-3xl shadow-lg">
-            <div id="admin-login">
-                <h2 class="font-poppins text-3xl font-bold text-center mb-4">Accès Administrateur</h2>
-                <div class="max-w-sm mx-auto">
-                    <div class="mb-4"><label for="admin-email" class="block text-sm font-semibold mb-1">Email</label><input type="email" id="admin-email" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div>
-                    <div class="mb-4"><label for="admin-password" class="block text-sm font-semibold mb-1">Mot de passe</label><input type="password" id="admin-password" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div>
-                    <button id="admin-login-btn" class="mt-4 w-full btn-primary font-bold py-3 px-4 rounded-xl">Se connecter</button>
-                    <p id="admin-error" class="text-red-400 text-center mt-2 hidden"></p>
-                </div>
-            </div>
-            <div id="admin-dashboard" class="hidden">
-                <h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2>
-                <div id="admin-stats" class="grid grid-cols-2 gap-4 mb-8"></div>
-
-                <div class="bg-gray-700 p-6 rounded-2xl mb-8">
-                    <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-chart-line mr-3 text-green-400"></i>Gestion des Taux de Change</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label for="admin-rate-rmb-mga" class="block text-sm font-semibold mb-1">Taux de Vente (1 RMB = X MGA)</label>
-                            <input type="number" id="admin-rate-rmb-mga" step="any" placeholder="Ex: 615" class="w-full bg-gray-600 rounded-lg p-2 text-white">
-                        </div>
-                        <div>
-                            <label for="admin-rate-mga-rmb" class="block text-sm font-semibold mb-1">Taux d'Achat (X MGA = 1 RMB)</label>
-                            <input type="number" id="admin-rate-mga-rmb" step="any" placeholder="Ex: 625" class="w-full bg-gray-600 rounded-lg p-2 text-white">
-                        </div>
-                        <button id="admin-save-rates-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg flex items-center justify-center">
-                            <i class="fas fa-save mr-2"></i>Sauvegarder les Taux
-                        </button>
-                        <p id="admin-rates-status" class="text-sm text-green-400 mt-1 text-center h-4"></p>
-                    </div>
-                </div>
-                
-                <div class="bg-gray-700 p-6 rounded-2xl mb-8 border-2 border-dashed border-yellow-400">
-                    <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-magic mr-3 text-yellow-400"></i>Générateur de Fiche Produit par IA</h3>
-                    <div class="space-y-4">
-                        <div>
-                            <label class="block text-sm font-semibold mb-1">Nom ou mots-clés du produit</label>
-                            <input type="text" id="ai-text-name" placeholder="Ex: Sac à dos de voyage, Thermos intelligent..." class="w-full bg-gray-600 rounded-lg p-2 text-white">
-                        </div>
-                        <button id="ai-generate-text-btn" class="w-full btn-primary font-bold py-2 px-4 rounded-lg flex items-center justify-center disabled:opacity-50">
-                            <i class="fas fa-rocket mr-2"></i>Générer la description
-                        </button>
-                        <p id="ai-text-status" class="text-sm text-yellow-400 mt-1 text-center h-4"></p>
-                    </div>
-                </div>
-
-                <div class="bg-gray-700 p-6 rounded-2xl mb-8">
-                    <h3 id="admin-form-title" class="text-xl font-bold mb-4">Fiche Produit</h3>
-                    <form id="admin-product-form" class="space-y-4">
-                        <input type="hidden" id="product-id">
-                        <div><label>Nom</label><input type="text" id="product-name" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
-                        <div><label>Catégorie</label><input type="text" id="product-category" list="category-suggestions" class="w-full bg-gray-600 rounded-lg p-2 text-white"><datalist id="category-suggestions"></datalist></div>
-                        <div><label>Description</label><textarea id="product-description" required class="w-full bg-gray-600 rounded-lg p-2 text-white" rows="6"></textarea></div>
-                        <div><label>Prix (Ar)</label><input type="number" id="product-price" class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="flex items-center"><input type="checkbox" id="product-in-stock" class="w-4 h-4 text-red-600 bg-gray-700 border-gray-600 rounded focus:ring-red-500"><label for="product-in-stock" class="ml-2 text-sm font-medium text-white">Disponible à Mada</label></div>
-                            <div class="flex items-center"><input type="checkbox" id="product-featured" class="w-4 h-4 text-yellow-400 bg-gray-700 border-gray-600 rounded focus:ring-yellow-500"><label for="product-featured" class="ml-2 text-sm font-medium text-white">Mettre en avant</label></div>
-                        </div>
-                        <div><label>Image(s)</label><div class="flex flex-wrap gap-2 mt-2 items-center"><div id="image-preview-container" class="flex flex-wrap gap-2"></div><label for="product-image-upload" class="cursor-pointer w-16 h-16 bg-gray-600 rounded flex items-center justify-center text-gray-400 hover:bg-gray-500"><i class="fas fa-plus"></i></label></div><input type="file" id="product-image-upload" multiple accept="image/*" class="hidden"><input type="hidden" id="product-images-json"><p id="upload-status" class="text-sm text-yellow-400 mt-1"></p></div>
-                        <div class="flex gap-4"><button type="submit" id="admin-submit-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg">Ajouter</button><button type="button" id="admin-cancel-btn" class="w-full bg-gray-500 font-bold py-2 px-4 rounded-lg hidden">Annuler</button></div>
-                    </form>
-                </div>
-                <div>
-                    <h3 class="text-xl font-bold mb-4">Produits existants</h3>
-                    <div id="admin-product-list" class="space-y-4"></div>
-                </div>
-                <div class="bg-gray-700 p-6 rounded-2xl mt-8">
-                    <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-robot mr-2 text-yellow-400"></i>Générateur de Publication IA</h3>
-                    <div class="space-y-4">
-                        <div><label for="ia-product-select" class="block text-sm font-semibold mb-1">Choisir un produit</label><select id="ia-product-select" class="w-full bg-gray-600 rounded-lg p-2 text-white"></select></div>
-                        <button id="ia-generate-btn" class="w-full bg-yellow-500 hover:bg-yellow-600 font-bold py-2 px-4 rounded-lg flex items-center justify-center"><i class="fas fa-magic mr-2"></i>Générer la publication</button>
-                        <div><label for="ia-generated-post" class="block text-sm font-semibold mb-1">Résultat</label><div class="relative"><textarea id="ia-generated-post" readonly class="w-full bg-gray-800 rounded-lg p-3 text-white h-48 resize-none"></textarea><button id="ia-copy-btn" class="absolute top-2 right-2 bg-gray-600 hover:bg-gray-500 text-white font-bold py-1 px-2 rounded-md text-xs hidden"><i class="fas fa-copy mr-1"></i>Copier</button></div><p id="ia-status" class="text-sm text-gray-400 mt-1"></p></div>
-                    </div>
-                </div>
-                <div class="mt-8 flex flex-wrap gap-4 items-center">
-                    <button id="admin-logout-btn" class="bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded-lg">Se déconnecter</button>
-                    <a href="https://rakotobewangyu-dev.github.io/Facturation/" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center"><i class="fas fa-file-invoice-dollar mr-2"></i>Facturation</a>
-                </div>
-            </div>
-        </div>`;
-
-        const adminLogin = document.getElementById('admin-login');
-        const adminDashboard = document.getElementById('admin-dashboard');
-        const adminLoginBtn = document.getElementById('admin-login-btn');
-        const adminLogoutBtn = document.getElementById('admin-logout-btn');
-        const adminProductForm = document.getElementById('admin-product-form');
-        const adminProductList = document.getElementById('admin-product-list');
-        const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
-        const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
-        const deleteConfirmModal = document.getElementById('delete-confirm-modal');
-        
-        auth.onAuthStateChanged(user => {
-            if (adminLogin && adminDashboard) {
-                adminLogin.classList.toggle('hidden', !!user);
-                adminDashboard.classList.toggle('hidden', !user);
-                if (user) {
-                    renderAdminStats();
-                    renderAdminList();
-                    initIAGenerator(); 
-                    initAiFeatures();
-                    initAdminRateManagement();
-                }
-            }
-        });
-
-        adminLoginBtn.addEventListener('click', () => {
-            auth.signInWithEmailAndPassword(document.getElementById('admin-email').value, document.getElementById('admin-password').value)
-                .catch(err => document.getElementById('admin-error').textContent = "Email ou mot de passe incorrect.");
-        });
-        adminLogoutBtn.addEventListener('click', () => auth.signOut());
-
-        async function uploadToImgBB(file) {
-            const formData = new FormData();
-            formData.append('image', file);
-            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
-            if (!res.ok) throw new Error('Échec du téléversement');
-            const data = await res.json();
-            return data.data.url;
-        }
-        
-        document.getElementById('product-image-upload').addEventListener('change', async (e) => {
-            if (!e.target.files.length) return;
-            document.getElementById('upload-status').textContent = `Téléversement en cours...`;
-            try {
-                const urls = await Promise.all(Array.from(e.target.files).map(uploadToImgBB));
-                let currentImages = JSON.parse(document.getElementById('product-images-json').value || '[]');
-                currentImages.push(...urls);
-                document.getElementById('product-images-json').value = JSON.stringify(currentImages);
-                renderImagePreviews(currentImages);
-                document.getElementById('upload-status').textContent = `Prêt.`;
-            } catch (error) {
-                document.getElementById('upload-status').textContent = `Erreur: ${error.message}`;
-            }
-        });
-
-        function renderImagePreviews(images) {
-            const container = document.getElementById('image-preview-container');
-            container.innerHTML = images.map((url, i) => `<div class="relative"><img src="${url}" class="w-16 h-16 object-cover rounded"><button type="button" class="absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs delete-img-btn" data-index="${i}">&times;</button></div>`).join('');
-            container.querySelectorAll('.delete-img-btn').forEach(btn => btn.addEventListener('click', e => {
-                let currentImages = JSON.parse(document.getElementById('product-images-json').value);
-                currentImages.splice(e.currentTarget.dataset.index, 1);
-                document.getElementById('product-images-json').value = JSON.stringify(currentImages);
-                renderImagePreviews(currentImages);
-            }));
-        }
-
-        function resetAdminForm() {
-            adminProductForm.reset();
-            document.getElementById('product-id').value = '';
-            document.getElementById('product-category').value = '';
-            document.getElementById('product-in-stock').checked = true;
-            document.getElementById('product-featured').checked = false;
-            document.getElementById('product-images-json').value = '[]';
-            document.getElementById('upload-status').textContent = '';
-            renderImagePreviews([]);
-            document.getElementById('admin-submit-btn').textContent = 'Ajouter';
-            document.getElementById('admin-cancel-btn').classList.add('hidden');
-        }
-
-        adminProductForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const id = document.getElementById('product-id').value;
-            const priceValue = document.getElementById('product-price').value;
-            
-            const data = {
-                name: document.getElementById('product-name').value,
-                category: document.getElementById('product-category').value.trim() || null,
-                description: document.getElementById('product-description').value,
-                price: priceValue ? parseFloat(priceValue) : null,
-                inStockMadagascar: document.getElementById('product-in-stock').checked,
-                isFeatured: document.getElementById('product-featured').checked,
-                images: JSON.parse(document.getElementById('product-images-json').value || '[]')
-            };
-            try {
-                if (id) await productsCollection.doc(id).update(data);
-                else await productsCollection.add(data);
-                resetAdminForm();
-                loadAndRenderProducts();
-            } catch (error) { console.error("Erreur d'écriture: ", error); }
-        });
-
-        document.getElementById('admin-cancel-btn').addEventListener('click', resetAdminForm);
-
-        cancelDeleteBtn.addEventListener('click', () => deleteConfirmModal.style.display = 'none');
-        confirmDeleteBtn.addEventListener('click', async () => {
-            try {
-                await productsCollection.doc(confirmDeleteBtn.dataset.id).delete();
-                loadAndRenderProducts();
-            } catch (error) { console.error("Erreur de suppression: ", error); }
-            finally { deleteConfirmModal.style.display = 'none'; }
-        });
-        
-        function renderAdminStats() {
-            const statsContainer = document.getElementById('admin-stats');
-            if (!statsContainer) return;
-            const totalProducts = boutiqueProducts.length;
-            const inStockMada = boutiqueProducts.filter(p => p.inStockMadagascar !== false).length;
-            statsContainer.innerHTML = `
-                <div class="bg-gray-700 p-4 rounded-lg text-center">
-                    <p class="text-3xl font-bold">${totalProducts}</p>
-                    <p class="text-sm text-gray-400">Produits au total</p>
-                </div>
-                <div class="bg-gray-700 p-4 rounded-lg text-center">
-                    <p class="text-3xl font-bold">${inStockMada}</p>
-                    <p class="text-sm text-gray-400">En stock à Mada</p>
-                </div>
-            `;
-        }
-
-        function renderAdminList() {
-            if (!adminProductList) return;
-            
-            const categories = [...new Set(boutiqueProducts.map(p => p.category).filter(Boolean))];
-            const suggestionsContainer = document.getElementById('category-suggestions');
-            if (suggestionsContainer) {
-                suggestionsContainer.innerHTML = categories.map(c => `<option value="${c}"></option>`).join('');
-            }
-
-            adminProductList.innerHTML = boutiqueProducts.map(p => {
-                const statusIndicator = p.inStockMadagascar !== false
-                    ? `<span class="h-3 w-3 rounded-full bg-green-500 flex-shrink-0" title="Disponible à Madagascar"></span>`
-                    : `<span class="h-3 w-3 rounded-full bg-yellow-500 flex-shrink-0" title="Sur commande"></span>`;
-                const featuredIndicator = p.isFeatured
-                    ? `<i class="fas fa-star text-yellow-400" title="Produit en avant"></i>`
-                    : `<i class="fas fa-star text-gray-400/20"></i>`;
-                return `
-                    <div class="bg-gray-600 p-3 rounded-lg flex items-center justify-between">
-                        <div class="flex items-center gap-3 overflow-hidden">
-                            ${statusIndicator}
-                            ${featuredIndicator}
-                            <div class="truncate">
-                                <p class="font-bold truncate">${p.name}</p>
-                                <p class="text-xs text-gray-400 truncate">${p.category || 'Sans catégorie'}</p>
-                            </div>
-                        </div>
-                        <div class="flex space-x-2 flex-shrink-0">
-                            <button class="edit-product-btn bg-blue-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Modifier</button>
-                            <button class="delete-product-btn bg-red-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Supprimer</button>
-                        </div>
-                    </div>`;
-            }).join('');
-            
-            adminProductList.querySelectorAll('.edit-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
-                const p = boutiqueProducts.find(prod => prod.id === e.currentTarget.dataset.id);
-                document.getElementById('product-id').value = p.id;
-                document.getElementById('product-name').value = p.name;
-                document.getElementById('product-category').value = p.category || '';
-                document.getElementById('product-description').value = p.description;
-                document.getElementById('product-price').value = p.price || '';
-                document.getElementById('product-in-stock').checked = p.inStockMadagascar !== false;
-                document.getElementById('product-featured').checked = p.isFeatured === true;
-                document.getElementById('product-images-json').value = JSON.stringify(p.images || []);
-                renderImagePreviews(p.images || []);
-                document.getElementById('admin-submit-btn').textContent = 'Mettre à jour';
-                document.getElementById('admin-cancel-btn').classList.remove('hidden');
-                window.scrollTo(0, 0);
-            }));
-            adminProductList.querySelectorAll('.delete-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
-                confirmDeleteBtn.dataset.id = e.currentTarget.dataset.id;
-                deleteConfirmModal.style.display = 'flex';
-            }));
-        }
-    }
-
-    function initAdminRateManagement() {
-        const rmbMgaInput = document.getElementById('admin-rate-rmb-mga');
-        const mgaRmbInput = document.getElementById('admin-rate-mga-rmb');
-        const saveBtn = document.getElementById('admin-save-rates-btn');
-        const statusEl = document.getElementById('admin-rates-status');
-
-        if(!saveBtn) return;
 
         settingsCollection.doc('exchangeRates').get().then(doc => {
             if (doc.exists) {
                 const data = doc.data();
-                if (data.rmbToMga) rmbMgaInput.value = data.rmbToMga;
-                if (data.mgaToRmbDivisor) mgaRmbInput.value = data.mgaToRmbDivisor;
+                rates.RMB_TO_MGA = data.rmbToMga || rates.RMB_TO_MGA;
+                rates.MGA_TO_RMB_DIVISOR = data.mgaToRmbDivisor || rates.MGA_TO_RMB_DIVISOR;
             }
-        });
-
-        saveBtn.addEventListener('click', async () => {
-            const rmbToMga = parseFloat(rmbMgaInput.value);
-            const mgaToRmbDivisor = parseFloat(mgaRmbInput.value);
-
-            if (isNaN(rmbToMga) || isNaN(mgaToRmbDivisor) || rmbToMga <= 0 || mgaToRmbDivisor <= 0) {
-                statusEl.textContent = "Veuillez entrer des taux valides.";
-                statusEl.className = "text-sm text-red-400 mt-1 text-center h-4";
-                return;
-            }
-
-            try {
-                saveBtn.disabled = true;
-                statusEl.textContent = "Sauvegarde en cours...";
-                statusEl.className = "text-sm text-yellow-400 mt-1 text-center h-4";
-                
-                await settingsCollection.doc('exchangeRates').set({
-                    rmbToMga: rmbToMga,
-                    mgaToRmbDivisor: mgaToRmbDivisor
-                }, { merge: true });
-
-                statusEl.textContent = "Taux sauvegardés avec succès !";
-                statusEl.className = "text-sm text-green-400 mt-1 text-center h-4";
-                
-                if (!document.getElementById('page-echange').classList.contains('hidden')) {
-                    initExchangeCalculator();
-                }
-
-            } catch (error) {
-                console.error("Erreur lors de la sauvegarde: ", error);
-                statusEl.textContent = "Erreur lors de la sauvegarde.";
-                statusEl.className = "text-sm text-red-400 mt-1 text-center h-4";
-            } finally {
-                saveBtn.disabled = false;
-                setTimeout(() => { statusEl.textContent = ''; }, 3000);
-            }
-        });
-    }
-    
-    // ================== LOGIQUE GÉNÉRATEUR IA ==================
-
-    async function callGenerativeApi(url, payload, maxRetries = 3) {
-        let attempt = 0;
-        while (attempt < maxRetries) {
-            try {
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                const responseText = await response.text();
-                
-                if (!response.ok) {
-                    let errorDetails = `(Status: ${response.status})`;
-                    try {
-                        const errorResult = JSON.parse(responseText);
-                        errorDetails = errorResult?.error?.message || `(Status: ${response.status})`;
-                    } catch (e) {
-                        errorDetails = responseText || response.statusText;
-                    }
-                    throw new Error(`Erreur API ${errorDetails}`);
-                }
-                
-                const result = JSON.parse(responseText);
-
-                if (!result.candidates || result.candidates.length === 0) {
-                    if (result.promptFeedback) {
-                        const blockReason = result.promptFeedback.blockReason;
-                        console.error("Prompt bloqué:", result.promptFeedback);
-                        throw new Error(`La requête a été bloquée: ${blockReason}`);
-                    }
-                    throw new Error("La réponse de l'API ne contient aucun résultat valide.");
-                }
-
-                return result;
-
-            } catch (error) {
-                console.error(`Tentative ${attempt + 1} échouée:`, error);
-                attempt++;
-                if (attempt >= maxRetries) {
-                    throw error; 
-                }
-                const delay = Math.pow(2, attempt) * 200; 
-                await new Promise(resolve => setTimeout(resolve, delay));
-            }
-        }
-    }
-
-    async function generateAIPost(product) {
-        const apiKey = "AIzaSyDeTIQtd0xLZAIamRfajdQd2vAGrjIWGi4";
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-
-        const systemPrompt = `Tu es un gestionnaire de réseaux sociaux expert pour "Aridago", une entreprise qui facilite les achats en Chine pour des clients à Madagascar. Ta mission est de créer des publications Facebook engageantes, professionnelles et vendeuses.`;
-        const userQuery = `Génère une publication Facebook pour le produit suivant. Mets en avant ses avantages de manière créative et termine par un appel à l'action clair. Utilise des emojis pertinents pour rendre la publication attractive.\n\n- Nom du produit: ${product.name}\n- Prix: ${product.price ? product.price.toLocaleString('fr-FR') + ' Ariary' : 'Prix sur devis'}\n- Description: ${product.description}\n\nLa publication doit être en français. Ne pas utiliser de formatage Markdown comme les astérisques pour le gras.`;
-
-        const payload = {
-            contents: [{ parts: [{ text: userQuery }] }],
-            systemInstruction: { parts: [{ text: systemPrompt }] },
-        };
-
-        try {
-            const response = await fetch(apiUrl, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(payload)
-            });
-
-            const responseText = await response.text();
-
-            if (!response.ok) {
-                let errorDetails = `(Status: ${response.status})`;
-                try {
-                    const errorResult = JSON.parse(responseText);
-                    errorDetails = errorResult?.error?.message || response.statusText;
-                } catch (e) {
-                   errorDetails = response.statusText;
-                }
-                throw new Error(`Erreur de l'API: ${errorDetails}`);
-            }
-            
-            const result = JSON.parse(responseText);
-            const candidate = result.candidates?.[0];
-
-            if (candidate && candidate.content?.parts?.[0]?.text) {
-                return candidate.content.parts[0].text.replace(/\*\*/g, '').replace(/\*/g, '');
-            } else {
-                 if (result.promptFeedback && result.promptFeedback.blockReason) {
-                     throw new Error(`Contenu bloqué par sécurité (${result.promptFeedback.blockReason}).`);
-                }
-                return "Désolé, la réponse de l'IA était vide ou mal formée.";
-            }
-        } catch (error) {
-            console.error('Erreur API Gemini:', error);
-            return `Désolé, une erreur est survenue. Détails: ${error.message}`;
-        }
-    }
-
-    function initIAGenerator() {
-        const productSelect = document.getElementById('ia-product-select');
-        const generateBtn = document.getElementById('ia-generate-btn');
-        const resultTextarea = document.getElementById('ia-generated-post');
-        const statusP = document.getElementById('ia-status');
-        const copyBtn = document.getElementById('ia-copy-btn');
-
-        if (!productSelect) return;
-
-        productSelect.innerHTML = '<option value="">-- Sélectionnez un produit --</option>' +
-            boutiqueProducts.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
-
-        generateBtn.addEventListener('click', async () => {
-            const selectedProductId = productSelect.value;
-            if (!selectedProductId) {
-                statusP.textContent = "Veuillez d'abord sélectionner un produit.";
-                statusP.className = "text-sm text-red-400 mt-1";
-                return;
-            }
-            const product = boutiqueProducts.find(p => p.id === selectedProductId);
-
-            statusP.textContent = "Génération en cours... L'IA réfléchit ✨";
-            statusP.className = "text-sm text-yellow-400 mt-1 animate-pulse";
-            resultTextarea.value = "";
-            generateBtn.disabled = true;
-            generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Génération...';
-            copyBtn.classList.add('hidden');
-
-            const generatedText = await generateAIPost(product);
-
-            resultTextarea.value = generatedText;
-            resultTextarea.readOnly = false;
-            statusP.textContent = "Génération terminée ! Vous pouvez modifier le texte.";
-            statusP.className = "text-sm text-green-400 mt-1";
-            generateBtn.disabled = false;
-            generateBtn.innerHTML = '<i class="fas fa-magic mr-2"></i>Générer une autre publication';
-            copyBtn.classList.remove('hidden');
-        });
-        
-        copyBtn.addEventListener('click', () => {
-            resultTextarea.select();
-            document.execCommand('copy');
-            copyBtn.innerHTML = '<i class="fas fa-check mr-1"></i>Copié !';
-            setTimeout(() => { copyBtn.innerHTML = '<i class="fas fa-copy mr-1"></i>Copier'; }, 2000);
-        });
-    }
-
-    function initAiFeatures() {
-        const aiTextName = document.getElementById('ai-text-name');
-        const aiGenerateTextBtn = document.getElementById('ai-generate-text-btn');
-        const aiTextStatus = document.getElementById('ai-text-status');
-
-        if(!aiGenerateTextBtn) return;
-
-        aiGenerateTextBtn.addEventListener('click', async () => {
-            const productName = aiTextName.value.trim();
-            if (!productName) {
-                aiTextStatus.textContent = 'Veuillez fournir un nom ou des mots-clés.';
-                return;
-            }
-
-            aiTextStatus.textContent = 'Génération du texte en cours...';
-            aiGenerateTextBtn.disabled = true;
-
-            try {
-                const apiKey = "AIzaSyDeTIQtd0xLZAIamRfajdQd2vAGrjIWGi4";
-                
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-                const prompt = `En tant qu'assistant de fiche produit, génère une description pour "${productName}". La description doit commencer par une seule phrase d'accroche courte et percutante. Juste après, à la ligne, continue avec une liste à puces concise (- Caractéristique : Valeur) des spécifications techniques et des caractéristiques clés. La réponse doit être en texte brut, sans formatage Markdown. Format attendu : NOM : [Nom clair du produit] ;;; DESCRIPTION : [Phrase d'accroche.]\n\n- Spécification : ...\n- Autre Spécification : ...`;
-
-                const payload = { contents: [{ parts: [{ text: prompt }] }] };
-
-                const result = await callGenerativeApi(apiUrl, payload);
-                const text = result.candidates[0].content.parts[0].text;
-                
-                const parts = text.split(';;;');
-                const generatedName = parts[0].replace('NOM :', '').trim();
-                const generatedDesc = parts[1].replace('DESCRIPTION :', '').trim();
-
-                document.getElementById('product-name').value = generatedName;
-                document.getElementById('product-description').value = generatedDesc;
-                aiTextStatus.textContent = 'Description générée avec succès !';
-
-            } catch (error) {
-                console.error('Erreur du générateur de texte IA:', error);
-                aiTextStatus.textContent = `Erreur: ${error.message}`;
-            } finally {
-                aiGenerateTextBtn.disabled = false;
-            }
-        });
+        }).catch(err => console.error("Erreur de chargement des taux", err)).finally(updateDisplay);
     }
     
     function initScrollAnimations() {
         const animatedElements = document.querySelectorAll('.scroll-animate');
         if ("IntersectionObserver" in window) {
             const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => {
-                    entry.target.classList.toggle('scrolled-in', entry.isIntersecting);
-                });
+                entries.forEach(entry => entry.target.classList.toggle('scrolled-in', entry.isIntersecting));
             }, { threshold: 0.1 });
-            
             animatedElements.forEach(el => observer.observe(el));
         } else {
             animatedElements.forEach(el => el.classList.add('scrolled-in'));
         }
     }
 
-    // ================== APPEL INITIAL ==================
+    // APPEL INITIAL
     loadAndRenderProducts();
     initSearchFunctionality();
     initExchangeCalculator();
-    renderDevisFaq();
 });
 </script>
 </body>
