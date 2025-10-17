@@ -117,32 +117,35 @@
           white-space: nowrap;
           border-width: 0;
         }
-        /* Style pour le filtre scrollable */
         #category-filters {
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
         #category-filters::-webkit-scrollbar {
-            display: none; /* Chrome, Safari, and Opera */
+            display: none;
         }
     </style>
 </head>
 <body class="text-slate-800">
 
     <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
-        <!-- Modification 1: Header ajusté pour aligner la navigation à droite sur mobile -->
-        <div class="container mx-auto px-2 sm:px-4 py-2 flex justify-between items-center">
+        <!-- Modification 1: Header layout adjusted -->
+        <div class="container mx-auto px-2 sm:px-4 py-2 flex items-center justify-between md:justify-start relative">
+            <!-- Logo -->
             <a href="#" class="nav-link flex-shrink-0" data-page="accueil">
                  <img src="https://i.ibb.co/4nXZ4R2V/image-removebg-preview.png" alt="Logo Aridago" class="h-14 w-auto">
             </a>
             
-            <nav class="flex items-center space-x-1 sm:space-x-2 md:space-x-4 text-[10px] sm:text-sm md:text-base">
-                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="accueil">Accueil</a>
-                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="boutique">Boutique</a>
-                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="devis">Devis</a>
-                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="echange">Transfert</a>
-                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="apropos">À Propos</a>
-            </nav>
+            <!-- Navigation Container -->
+            <div class="flex-1 flex justify-end md:justify-center">
+                 <nav class="flex items-center space-x-1 sm:space-x-2 md:space-x-4 text-[10px] sm:text-sm md:text-base">
+                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="accueil">Accueil</a>
+                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="boutique">Boutique</a>
+                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="devis">Devis</a>
+                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="echange">Transfert</a>
+                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="apropos">À Propos</a>
+                </nav>
+            </div>
         </div>
     </header>
 
@@ -346,7 +349,6 @@
                     </div>
 
                     <div class="mt-10 text-center">
-                        <!-- Modification 3: Bouton et icône ajustés -->
                         <button id="exchange-whatsapp-btn" class="inline-flex justify-center items-center py-3 px-8 md:py-4 md:px-16 text-base md:text-lg font-bold rounded-xl text-white btn-whatsapp shadow-lg hover:shadow-xl transform hover:scale-105 transition">
                          <ion-icon name="logo-whatsapp" class="mr-3 text-2xl"></ion-icon>
                             Confirmer la transaction
@@ -847,7 +849,6 @@ document.addEventListener('DOMContentLoaded', function() {
             e.currentTarget.classList.add('border-red-500');
         }));
 
-        // Lightbox Logic
         const mainImageContainer = detailSection.querySelector('.cursor-zoom-in');
         const lightbox = document.getElementById('image-lightbox');
         const lightboxImg = document.getElementById('lightbox-img');
@@ -1045,25 +1046,6 @@ document.addEventListener('DOMContentLoaded', function() {
             MGA: [{ id: 'recept-espece', name: 'Espèce' }, { id: 'recept-mvola', name: 'MVola' }, { id: 'recept-orangemoney', name: 'Orange Money' }, { id: 'recept-airtelmoney', name: 'Airtel Money' }]
         };
 
-        // Modification 2: Logique de clic améliorée
-        paymentOptionsContainer.addEventListener('click', (e) => {
-            const targetLabel = e.target.closest('.payment-label');
-            if (!targetLabel) return;
-            paymentOptionsContainer.querySelectorAll('.payment-label').forEach(l => {
-                l.classList.remove('bg-red-100', 'font-bold', 'text-red-700');
-            });
-            targetLabel.classList.add('bg-red-100', 'font-bold', 'text-red-700');
-        });
-
-        receptionOptionsContainer.addEventListener('click', (e) => {
-            const targetLabel = e.target.closest('.reception-label');
-            if (!targetLabel) return;
-            receptionOptionsContainer.querySelectorAll('.reception-label').forEach(l => {
-                l.classList.remove('bg-green-100', 'font-bold', 'text-green-700');
-            });
-            targetLabel.classList.add('bg-green-100', 'font-bold', 'text-green-700');
-        });
-
         async function fetchRates() {
             try {
                 const doc = await settingsCollection.doc('exchangeRates').get();
@@ -1082,8 +1064,9 @@ document.addEventListener('DOMContentLoaded', function() {
         
         function renderPaymentOptions() {
             const currency = isRmbToMga ? 'RMB' : 'MGA';
+            // Modification 2: Removed transition-colors
             paymentOptionsContainer.innerHTML = paymentMethods[currency].map((opt, index) => `
-                <label for="payment-${opt.id}" class="payment-label flex items-center justify-center text-center bg-gray-100 p-3 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">
+                <label for="payment-${opt.id}" class="payment-label flex items-center justify-center text-center bg-gray-100 p-3 rounded-lg cursor-pointer hover:bg-gray-200">
                     <input type="radio" id="payment-${opt.id}" name="payment-method" value="${opt.name}" class="sr-only" ${index === 0 ? 'checked' : ''}>
                     <span class="font-medium text-gray-700">${opt.name}</span>
                 </label>`).join('');
@@ -1096,8 +1079,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function renderReceptionOptions() {
             const currency = isRmbToMga ? 'MGA' : 'RMB';
+            // Modification 2: Removed transition-colors
             receptionOptionsContainer.innerHTML = receptionMethods[currency].map((opt, index) => `
-                 <label for="reception-${opt.id}" class="reception-label flex items-center justify-center text-center bg-gray-100 p-3 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">
+                 <label for="reception-${opt.id}" class="reception-label flex items-center justify-center text-center bg-gray-100 p-3 rounded-lg cursor-pointer hover:bg-gray-200">
                     <input type="radio" id="reception-${opt.id}" name="reception-method" value="${opt.name}" class="sr-only" ${index === 0 ? 'checked' : ''}>
                     <span class="font-medium text-gray-700">${opt.name}</span>
                 </label>`).join('');
@@ -1107,6 +1091,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 checkedReception.parentElement.classList.add('bg-green-100', 'font-bold', 'text-green-700');
             }
         }
+        
+        // Modification 2: Instant click feedback
+        paymentOptionsContainer.addEventListener('click', (e) => {
+            const targetLabel = e.target.closest('.payment-label');
+            if (!targetLabel) return;
+            paymentOptionsContainer.querySelectorAll('.payment-label').forEach(l => l.classList.remove('bg-red-100', 'font-bold', 'text-red-700'));
+            targetLabel.classList.add('bg-red-100', 'font-bold', 'text-red-700');
+        });
+
+        receptionOptionsContainer.addEventListener('click', (e) => {
+            const targetLabel = e.target.closest('.reception-label');
+            if (!targetLabel) return;
+            receptionOptionsContainer.querySelectorAll('.reception-label').forEach(l => l.classList.remove('bg-green-100', 'font-bold', 'text-green-700'));
+            targetLabel.classList.add('bg-green-100', 'font-bold', 'text-green-700');
+        });
+
 
         function updateDisplay() {
             if (isRmbToMga) {
