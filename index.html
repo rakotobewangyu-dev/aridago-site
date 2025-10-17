@@ -16,119 +16,96 @@
     <style>
         body {
             font-family: 'Poppins', sans-serif;
-background-color: #FFFBEB;
+            background-color: #FFFBEB;
         }
         :root {
             --primary-color: #d92a2a;
---secondary-color: #f7b731;
+            --secondary-color: #f7b731;
         }
         .nav-link-underline::after {
             content: '';
-position: absolute;
+            position: absolute;
             bottom: -4px;
             left: 0;
             width: 0;
             height: 2px;
             background-color: var(--primary-color);
             transition: width 0.3s;
-}
+        }
         .nav-link-underline:hover::after, .nav-link-active::after {
             width: 100%;
-}
+        }
         .text-gradient {
             background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
--webkit-background-clip: text;
+            -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .btn-primary {
             background: linear-gradient(90deg, #d92a2a, #f7b731);
-color: white;
+            color: white;
         }
         .btn-secondary {
             background-color: #2ab57d;
-color: white;
+            color: white;
         }
         .btn-secondary:hover {
             background-color: #2a9d8f;
-}
+        }
         .btn-whatsapp {
             background: linear-gradient(90deg, #25D366, #128C7E);
-color: white;
+            color: white;
         }
         .theme-gradient-text {
             background: linear-gradient(90deg, #d92a2a, #f7b731);
--webkit-background-clip: text;
+            -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
         .theme-gradient-bg { 
-            background: linear-gradient(90deg, #d92a2a, #f7b731);
-}
+            background: linear-gradient(90deg, #d92a2a, #f7b731); 
+        }
         .modal-backdrop { 
-            background-color: rgba(0,0,0,0.6);
-display: flex;
+            background-color: rgba(0,0,0,0.6); 
+            display: flex;
             align-items: center;
             justify-content: center;
         }
         .hidden {
             display: none;
-}
+        }
         .rotate-180 {
             transform: rotate(180deg);
-}
+        }
         #confirmation-modal, #price-alert-modal, #link-alert-modal, #delete-confirm-modal {
             display: none;
-}
+        }
         /* Améliorations UI */
-        .cursor-zoom-in { cursor: zoom-in;
-}
+        .cursor-zoom-in { cursor: zoom-in; }
         .scroll-animate {
             opacity: 0;
-transform: translateY(30px);
+            transform: translateY(30px);
             transition: opacity 0.6s ease-out, transform 0.6s ease-out;
         }
         .scroll-animate.scrolled-in {
             opacity: 1;
-transform: translateY(0);
+            transform: translateY(0);
         }
         .category-filter {
             transition: all 0.3s ease-in-out;
-background-color: #f3f4f6; /* bg-gray-100 */
-            color: #4b5563;
-/* text-gray-600 */
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #4b5563; /* text-gray-600 */
             box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
-}
+        }
         .category-filter:hover {
              transform: translateY(-2px);
-box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-             background-color: #e5e7eb;
-/* bg-gray-200 */
+             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+             background-color: #e5e7eb; /* bg-gray-200 */
         }
         .category-filter.active-filter {
-            background: linear-gradient(90deg, #d92a2a, #f7b731);
-/* Use the theme gradient */
+            background: linear-gradient(90deg, #d92a2a, #f7b731); /* Use the theme gradient */
             color: white;
-box-shadow: 0 4px 6px -1px rgba(217, 42, 42, 0.3), 0 2px 4px -2px rgba(247, 183, 49, 0.3);
-/* shadow-md with theme colors */
+            box-shadow: 0 4px 6px -1px rgba(217, 42, 42, 0.3), 0 2px 4px -2px rgba(247, 183, 49, 0.3); /* shadow-md with theme colors */
             transform: translateY(-2px);
-}
-        
-        /* NOUVEAU: Style pour le conteneur de filtres scrollable */
-        #category-filters {
-            display: flex;
-            flex-wrap: nowrap; /* Empêche le retour à la ligne */
-            overflow-x: auto; /* Active le défilement horizontal */
-            -webkit-overflow-scrolling: touch; /* Améliore le défilement sur iOS */
-            scrollbar-width: none; /* Cache la scrollbar sur Firefox */
-            padding-bottom: 12px; /* Espace pour l'ombre portée */
-            margin-bottom: 2rem; /* mb-8 */
         }
-        #category-filters::-webkit-scrollbar {
-            display: none; /* Cache la scrollbar sur Chrome, Safari, Edge */
-        }
-        #category-filters .category-filter {
-            flex-shrink: 0; /* Empêche les boutons de rétrécir */
-        }
-
     </style>
 </head>
 <body class="text-slate-800">
@@ -138,28 +115,23 @@ box-shadow: 0 4px 6px -1px rgba(217, 42, 42, 0.3), 0 2px 4px -2px rgba(247, 183,
             <div class="flex items-center space-x-2 sm:space-x-4">
                 <a href="#" class="nav-link flex-shrink-0" data-page="accueil">
                      <img src="https://i.ibb.co/4nXZ4R2V/image-removebg-preview.png" alt="Logo Aridago" class="h-12 sm:h-14 md:h-16 w-auto">
-     
-           </a>
+                </a>
                 <nav class="flex items-center space-x-1 sm:space-x-2 md:space-x-4 text-xs sm:text-sm md:text-base">
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="accueil">Accueil</a>
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="boutique">Boutique</a>
-     
-               <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="devis">Devis</a>
+                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="devis">Devis</a>
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="apropos">À Propos</a>
                 </nav>
             </div>
             
-    
-        <div class="flex items-center">
+            <div class="flex items-center">
                 <button id="admin-link-header" class="text-slate-700 hover:text-red-600 text-lg p-2"><i class="fas fa-user-shield"></i></button>
             </div>
         </div>
     </header>
 
-    <div style="background: linear-gradient(90deg, #d92a2a, #f7b731);"
-class="text-white text-center py-2">
-        <p class="text-sm font-semibold px-2">Votre partenaire d'achat en Chine |
-Simple, rapide et fiable</p>
+    <div style="background: linear-gradient(90deg, #d92a2a, #f7b731);" class="text-white text-center py-2">
+        <p class="text-sm font-semibold px-2">Votre partenaire d'achat en Chine | Simple, rapide et fiable</p>
     </div>
 
     <main>
@@ -168,41 +140,33 @@ Simple, rapide et fiable</p>
             <div class="relative bg-slate-900 text-white flex items-center justify-center min-h-[500px] overflow-hidden">
                 <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://i.ibb.co/8q8LMyF/Gemini-Generated-Image-q83rbmq83rbmq83r.png');"></div>
                 <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
-                <div 
-class="relative text-center max-w-3xl px-4 z-10">
+                <div class="relative text-center max-w-3xl px-4 z-10">
                     <h1 class="text-4xl md:text-6xl font-extrabold mb-4 leading-tight">Commander en Chine ?<br>C'est maintenant <span class="text-gradient">simple et rapide !</span></h1>
                     <p class="text-lg md:text-xl text-slate-300 mb-8">Nous sommes votre partenaire de confiance pour le sourcing, l'accompagnement commercial et la logistique entre la Chine et Madagascar.</p>
-                    
-<a href="#" class="btn-primary font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 shadow-lg nav-link" data-page="devis">Faire une commande</a>
+                    <a href="#" class="btn-primary font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 shadow-lg nav-link" data-page="devis">Faire une commande</a>
                 </div>
             </div>
 
             <section class="bg-white py-12 md:py-16">
                 <div class="container mx-auto px-4">
-                    <div class="grid grid-cols-1 
-sm:grid-cols-2 md:grid-cols-3 gap-8 text-center">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 text-center">
                         <div class="feature p-4 scroll-animate">
                             <i class="fas fa-search-dollar text-4xl text-red-600 mb-4"></i>
                             <h3 class="font-bold text-lg mb-2">Recherche de produits</h3>
-    
-                        <p class="text-slate-600">Nous trouvons pour vous les meilleurs produits au meilleur prix.</p>
+                            <p class="text-slate-600">Nous trouvons pour vous les meilleurs produits au meilleur prix.</p>
                         </div>
                         <div class="feature p-4 scroll-animate" style="transition-delay: 100ms;">
-             
-               <i class="fas fa-handshake text-4xl text-red-600 mb-4"></i>
+                            <i class="fas fa-handshake text-4xl text-red-600 mb-4"></i>
                             <h3 class="font-bold text-lg mb-2">Intermédiaire de confiance</h3>
                             <p class="text-slate-600">Nous gérons l'achat, la vérification et le paiement pour vous.</p>
-         
-               </div>
+                        </div>
                         <div class="feature p-4 scroll-animate" style="transition-delay: 200ms;">
                             <i class="fas fa-shipping-fast text-4xl text-red-600 mb-4"></i>
-                       
-     <h3 class="font-bold text-lg mb-2">Transport sécurisé</h3>
+                            <h3 class="font-bold text-lg mb-2">Transport sécurisé</h3>
                             <p class="text-slate-600">Nous nous occupons de l'expédition de la Chine vers Madagascar.</p>
                         </div>
                     </div>
-         
-       </div>
+                </div>
             </section>
 
              <div id="popular-products-accueil" class="py-12 md:py-16 scroll-animate">
@@ -211,27 +175,22 @@ sm:grid-cols-2 md:grid-cols-3 gap-8 text-center">
 
         <section id="page-boutique" class="page-content hidden">
             <div class="container mx-auto px-4 py-12 md:py-16">
-           
-      <div class="text-center mb-12">
+                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold mb-2 text-gradient flex items-center justify-center">
                         <i class="fas fa-store mr-3"></i>Notre Boutique
                     </h2>
-                
-    <p class="text-slate-600 text-lg">Commandez directement nos articles sélectionnés pour vous.</p>
+                    <p class="text-slate-600 text-lg">Commandez directement nos articles sélectionnés pour vous.</p>
                      <div class="mt-6 max-w-lg mx-auto relative flex items-center">
                         <input type="text" id="search-bar" placeholder="Rechercher par nom de produit..." class="w-full pl-6 pr-12 py-3 border-2 border-slate-200 rounded-full focus:outline-none focus:ring-2 focus:ring-red-400 transition">
-                   
-     <button id="search-btn" class="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-white rounded-r-full hover:opacity-90" style="background-color: var(--secondary-color);">
+                        <button id="search-btn" class="absolute right-0 top-0 h-full w-12 flex items-center justify-center text-white rounded-r-full hover:opacity-90" style="background-color: var(--secondary-color);">
                             <i class="fas fa-search"></i>
                         </button>
                      </div>
-      
-           </div>
-                 <div id="category-filters" class="items-center gap-2"></div>
+                 </div>
+                 <div id="category-filters" class="flex flex-wrap justify-center items-center gap-2 mb-8"></div>
                  <div id="product-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
                     <p id="loading-products" class="text-center text-gray-500 col-span-full">Chargement des produits...</p>
-                
- </div>
+                 </div>
             </div>
         </section>
 
@@ -239,155 +198,115 @@ sm:grid-cols-2 md:grid-cols-3 gap-8 text-center">
             <div class="container mx-auto max-w-4xl p-4 md:p-8">
         
                 <header class="text-center mb-10 scroll-animate">
-                    <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" 
-class="mx-auto h-24 md:h-36 w-auto mb-6">
+                    <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="mx-auto h-24 md:h-36 w-auto mb-6">
                     <h1 class="text-3xl md:text-5xl font-extrabold text-gray-800 leading-tight">
                         Commander en Chine ?<br>C'est maintenant <span class="theme-gradient-text">simple et rapide !</span>
                     </h1>
-                  
-  <p class="mt-4 text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+                    <p class="mt-4 text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
                         Remplissez ce formulaire pour recevoir votre devis personnalisé directement sur WhatsApp.
-</p>
+                    </p>
                 </header>
 
                 <section class="mb-12 scroll-animate">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 text-center">
                         <div class="bg-white p-6 rounded-2xl shadow-sm">
-            
-                <div class="theme-gradient-bg w-12 h-12 flex items-center justify-center rounded-full text-white font-bold text-xl mx-auto mb-4">1</div>
+                            <div class="theme-gradient-bg w-12 h-12 flex items-center justify-center rounded-full text-white font-bold text-xl mx-auto mb-4">1</div>
                             <h3 class="font-bold text-lg text-gray-800">Remplissez le formulaire</h3>
-                            <p class="text-gray-500 text-sm mt-1">Ajoutez les liens et détails de tous vos 
-produits.</p>
+                            <p class="text-gray-500 text-sm mt-1">Ajoutez les liens et détails de tous vos produits.</p>
                         </div>
                         <div class="bg-white p-6 rounded-2xl shadow-sm">
                             <div class="theme-gradient-bg w-12 h-12 flex items-center justify-center rounded-full text-white font-bold text-xl mx-auto mb-4">2</div>
-        
-                    <h3 class="font-bold text-lg text-gray-800">Envoyez via WhatsApp</h3>
+                            <h3 class="font-bold text-lg text-gray-800">Envoyez via WhatsApp</h3>
                             <p class="text-gray-500 text-sm mt-1">Un clic suffit pour nous transmettre votre demande.</p>
                         </div>
-             
-           <div class="bg-white p-6 rounded-2xl shadow-sm">
+                        <div class="bg-white p-6 rounded-2xl shadow-sm">
                             <div class="theme-gradient-bg w-12 h-12 flex items-center justify-center rounded-full text-white font-bold text-xl mx-auto mb-4">3</div>
                             <h3 class="font-bold text-lg text-gray-800">Recevez la confirmation</h3>
-            
-                <p class="text-gray-500 text-sm mt-1">Nous vérifions et validons la commande avec vous.</p>
+                            <p class="text-gray-500 text-sm mt-1">Nous vérifions et validons la commande avec vous.</p>
                         </div>
                     </div>
                 </section>
 
-              
-  <main class="bg-white p-6 md:p-10 rounded-3xl shadow-lg scroll-animate">
+                <main class="bg-white p-6 md:p-10 rounded-3xl shadow-lg scroll-animate">
                     <form id="devis-form">
                         <fieldset class="border-b-2 border-gray-100 pb-8">
                             <legend class="text-xl md:text-2xl font-bold text-gray-800 mb-6 flex items-center">
-         
-                       <span class="theme-gradient-bg w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full text-white font-bold mr-4 text-base md:text-lg">1</span> Vos informations
+                                <span class="theme-gradient-bg w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full text-white font-bold mr-4 text-base md:text-lg">1</span> Vos informations
                             </legend>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 
-gap-y-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                                 <div><label for="nom" class="block text-sm font-semibold text-gray-600 mb-1">Votre nom</label><input type="text" id="nom" name="nom" required class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></div>
-                                <div><label for="entreprise" class="block text-sm font-semibold text-gray-600 mb-1">Nom de votre Entreprise (Optionnel)</label><input type="text" id="entreprise" name="entreprise" class="w-full 
-bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></div>
+                                <div><label for="entreprise" class="block text-sm font-semibold text-gray-600 mb-1">Nom de votre Entreprise (Optionnel)</label><input type="text" id="entreprise" name="entreprise" class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></div>
                                 <div><label for="whatsapp" class="block text-sm font-semibold text-gray-600 mb-1">Numéro WhatsApp</label><input type="tel" id="whatsapp" name="whatsapp" required class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></div>
-                                <div><label for="email" class="block text-sm font-semibold text-gray-600 mb-1">Email 
-(Optionnel)</label><input type="email" id="email" name="email" class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></div>
+                                <div><label for="email" class="block text-sm font-semibold text-gray-600 mb-1">Email (Optionnel)</label><input type="email" id="email" name="email" class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></div>
                                 <div class="md:col-span-2"><label for="adresse" class="block text-sm font-semibold text-gray-600 mb-1">Adresse de livraison</label><input type="text" id="adresse" name="adresse" required class="w-full bg-gray-100 border-2 border-gray-200 rounded-xl p-3 focus:outline-none focus:ring-2 focus:ring-yellow-400 transition"></div>
                             </div>
-    
-                    </fieldset>
+                        </fieldset>
                         <fieldset class="mt-8">
                             <legend class="text-xl md:text-2xl font-bold text-gray-800 mb-6 flex items-center">
-                    
-            <span class="theme-gradient-bg w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full text-white font-bold mr-4 text-base md:text-lg">2</span> Vos produits
+                                <span class="theme-gradient-bg w-8 h-8 md:w-10 md:h-10 flex items-center justify-center rounded-full text-white font-bold mr-4 text-base md:text-lg">2</span> Vos produits
                             </legend>
                             <div id="product-list" class="space-y-6"></div>
-              
-              <div class="mt-6"><button type="button" id="add-product" class="w-full flex items-center justify-center px-6 py-3 border-2 border-dashed border-red-300 text-sm font-semibold rounded-xl text-red-600 hover:bg-red-50 transition"><svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>Ajouter un autre produit</button></div>
+                            <div class="mt-6"><button type="button" id="add-product" class="w-full flex items-center justify-center px-6 py-3 border-2 border-dashed border-red-300 text-sm font-semibold rounded-xl text-red-600 hover:bg-red-50 transition"><svg class="w-5 h-5 mr-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" /></svg>Ajouter un autre produit</button></div>
                         </fieldset>
-                        <div 
-class="mt-10 text-center">
+                        <div class="mt-10 text-center">
                             <button type="submit" class="inline-flex justify-center items-center py-3 px-8 md:py-4 md:px-16 text-base md:text-lg font-bold rounded-xl text-white btn-whatsapp shadow-lg hover:shadow-xl transform hover:scale-105 transition animate-pulse">
                                 <ion-icon name="logo-whatsapp" class="mr-3 text-2xl"></ion-icon>
-                
-                Envoyer ma commande
+                                Envoyer ma commande
                             </button>
                         </div>
                     </form>
-          
-      </main>
+                </main>
 
                 <section class="mt-12 bg-white p-6 md:p-10 rounded-3xl shadow-lg scroll-animate">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Questions fréquentes (FAQ)</h2>
                     <div id="faq-container" class="space-y-2">
-                      
-  <div class="faq-item bg-gray-50 rounded-xl">
+                        <div class="faq-item bg-gray-50 rounded-xl">
                             <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
                                 <span>Quels sont les frais de transport Chine-Madagascar ?</span>
-                   
-             <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-          
-                      <p>Les frais de transport ne sont pas inclus dans le devis initial.
-Ils dépendent du poids et du volume total de votre commande.
-Nous vous fournirons une estimation détaillée de ces frais lors de la confirmation de votre commande.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item bg-gray-50 rounded-xl">
-      
-                      <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
-                                <span>Quels sont les délais de livraison estimés ?</span>
-                              
-  <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-                     
-           <p>Les délais varient en fonction du type de transport choisi (aérien ou maritime).
-En général, comptez entre 3 à 10 jours pour le transport aérien et 30 à 60 jours pour le transport maritime, après réception de tous vos articles dans notre entrepôt en Chine.</p>
-                            </div>
-                        </div>
-                 
-       <div class="faq-item bg-gray-50 rounded-xl">
-                            <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
-                                <span>Quels sont les moyens de paiement acceptés ?</span>
-              
-                  <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-     
-                           <p>Pour les paiements en <b>Yuan (CNY)</b>, nous acceptons : Alipay et WeChatPay.<br>Pour les paiements en <b>Ariary (MGA)</b>, nous acceptons : Espèce, MVola, Orange Money et Airtel Money.<br>Les détails vous seront communiqués lors de la validation de votre devis.</p>
-                            </div>
-        
-                </div>
-                        <div class="faq-item bg-gray-50 rounded-xl">
-                            <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
-                    
-            <span>Comment garantissez-vous la qualité des produits ?</span>
                                 <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </button>
-      
-                      <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-                                <p>La qualité est notre priorité.
-Nos équipes en Chine effectuent un contrôle qualité systématique avant toute expédition.
-Nous vous envoyons des photos et des vidéos des produits pour que vous puissiez valider la conformité de votre commande avant son envoi.</p>
+                            <div class="faq-answer hidden px-4 pb-4 text-gray-600">
+                                <p>Les frais de transport ne sont pas inclus dans le devis initial. Ils dépendent du poids et du volume total de votre commande. Nous vous fournirons une estimation détaillée de ces frais lors de la confirmation de votre commande.</p>
                             </div>
                         </div>
-                        <div class="faq-item 
-bg-gray-50 rounded-xl">
+                        <div class="faq-item bg-gray-50 rounded-xl">
                             <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
-                                <span>Est-il possible de commander un échantillon ?</span>
-                        
-        <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                                <span>Quels sont les délais de livraison estimés ?</span>
+                                <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
                             </button>
                             <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-               
-                 <p>Oui, sur demande, nous pouvons organiser l'envoi d'un échantillon pour la plupart des produits.
-Le coût de l'échantillon et les frais d'expédition sont généralement à la charge du client, sauf accord particulier.</p>
+                                <p>Les délais varient en fonction du type de transport choisi (aérien ou maritime). En général, comptez entre 3 à 10 jours pour le transport aérien et 30 à 60 jours pour le transport maritime, après réception de tous vos articles dans notre entrepôt en Chine.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item bg-gray-50 rounded-xl">
+                            <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
+                                <span>Quels sont les moyens de paiement acceptés ?</span>
+                                <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="faq-answer hidden px-4 pb-4 text-gray-600">
+                                <p>Pour les paiements en <b>Yuan (CNY)</b>, nous acceptons : Alipay et WeChatPay.<br>Pour les paiements en <b>Ariary (MGA)</b>, nous acceptons : Espèce, MVola, Orange Money et Airtel Money.<br>Les détails vous seront communiqués lors de la validation de votre devis.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item bg-gray-50 rounded-xl">
+                            <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
+                                <span>Comment garantissez-vous la qualité des produits ?</span>
+                                <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="faq-answer hidden px-4 pb-4 text-gray-600">
+                                <p>La qualité est notre priorité. Nos équipes en Chine effectuent un contrôle qualité systématique avant toute expédition. Nous vous envoyons des photos et des vidéos des produits pour que vous puissiez valider la conformité de votre commande avant son envoi.</p>
+                            </div>
+                        </div>
+                        <div class="faq-item bg-gray-50 rounded-xl">
+                            <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
+                                <span>Est-il possible de commander un échantillon ?</span>
+                                <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                            </button>
+                            <div class="faq-answer hidden px-4 pb-4 text-gray-600">
+                                <p>Oui, sur demande, nous pouvons organiser l'envoi d'un échantillon pour la plupart des produits. Le coût de l'échantillon et les frais d'expédition sont généralement à la charge du client, sauf accord particulier.</p>
                             </div>
                         </div>
                     </div>
-           
-     </section>
+                </section>
                 
             </div>
         </section>
@@ -395,12 +314,10 @@ Le coût de l'échantillon et les frais d'expédition sont généralement à la 
         <section id="page-apropos" class="page-content hidden">
             <div class="relative bg-slate-800 text-white flex items-center justify-center pt-24 pb-16 overflow-hidden">
                 <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://i.ibb.co/8q8LMyF/Gemini-Generated-Image-q83rbmq83rbmq83r.png');"></div>
-     
-           <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
+                <div class="absolute inset-0 bg-black/60 backdrop-blur-sm"></div>
                 <div class="relative text-center max-w-4xl px-4 z-10">
                     <h2 class="text-4xl md:text-5xl font-extrabold mb-4 leading-tight text-gradient">Votre Partenaire de Confiance Pour la Chine</h2>
-                    <p class="text-lg md:text-xl text-slate-300">Nous avons créé Aridago pour rendre les achats en 
-Chine simples, transparents et accessibles à tous depuis Madagascar.</p>
+                    <p class="text-lg md:text-xl text-slate-300">Nous avons créé Aridago pour rendre les achats en Chine simples, transparents et accessibles à tous depuis Madagascar.</p>
                 </div>
             </div>
 
@@ -408,162 +325,122 @@ Chine simples, transparents et accessibles à tous depuis Madagascar.</p>
                 <div class="container mx-auto px-4 py-16 md:py-20">
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16 md:mb-24 scroll-animate">
-  
-                      <div class="order-last md:order-first">
+                        <div class="order-last md:order-first">
                             <h3 class="text-3xl font-bold mb-6 text-gradient">Qui sommes-nous ?</h3>
                             <p class="text-slate-700 mb-4 text-base md:text-lg">
-          
-                      Fondé par des experts en commerce international durablement implantés à Madagascar et en Chine, Aridago est né d'une vision claire : devenir le <strong>partenaire de confiance</strong> des entreprises et particuliers malgaches.
-Nous avons identifié un besoin fondamental : la nécessité d'un intermédiaire fiable capable de surmonter les barrières linguistiques, culturelles et logistiques.
-</p>
+                                Fondé par des experts en commerce international durablement implantés à Madagascar et en Chine, Aridago est né d'une vision claire : devenir le <strong>partenaire de confiance</strong> des entreprises et particuliers malgaches. Nous avons identifié un besoin fondamental : la nécessité d'un intermédiaire fiable capable de surmonter les barrières linguistiques, culturelles et logistiques.
+                            </p>
                             <p class="text-slate-700 text-base md:text-lg">
-                                Notre double présence est notre plus grande force.
-L'équipe en Chine opère au plus près des fabricants, tandis que notre équipe à Madagascar assure une compréhension parfaite de vos besoins.
-Cette synergie unique nous permet de construire un <strong>pont solide et fiable</strong> entre votre projet et les meilleures opportunités du marché chinois.
-</p>
+                                Notre double présence est notre plus grande force. L'équipe en Chine opère au plus près des fabricants, tandis que notre équipe à Madagascar assure une compréhension parfaite de vos besoins. Cette synergie unique nous permet de construire un <strong>pont solide et fiable</strong> entre votre projet et les meilleures opportunités du marché chinois.
+                            </p>
                         </div>
                         <div>
                             <img src="https://i.ibb.co/pvdKjdPG/Capture-d-cran-2025-09-09-183658.png" alt="Équipe Aridago" class="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
-               
-         </div>
+                        </div>
                     </div>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-16 md:mb-24 scroll-animate">
                         <div>
-                   
-         <img src="https://i.ibb.co/7dZdpFcJ/Untitled-design-1.png" alt="Services Aridago" class="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
+                            <img src="https://i.ibb.co/7dZdpFcJ/Untitled-design-1.png" alt="Services Aridago" class="rounded-xl shadow-2xl transform hover:scale-105 transition-transform duration-300">
                         </div>
                         <div>
-                            <h3 class="text-3xl font-bold mb-6 text-gradient">Que faisons-nous 
-?</h3>
+                            <h3 class="text-3xl font-bold mb-6 text-gradient">Que faisons-nous ?</h3>
                             <p class="text-slate-700 mb-4 text-base md:text-lg">
-                                Nous offrons un service complet d'intermédiaire d'achat.
-Vous avez trouvé un produit ? Nous nous occupons de tout : communication, négociation, et paiement sécurisé.
-</p>
+                                Nous offrons un service complet d'intermédiaire d'achat. Vous avez trouvé un produit ? Nous nous occupons de tout : communication, négociation, et paiement sécurisé.
+                            </p>
                             <p class="text-slate-700 text-base md:text-lg">
                                 En plus, notre boutique vous propose une sélection de produits déjà en stock à Madagascar, prêts à être récupérés sur place pour une satisfaction immédiate.
-</p>
+                            </p>
                         </div>
                     </div>
 
                     <div class="text-center mb-16 md:mb-24 scroll-animate">
                         <h3 class="text-3xl md:text-4xl font-bold mb-12 text-gradient">Nos Domaines d'Expertise</h3>
- 
-                       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
                             <div class="bg-slate-50 p-6 rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
-                                <h4 class="font-bold text-xl mb-2 
-text-blue-600">Produits Métallurgiques</h4>
-                                <p class="text-slate-600">Aciers, aluminium, fer.
-Nous maîtrisons les nuances des matières premières aux produits semi-finis pour l'industrie.</p>
+                                <h4 class="font-bold text-xl mb-2 text-blue-600">Produits Métallurgiques</h4>
+                                <p class="text-slate-600">Aciers, aluminium, fer. Nous maîtrisons les nuances des matières premières aux produits semi-finis pour l'industrie.</p>
                             </div>
                             <div class="bg-slate-50 p-6 rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
-                         
-       <h4 class="font-bold text-xl mb-2 text-blue-600">Produits Industriels</h4>
+                                <h4 class="font-bold text-xl mb-2 text-blue-600">Produits Industriels</h4>
                                 <p class="text-slate-600">Accès à un large éventail de machines-outils, pièces mécaniques et équipements spécialisés.</p>
                             </div>
-                
-            <div class="bg-slate-50 p-6 rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
+                            <div class="bg-slate-50 p-6 rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
                                 <h4 class="font-bold text-xl mb-2 text-blue-600">Matériaux de Construction</h4>
-                                <p class="text-slate-600">Partenaire de vos chantiers, nous sourçons tous les matériaux, 
-du gros œuvre aux finitions.</p>
+                                <p class="text-slate-600">Partenaire de vos chantiers, nous sourçons tous les matériaux, du gros œuvre aux finitions.</p>
                             </div>
                             <div class="bg-slate-50 p-6 rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
-                                
-<h4 class="font-bold text-xl mb-2 text-blue-600">Meubles & Équipements de Maison</h4>
+                                <h4 class="font-bold text-xl mb-2 text-blue-600">Meubles & Équipements de Maison</h4>
                                 <p class="text-slate-600">Nous identifions les fabricants de qualité pour vos projets d'ameublement et vos appareils électroménagers.</p>
                             </div>
-                  
-      </div>
+                        </div>
                     </div>
                     
                     <div class="text-center mb-16 md:mb-24 scroll-animate">
-                        <h3 class="text-3xl md:text-4xl font-bold mb-4">Notre Processus 
-Simplifié</h3>
+                        <h3 class="text-3xl md:text-4xl font-bold mb-4">Notre Processus Simplifié</h3>
                         <p class="text-slate-600 text-base md:text-lg max-w-2xl mx-auto">En quatre étapes claires, nous vous accompagnons de la recherche à la livraison.</p>
                         <div class="mt-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-4 relative">
-                            
-<div class="hidden md:block absolute top-10 left-0 w-full h-px bg-slate-200" style="z-index: 0;"></div>
+                            <div class="hidden md:block absolute top-10 left-0 w-full h-px bg-slate-200" style="z-index: 0;"></div>
                             
                             <div class="relative z-10 flex flex-col items-center p-4 md:p-6">
-                           
-     <div class="theme-gradient-bg w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-2xl md:text-3xl mx-auto mb-4 shadow-lg border-4 border-white">1</div>
+                                <div class="theme-gradient-bg w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-2xl md:text-3xl mx-auto mb-4 shadow-lg border-4 border-white">1</div>
                                 <h4 class="font-bold text-lg text-gray-800">Votre Demande</h4>
-                                <p class="text-gray-500 text-sm mt-1">Vous soumettez votre demande via notre 
-formulaire de devis détaillé.</p>
+                                <p class="text-gray-500 text-sm mt-1">Vous soumettez votre demande via notre formulaire de devis détaillé.</p>
                             </div>
                             <div class="relative z-10 flex flex-col items-center p-4 md:p-6">
-                                <div class="theme-gradient-bg 
-w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-2xl md:text-3xl mx-auto mb-4 shadow-lg border-4 border-white">2</div>
+                                <div class="theme-gradient-bg w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-2xl md:text-3xl mx-auto mb-4 shadow-lg border-4 border-white">2</div>
                                 <h4 class="font-bold text-lg text-gray-800">Devis & Validation</h4>
-                                <p class="text-gray-500 text-sm mt-1">Nous vous envoyons un devis clair.
-Après votre accord et un acompte, nous sécurisons l'achat.</p>
+                                <p class="text-gray-500 text-sm mt-1">Nous vous envoyons un devis clair. Après votre accord et un acompte, nous sécurisons l'achat.</p>
                             </div>
                             <div class="relative z-10 flex flex-col items-center p-4 md:p-6">
-                             
-   <div class="theme-gradient-bg w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-2xl md:text-3xl mx-auto mb-4 shadow-lg border-4 border-white">3</div>
+                                <div class="theme-gradient-bg w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-2xl md:text-3xl mx-auto mb-4 shadow-lg border-4 border-white">3</div>
                                 <h4 class="font-bold text-lg text-gray-800">Vérification</h4>
-                                <p class="text-gray-500 text-sm mt-1">Nos équipes effectuent un contrôle qualité rigoureux et vous 
-envoient photos et vidéos pour validation.</p>
+                                <p class="text-gray-500 text-sm mt-1">Nos équipes effectuent un contrôle qualité rigoureux et vous envoient photos et vidéos pour validation.</p>
                             </div>
                             <div class="relative z-10 flex flex-col items-center p-4 md:p-6">
-                                
-<div class="theme-gradient-bg w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-2xl md:text-3xl mx-auto mb-4 shadow-lg border-4 border-white">4</div>
+                                <div class="theme-gradient-bg w-16 h-16 md:w-20 md:h-20 flex items-center justify-center rounded-full text-white font-bold text-2xl md:text-3xl mx-auto mb-4 shadow-lg border-4 border-white">4</div>
                                 <h4 class="font-bold text-lg text-gray-800">Expédition</h4>
-                                <p class="text-gray-500 text-sm mt-1">Nous organisons le transport et le dédouanement pour une livraison fluide à 
-Madagascar.</p>
+                                <p class="text-gray-500 text-sm mt-1">Nous organisons le transport et le dédouanement pour une livraison fluide à Madagascar.</p>
                             </div>
                         </div>
                     </div>
 
                     <div class="bg-slate-50 rounded-2xl p-8 md:p-12 mb-16 md:mb-24 scroll-animate">
- 
-                       <h3 class="text-3xl md:text-4xl font-bold mb-12 text-center text-gradient">Nos Engagements</h3>
+                        <h3 class="text-3xl md:text-4xl font-bold mb-12 text-center text-gradient">Nos Engagements</h3>
                         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                             <div class="text-center p-8 bg-white rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
-     
-                           <div class="w-16 h-16 md:w-20 md:h-20 mx-auto mb-6 rounded-full bg-red-100 flex items-center justify-center">
+                                <div class="w-16 h-16 md:w-20 md:h-20 mx-auto mb-6 rounded-full bg-red-100 flex items-center justify-center">
                                     <i class="fas fa-shield-alt text-3xl text-red-600"></i>
-                      
-          </div>
+                                </div>
                                 <h4 class="font-bold text-xl mb-2">Confiance</h4>
                                 <p class="text-slate-600">Transparence totale dans nos processus et nos tarifs pour une collaboration sereine.</p>
-           
-                 </div>
+                            </div>
                             <div class="text-center p-8 bg-white rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
                                 <div class="w-16 h-16 md:w-20 md:h-20 mx-auto mb-6 rounded-full bg-yellow-100 flex items-center justify-center">
-   
-                                 <i class="fas fa-bolt text-3xl text-yellow-600"></i>
+                                    <i class="fas fa-bolt text-3xl text-yellow-600"></i>
                                 </div>
-                               
- <h4 class="font-bold text-xl mb-2">Efficacité</h4>
+                                <h4 class="font-bold text-xl mb-2">Efficacité</h4>
                                 <p class="text-slate-600">Nous optimisons chaque étape pour vous garantir des délais de traitement rapides.</p>
                             </div>
-                        
-    <div class="text-center p-8 bg-white rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
+                            <div class="text-center p-8 bg-white rounded-xl shadow-lg transform hover:-translate-y-2 transition-transform duration-300">
                                 <div class="w-16 h-16 md:w-20 md:h-20 mx-auto mb-6 rounded-full bg-green-100 flex items-center justify-center">
                                     <i class="fas fa-hands-helping text-3xl text-green-600"></i>
-    
-                            </div>
+                                </div>
                                 <h4 class="font-bold text-xl mb-2">Accompagnement</h4>
-                                <p class="text-slate-600">Nous offrons un support 
-personnalisé et réactif à chaque étape de votre commande.</p>
+                                <p class="text-slate-600">Nous offrons un support personnalisé et réactif à chaque étape de votre commande.</p>
                             </div>
                         </div>
-                         <p class="text-center text-slate-700 mt-12 text-lg">Choisir Aridago, c'est choisir la sérénité.
-Nous assurons une <strong>sélection rigoureuse</strong> des fournisseurs, la <strong>négociation des meilleurs prix</strong>, une <strong>transparence totale</strong> et un <strong>service après-vente réactif</strong>.</p>
+                         <p class="text-center text-slate-700 mt-12 text-lg">Choisir Aridago, c'est choisir la sérénité. Nous assurons une <strong>sélection rigoureuse</strong> des fournisseurs, la <strong>négociation des meilleurs prix</strong>, une <strong>transparence totale</strong> et un <strong>service après-vente réactif</strong>.</p>
                     </div>
 
                     <div class="text-center theme-gradient-bg rounded-2xl p-10 text-white shadow-2xl">
                         <h3 class="text-3xl md:text-4xl font-bold mb-4">Prêt à simplifier vos achats ?</h3>
-  
-                      <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Rejoignez les dizaines de clients qui nous font confiance pour leurs approvisionnements en Chine.</p>
+                        <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto">Rejoignez les dizaines de clients qui nous font confiance pour leurs approvisionnements en Chine.</p>
                         <div class="flex flex-col sm:flex-row justify-center items-center gap-4">
-                            <a href="#" 
-class="bg-white text-red-600 font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 shadow-lg nav-link" data-page="devis">Demander un devis</a>
+                            <a href="#" class="bg-white text-red-600 font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 shadow-lg nav-link" data-page="devis">Demander un devis</a>
                             <a href="#" class="border-2 border-white text-white font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 hover:bg-white hover:text-red-600 nav-link" data-page="boutique">Explorer la Boutique</a>
                         </div>
-                
-    </div>
+                    </div>
                 </div>
             </div>
         </section>
@@ -576,42 +453,34 @@ class="bg-white text-red-600 font-bold py-3 px-8 rounded-full transition duratio
     </main>
     
     <footer class="bg-slate-900 text-white">
-        <div class="container 
-mx-auto px-4 py-10">
+        <div class="container mx-auto px-4 py-10">
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8 text-center md:text-left">
                 <div>
                      <img src="https://i.imgur.com/JFtWbuc.png" alt="Logo Aridago" class="h-16 w-auto mb-4 mx-auto md:mx-0">
-                    <p class="text-slate-400 mb-4">Votre intermédiaire d'achat N°1 en Chine.
-Qualité, confiance et service client.</p>
+                    <p class="text-slate-400 mb-4">Votre intermédiaire d'achat N°1 en Chine. Qualité, confiance et service client.</p>
                     <div class="flex space-x-4 justify-center md:justify-start">
                         <a href="https://www.facebook.com/Aridagochine/" target="_blank" class="w-10 h-10 bg-slate-700 hover:bg-red-600 rounded-full flex items-center justify-center transition-colors"><i class="fab fa-facebook-f"></i></a>
                     </div>
-               
- </div>
+                </div>
                  <div>
                      <h3 class="text-xl font-bold mb-4 relative pb-2 inline-block md:block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-10 after:h-0.5 after:bg-secondary-color">Liens Rapides</h3>
                      <ul class="space-y-2">
-                        
-<li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="accueil">Accueil</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="accueil">Accueil</a></li>
                         <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="boutique">Boutique</a></li>
                         <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="devis">Devis sur Mesure</a></li>
                         <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="apropos">À Propos</a></li>
-     
-                </ul>
+                     </ul>
                 </div>
                  <div>
                      <h3 class="text-xl font-bold mb-4 relative pb-2 inline-block md:block after:content-[''] after:absolute after:left-0 after:bottom-0 after:w-10 after:h-0.5 after:bg-secondary-color">Contact</h3>
-                
-     <ul class="space-y-3 text-slate-400">
+                     <ul class="space-y-3 text-slate-400">
                          <li class="flex items-center justify-center md:justify-start"><i class="fab fa-whatsapp w-5 mr-2 text-green-400"></i><span>+86 156 0002 1123</span></li>
                          <li class="flex items-center justify-center md:justify-start"><i class="fas fa-envelope w-5 mr-2"></i><span>aridagoservice@hotmail.com</span></li>
                      </ul>
-  
-              </div>
+                </div>
             </div>
             <div class="text-center pt-8 border-t border-slate-700">
-                <p class="text-slate-500">&copy;
-<span id="year"></span> Aridago - Tous droits réservés.</p>
+                <p class="text-slate-500">&copy; <span id="year"></span> Aridago - Tous droits réservés.</p>
             </div>
         </div>
     </footer>
@@ -620,26 +489,22 @@ Qualité, confiance et service client.</p>
         <i class="fab fa-whatsapp text-3xl md:text-4xl"></i>
     </a>
     
-    <a href="https://www.facebook.com/Aridagochine/" target="_blank" class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-xl 
-transform hover:scale-110 transition z-40" title="Contactez-nous sur Facebook">
+    <a href="https://www.facebook.com/Aridagochine/" target="_blank" class="fixed bottom-6 right-6 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 md:w-16 md:h-16 rounded-full flex items-center justify-center shadow-xl transform hover:scale-110 transition z-40" title="Contactez-nous sur Facebook">
         <svg class="w-7 h-7 md:w-8 md:h-8" fill="currentColor" viewBox="0 0 24 24"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v2.385z"></path></svg>
     </a>
 
-    <div id="price-alert-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4"><h3 class="text-lg font-bold text-gray-800">Attention sur le Prix Unitaire</h3><p class="text-gray-600 mt-2 text-sm">Afin de s'assurer que nous parlons bien du même produit au bon prix, veuillez indiquer le prix exact d'achat sur le site que vous avez choisi pour qu'au moment de notre 
-achat il n'y ait pas d'erreur de commande.</p><button id="close-price-modal-btn" class="mt-6 w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg">Compris</button></div></div>
+    <!-- Modals -->
+    <div id="price-alert-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4"><h3 class="text-lg font-bold text-gray-800">Attention sur le Prix Unitaire</h3><p class="text-gray-600 mt-2 text-sm">Afin de s'assurer que nous parlons bien du même produit au bon prix, veuillez indiquer le prix exact d'achat sur le site que vous avez choisi pour qu'au moment de notre achat il n'y ait pas d'erreur de commande.</p><button id="close-price-modal-btn" class="mt-6 w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg">Compris</button></div></div>
     <div id="link-alert-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop"><div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4"><h3 class="text-lg font-bold text-gray-800">Comment copier le lien ?</h3><p class="text-gray-600 mt-2 text-sm">Copiez-collez le lien du produit que vous souhaitez acheter sur les sites chinois suivants afin que nous puissions l'identifier et l'acheter pour vous : Alibaba, Taobao, 1688, JingDong, XianYu, etc.</p><button id="close-link-modal-btn" class="mt-6 w-full bg-yellow-500 text-white font-bold py-2 px-4 rounded-lg">Compris</button></div></div>
     
-    <div id="confirmation-modal" class="fixed inset-0 z-50 items-center justify-center hidden 
-modal-backdrop">
+    <div id="confirmation-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop">
         <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-8 text-center m-4 relative">
             <button id="close-confirmation-modal" class="absolute top-4 right-4 text-gray-400 hover:text-gray-600 text-2xl font-bold">&times;</button>
             <div class="mx-auto bg-green-100 rounded-full h-24 w-24 flex items-center justify-center">
-                <svg class="h-16 w-16 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" 
-/></svg>
+                <svg class="h-16 w-16 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
             </div>
             <h2 class="mt-6 text-3xl font-extrabold text-gray-800">C'est presque fini !</h2>
-            <p class="mt-4 text-gray-600">Votre devis a été préparé.
-Cliquez ci-dessous pour nous l'envoyer sur WhatsApp.</p>
+            <p class="mt-4 text-gray-600">Votre devis a été préparé. Cliquez ci-dessous pour nous l'envoyer sur WhatsApp.</p>
             <a id="whatsapp-link" href="#" target="_blank" class="mt-8 inline-flex items-center justify-center w-full py-4 px-8 text-base font-bold rounded-xl text-white btn-primary">Confirmer et Envoyer sur WhatsApp</a>
         </div>
     </div>
@@ -647,9 +512,7 @@ Cliquez ci-dessous pour nous l'envoyer sur WhatsApp.</p>
     <div id="delete-confirm-modal" class="fixed inset-0 z-50 items-center justify-center hidden modal-backdrop">
         <div class="bg-white rounded-2xl shadow-xl w-full max-w-sm p-6 text-center m-4">
             <h3 class="text-lg font-bold text-gray-800">Confirmer la suppression</h3>
-      
-      <p class="text-gray-600 mt-2 text-sm">Êtes-vous sûr de vouloir supprimer ce produit ?
-Cette action est irréversible.</p>
+            <p class="text-gray-600 mt-2 text-sm">Êtes-vous sûr de vouloir supprimer ce produit ? Cette action est irréversible.</p>
             <div class="mt-6 flex justify-center gap-4">
                 <button id="cancel-delete-btn" class="w-full bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded-lg">Annuler</button>
                 <button id="confirm-delete-btn" class="w-full bg-red-600 text-white font-bold py-2 px-4 rounded-lg">Supprimer</button>
@@ -657,7 +520,8 @@ Cette action est irréversible.</p>
         </div>
     </div>
 
-      <div id="image-lightbox" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
+    <!-- Lightbox Modal -->
+    <div id="image-lightbox" class="fixed inset-0 bg-black/80 backdrop-blur-sm z-[100] hidden items-center justify-center p-4">
         <button id="close-lightbox-btn" class="absolute top-4 right-4 text-white text-4xl font-bold hover:opacity-75">&times;</button>
         <img id="lightbox-img" src="" alt="Agrandissement du produit" class="max-w-full max-h-full object-contain rounded-lg">
     </div>
@@ -673,38 +537,37 @@ document.addEventListener('DOMContentLoaded', function() {
     const firebaseConfig = {
       apiKey: "AIzaSyBa93ZQ34S4JEz6lc7yt_2ZrIiTc2Jqh9c",
       authDomain: "boutique-aridago.firebaseapp.com",
-   
-   projectId: "boutique-aridago",
+      projectId: "boutique-aridago",
       storageBucket: "boutique-aridago.appspot.com",
       messagingSenderId: "173722302642",
       appId: "1:173722302642:web:1cad436874f3b4270eb1ab"
     };
-const IMGBB_API_KEY = '7dfb12ff69d1e1f349a28e4a788f2c1d';
+    const IMGBB_API_KEY = '7dfb12ff69d1e1f349a28e4a788f2c1d';
 
     // Initialisation de Firebase
     firebase.initializeApp(firebaseConfig);
     const db = firebase.firestore();
     const auth = firebase.auth();
-const productsCollection = db.collection('products');
-    const settingsCollection = db.collection('settings'); // NOUVEAU
+    const productsCollection = db.collection('products');
 
     let boutiqueProducts = [];
-    let categoryOrder = []; // NOUVEAU
     const pages = document.querySelectorAll('.page-content');
     const navLinks = document.querySelectorAll('.nav-link');
-// ================== GESTION DE LA NAVIGATION (Single Page App) ==================
+    
+    // ================== GESTION DE LA NAVIGATION (Single Page App) ==================
     
     function showPage(pageId, fromPopState = false) {
         let pageFound = false;
-pages.forEach(page => {
+        pages.forEach(page => {
             const isTargetPage = page.id === pageId;
             page.classList.toggle('hidden', !isTargetPage);
             if (isTargetPage) pageFound = true;
         });
-if (!pageFound) {
+
+        if (!pageFound) {
             pageId = 'page-accueil';
             document.getElementById('page-accueil').classList.remove('hidden');
-}
+        }
 
         document.querySelectorAll('header nav .nav-link, footer .nav-link').forEach(link => {
             const isTargetLink = `page-${link.dataset.page}` === pageId;
@@ -712,44 +575,43 @@ if (!pageFound) {
                  link.classList.toggle('nav-link-active', isTargetLink);
                  link.classList.toggle('text-red-600', isTargetLink);
             } else if(link.closest('footer')) {
-   
-              link.classList.toggle('text-white', isTargetLink);
+                 link.classList.toggle('text-white', isTargetLink);
             }
         });
-if (!fromPopState) {
+
+        if (!fromPopState) {
             const pageName = pageId.replace('page-', '');
-const currentHash = window.location.hash.substring(1).split('/')[0];
+            const currentHash = window.location.hash.substring(1).split('/')[0];
             if(pageName !== currentHash) {
                 history.pushState({ pageId: pageId }, '', `#${pageName}`);
-}
+            }
         }
         
         window.scrollTo(0, 0);
-if (pageId === 'page-boutique') renderBoutique();
+        if (pageId === 'page-boutique') renderBoutique();
         initScrollAnimations();
     }
     
     function viewProduct(productId) {
         renderProductDetail(productId);
-showPage('page-detail', true); 
+        showPage('page-detail', true); 
         history.pushState({ pageId: 'page-detail', productId: productId }, '', `#detail/${productId}`);
         window.scrollTo(0, 0);
-}
+    }
     
     function router() {
         const hash = window.location.hash.substring(1);
-const [pageName, id] = hash.split('/');
+        const [pageName, id] = hash.split('/');
 
         if (pageName === 'detail' && id) {
             if (boutiqueProducts.length > 0) {
                  renderProductDetail(id);
-showPage('page-detail', true);
+                 showPage('page-detail', true);
             } else {
                  window.initialRoute = { pageId: 'page-detail', productId: id };
-}
+            }
         } else {
-            const pageId = `page-${pageName ||
-'accueil'}`;
+            const pageId = `page-${pageName || 'accueil'}`;
             showPage(pageId, true);
         }
     }
@@ -761,84 +623,78 @@ showPage('page-detail', true);
             showPage(pageId);
         });
     });
-document.getElementById('admin-link-header').addEventListener('click', (e) => {
+    
+    document.getElementById('admin-link-header').addEventListener('click', (e) => {
         e.preventDefault();
         showPage('page-admin');
     });
-window.addEventListener('popstate', (event) => {
+
+    window.addEventListener('popstate', (event) => {
         router();
     });
     
     document.getElementById('year').textContent = new Date().getFullYear();
-// ================== LOGIQUE BOUTIQUE ==================
+
+    // ================== LOGIQUE BOUTIQUE ==================
     async function loadAndRenderProducts() {
         try {
-            // NOUVEAU: Charger l'ordre des catégories
-            const categoryOrderDoc = await settingsCollection.doc('categories').get();
-            if (categoryOrderDoc.exists) {
-                categoryOrder = categoryOrderDoc.data().order || [];
-            }
-
             const snapshot = await productsCollection.orderBy("name").get();
-boutiqueProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            
+            boutiqueProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             
             renderCategoryFilters();
             renderBoutique();
             
             const featuredProducts = boutiqueProducts.filter(p => p.isFeatured === true).slice(0, 4);
-renderPopularProducts(featuredProducts);
+            renderPopularProducts(featuredProducts);
 
             if (auth.currentUser) {
                 renderAdminStats();
-renderAdminList();
+                renderAdminList();
                 initIAGenerator();
                 initAiFeatures();
-                initCategoryOrdering(); // NOUVEAU
             }
         } catch (error) {
             console.error("Erreur de chargement: ", error);
-if(document.getElementById('loading-products')) {
+            if(document.getElementById('loading-products')) {
                 document.getElementById('loading-products').textContent = 'Erreur de chargement des produits.';
-}
+            }
         } finally {
             if (window.initialRoute) {
                 renderProductDetail(window.initialRoute.productId);
-showPage(window.initialRoute.pageId, true);
+                showPage(window.initialRoute.pageId, true);
                 window.initialRoute = null;
             } else {
                  router();
-}
+            }
         }
     }
 
     function createProductCard(product) {
-        const imageUrl = product.images && product.images.length > 0 ?
-product.images[0] : 'https://placehold.co/600x400/cccccc/ffffff?text=Image';
+        const imageUrl = product.images && product.images.length > 0 ? product.images[0] : 'https://placehold.co/600x400/cccccc/ffffff?text=Image';
         const stockBadge = product.inStockMadagascar !== false
-            ?
-`<div class="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center"><i class="fas fa-check-circle mr-1"></i> En stock</div>`
+            ? `<div class="absolute top-2 left-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center"><i class="fas fa-check-circle mr-1"></i> En stock</div>`
             : `<div class="absolute top-2 left-2 bg-yellow-500 text-white text-xs font-bold px-2 py-1 rounded-full flex items-center"><i class="fas fa-shipping-fast mr-1"></i> Sur commande</div>`;
-const priceHTML = product.price && product.price > 0
-            ?
-`<p class="text-gradient font-extrabold text-base sm:text-xl">${product.price.toLocaleString('fr-FR')} Ar</p>`
+        
+        const priceHTML = product.price && product.price > 0
+            ? `<p class="text-gradient font-extrabold text-base sm:text-xl">${product.price.toLocaleString('fr-FR')} Ar</p>`
             : `<p class="text-gradient font-extrabold text-base sm:text-xl">Prix sur devis</p>`;
-return `
+
+        return `
             <div class="bg-white rounded-xl shadow-lg overflow-hidden group transform hover:-translate-y-1 transition-transform duration-300 view-product-btn cursor-pointer scroll-animate" data-id="${product.id}">
                 <div class="relative">
                     <img src="${imageUrl}" alt="${product.name}" class="w-full h-40 sm:h-48 md:h-56 object-contain p-2 sm:p-4">
                     ${stockBadge}
-        
-            <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div class="absolute inset-0 bg-black/50 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                         <span class="text-white btn-primary py-2 px-5 rounded-full transform hover:scale-105 transition-transform text-sm">Voir</span>
                     </div>
                 </div>
-         
-       <div class="p-2 sm:p-4 text-center">
+                <div class="p-2 sm:p-4 text-center">
                     <h3 class="font-semibold text-sm sm:text-base mb-1 sm:mb-2 truncate">${product.name}</h3>
                     ${priceHTML}
                 </div>
             </div>`;
-}
+    }
 
     function addProductCardListeners() {
         document.querySelectorAll('.view-product-btn').forEach(btn => {
@@ -847,104 +703,83 @@ return `
                 viewProduct(productId);
             });
         });
-}
+    }
 
     function normalizeString(str) {
-        return str ?
-str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : '';
+        return str ? str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : '';
     }
 
     function renderCategoryFilters() {
-        // MODIFIÉ: Logique de tri des catégories
-        const allProductCategories = [...new Set(boutiqueProducts.map(p => p.category).filter(Boolean))];
-        let sortedCategories = [];
-
-        if (categoryOrder.length > 0) {
-            const categorySet = new Set(allProductCategories);
-            // Ajouter les catégories dans l'ordre défini
-            categoryOrder.forEach(cat => {
-                if (categorySet.has(cat)) {
-                    sortedCategories.push(cat);
-                    categorySet.delete(cat);
-                }
-            });
-            // Ajouter les catégories restantes (non définies dans l'ordre) à la fin
-            sortedCategories.push(...Array.from(categorySet).sort());
-        } else {
-            // Comportement par défaut si aucun ordre n'est sauvegardé
-            sortedCategories = allProductCategories.sort();
-        }
-
-        const categoriesToRender = ['Tous', ...sortedCategories];
-const container = document.getElementById('category-filters');
-        if (!container) return;
-        
-        container.innerHTML = `<span class="font-semibold text-slate-600 mr-3 flex-shrink-0">Filtre :</span>` + categoriesToRender.map((cat, index) => 
+        const categories = ['Tous', ...new Set(boutiqueProducts.map(p => p.category).filter(Boolean))];
+        const container = document.getElementById('category-filters');
+        container.innerHTML = `<span class="font-semibold text-slate-600 mr-3">Filtre :</span>` + categories.map((cat, index) => 
             `<button class="category-filter px-3 py-1 text-sm font-semibold rounded-lg ${index === 0 ? 'active-filter' : ''}" data-category="${cat}">${cat}</button>`
         ).join('');
-container.querySelectorAll('.category-filter').forEach(btn => {
+
+        container.querySelectorAll('.category-filter').forEach(btn => {
             btn.addEventListener('click', () => {
                 container.querySelector('.active-filter')?.classList.remove('active-filter');
                 btn.classList.add('active-filter');
                 renderBoutique();
             });
         });
-}
+    }
 
     function renderBoutique() {
         const productGrid = document.getElementById('product-grid');
-const loadingText = document.getElementById('loading-products');
+        const loadingText = document.getElementById('loading-products');
         const searchBar = document.getElementById('search-bar');
         
         const activeCategory = document.querySelector('#category-filters .active-filter')?.dataset.category;
-const searchTerm = normalizeString(searchBar ? searchBar.value : '');
+        const searchTerm = normalizeString(searchBar ? searchBar.value : '');
         
         let filteredProducts = boutiqueProducts;
-if (activeCategory && activeCategory !== 'Tous') {
+
+        if (activeCategory && activeCategory !== 'Tous') {
             filteredProducts = filteredProducts.filter(p => p.category === activeCategory);
-}
+        }
         
         if (searchTerm) {
             filteredProducts = filteredProducts.filter(p => normalizeString(p.name).includes(searchTerm));
-}
+        }
 
         if (loadingText) loadingText.style.display = 'none';
-productGrid.innerHTML = filteredProducts.length > 0
-            ?
-filteredProducts.map(createProductCard).join('')
+        productGrid.innerHTML = filteredProducts.length > 0
+            ? filteredProducts.map(createProductCard).join('')
             : `<p class="text-center text-gray-500 col-span-full">Aucun produit ne correspond à votre recherche.</p>`;
-addProductCardListeners();
+        addProductCardListeners();
         initScrollAnimations();
     }
     
     function renderPopularProducts(products) {
         const container = document.getElementById('popular-products-accueil');
-if (!container) return;
+        if (!container) return;
         if (products.length === 0) {
             container.innerHTML = '';
-return;
+            return;
         }
         container.innerHTML = `<div class="container mx-auto px-4"><div class="text-center mb-12"><h2 class="text-3xl md:text-4xl font-bold mb-2">Produits Populaires</h2><p class="text-slate-600 text-lg">Les articles les plus demandés</p></div><div class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">${products.map(createProductCard).join('')}</div></div>`;
-addProductCardListeners();
+        addProductCardListeners();
         initScrollAnimations();
     }
 
     function renderProductDetail(productId) {
-        const product = boutiqueProducts.find(p => p.id === productId);
-if (!product) { showPage('page-boutique'); return; }
+        const product = boutiqueProducts.find(p => p.id === productId); 
+        if (!product) { showPage('page-boutique'); return; }
         
         const availabilityText = product.inStockMadagascar !== false
-            ?
-`<div class="mt-4 flex items-center text-green-600 font-semibold"><i class="fas fa-check-circle mr-2"></i>Produit disponible à Madagascar</div>`
+            ? `<div class="mt-4 flex items-center text-green-600 font-semibold"><i class="fas fa-check-circle mr-2"></i>Produit disponible à Madagascar</div>`
             : `<div class="mt-4 flex items-center text-yellow-600 font-semibold"><i class="fas fa-shipping-fast mr-2"></i>Produit disponible sur commande</div>`;
-const priceDetailHTML = product.price && product.price > 0
-            ?
-`<p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">${product.price.toLocaleString('fr-FR')} Ar</p>`
+        
+        const priceDetailHTML = product.price && product.price > 0
+            ? `<p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">${product.price.toLocaleString('fr-FR')} Ar</p>`
             : `<p class="text-3xl md:text-4xl font-extrabold text-gradient my-4">Prix sur devis</p>`;
-const thumbnailsHTML = (product.images || []).map((img, i) => `<img src="${img}" class="w-16 h-16 md:w-20 md:h-20 object-contain bg-slate-100 rounded-md cursor-pointer border-2 ${i === 0 ? 'border-red-500' : 'border-transparent'} thumbnail" data-index="${i}">`).join('');
-const detailSection = document.getElementById('page-detail');
+
+        const thumbnailsHTML = (product.images || []).map((img, i) => `<img src="${img}" class="w-16 h-16 md:w-20 md:h-20 object-contain bg-slate-100 rounded-md cursor-pointer border-2 ${i === 0 ? 'border-red-500' : 'border-transparent'} thumbnail" data-index="${i}">`).join('');
+        const detailSection = document.getElementById('page-detail');
         detailSection.innerHTML = `<div class="container mx-auto px-4"><button class="nav-link font-semibold mb-8 inline-flex items-center" data-page="boutique"><i class="fas fa-arrow-left mr-2"></i>Retour à la boutique</button><div class="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12"><div><div class="bg-slate-100 rounded-xl shadow-lg mb-4 cursor-zoom-in"><img id="main-product-image" src="${product.images[0]}" alt="${product.name}" class="w-full h-80 md:h-96 object-contain rounded-xl p-4"></div><div id="thumbnail-container" class="flex flex-wrap gap-4 justify-center">${thumbnailsHTML}</div></div><div><h1 class="text-3xl md:text-4xl font-bold text-slate-800">${product.name}</h1>${priceDetailHTML}${availabilityText}<p class="mt-4 text-slate-600 whitespace-pre-wrap">${product.description}</p><div class="mt-8"><a href="#" data-id="${product.id}" class="order-now-btn w-full inline-flex items-center justify-center text-center btn-secondary transition text-white font-bold py-4 px-4 rounded-xl text-lg"><i class="fab fa-whatsapp mr-3 text-2xl"></i>Commander maintenant</a></div></div></div></div>`;
-detailSection.querySelector('.nav-link').addEventListener('click', (e) => { e.preventDefault(); showPage('page-boutique'); });
+        
+        detailSection.querySelector('.nav-link').addEventListener('click', (e) => { e.preventDefault(); showPage('page-boutique'); });
         
         detailSection.querySelector('.order-now-btn').addEventListener('click', e => { 
             e.preventDefault();
@@ -952,32 +787,32 @@ detailSection.querySelector('.nav-link').addEventListener('click', (e) => { e.pr
             if (product.price && product.price > 0) {
                 orderText += `\n- Prix: ${product.price.toLocaleString('fr-FR')} Ar`;
             }
-       
-      window.open(`https://wa.me/8615600021123?text=${encodeURIComponent(orderText)}`, '_blank');
+             window.open(`https://wa.me/8615600021123?text=${encodeURIComponent(orderText)}`, '_blank');
         });
         
         const mainImage = document.getElementById('main-product-image');
-const thumbnails = detailSection.querySelectorAll('.thumbnail');
+        const thumbnails = detailSection.querySelectorAll('.thumbnail');
         thumbnails.forEach(thumb => thumb.addEventListener('click', e => {
             mainImage.src = product.images[e.currentTarget.dataset.index];
             thumbnails.forEach(t => t.classList.remove('border-red-500'));
             e.currentTarget.classList.add('border-red-500');
         }));
-// Lightbox Logic
+
+        // Lightbox Logic
         const mainImageContainer = detailSection.querySelector('.cursor-zoom-in');
         const lightbox = document.getElementById('image-lightbox');
-const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxImg = document.getElementById('lightbox-img');
         const closeLightboxBtn = document.getElementById('close-lightbox-btn');
 
         const openLightbox = () => {
             lightboxImg.src = mainImage.src;
-lightbox.classList.remove('hidden');
+            lightbox.classList.remove('hidden');
             lightbox.classList.add('flex');
         };
 
         const closeLightbox = () => {
             lightbox.classList.add('hidden');
-lightbox.classList.remove('flex');
+            lightbox.classList.remove('flex');
         };
 
         mainImageContainer.addEventListener('click', openLightbox);
@@ -987,44 +822,43 @@ lightbox.classList.remove('flex');
                 closeLightbox();
             }
         });
-}
+    }
 
     function initSearchFunctionality() {
         const searchBar = document.getElementById('search-bar');
-const searchBtn = document.getElementById('search-btn');
+        const searchBtn = document.getElementById('search-btn');
         if (searchBar && searchBtn) {
-            const performSearch = () => { if (!document.getElementById('page-boutique').classList.contains('hidden')) renderBoutique();
-};
+            const performSearch = () => { if (!document.getElementById('page-boutique').classList.contains('hidden')) renderBoutique(); };
             searchBar.addEventListener('input', performSearch);
             searchBtn.addEventListener('click', performSearch);
             searchBar.addEventListener('keypress', e => { if (e.key === 'Enter') { e.preventDefault(); performSearch(); } });
-}
+        }
     }
     
     // ================== LOGIQUE DEVIS ==================
     const devisForm = document.getElementById('devis-form');
-const productList = document.getElementById('product-list');
+    const productList = document.getElementById('product-list');
     const addProductBtn = document.getElementById('add-product');
     let productCount = 0;
     
     const linkAlertModal = document.getElementById('link-alert-modal');
     const closeLinkModalBtn = document.getElementById('close-link-modal-btn');
-let hasShownLinkAlert = localStorage.getItem('hasShownLinkAlert_Aridago');
+    let hasShownLinkAlert = localStorage.getItem('hasShownLinkAlert_Aridago');
 
     function createProductBlock() {
         productCount++;
         const div = document.createElement('div');
-div.className = 'p-5 border-2 border-gray-200 rounded-xl bg-gray-50/50 relative';
-        div.innerHTML = `<h4 class="font-bold text-md text-gray-800 mb-4">Produit ${productCount}</h4> ${productCount > 1 ?
-'<button type="button" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold remove-product">&times;</button>' : ''}<div class="space-y-4"><div><label class="text-sm font-semibold text-gray-600">Nom</label><input type="text" name="product_name_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Lien</label><input type="url" name="product_link_${productCount}" required class="link-input w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Spécification</label><textarea name="product_spec_${productCount}" rows="2" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></textarea></div><div><label class="text-sm font-semibold text-gray-600">Quantité</label><input type="number" name="product_quantity_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div></div>`;
-productList.appendChild(div);
+        div.className = 'p-5 border-2 border-gray-200 rounded-xl bg-gray-50/50 relative';
+        div.innerHTML = `<h4 class="font-bold text-md text-gray-800 mb-4">Produit ${productCount}</h4> ${productCount > 1 ? '<button type="button" class="absolute top-4 right-4 text-red-500 hover:text-red-700 text-2xl font-bold remove-product">&times;</button>' : ''}<div class="space-y-4"><div><label class="text-sm font-semibold text-gray-600">Nom</label><input type="text" name="product_name_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Lien</label><input type="url" name="product_link_${productCount}" required class="link-input w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div><div><label class="text-sm font-semibold text-gray-600">Spécification</label><textarea name="product_spec_${productCount}" rows="2" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></textarea></div><div><label class="text-sm font-semibold text-gray-600">Quantité</label><input type="number" name="product_quantity_${productCount}" required class="w-full bg-white border-2 border-gray-200 rounded-xl p-3 mt-1"></div></div>`;
+        productList.appendChild(div);
 
         div.querySelector('.link-input').addEventListener('focus', () => {
             if (!hasShownLinkAlert) {
                 linkAlertModal.style.display = 'flex';
             }
         });
-if(div.querySelector('.remove-product')) div.querySelector('.remove-product').addEventListener('click', () => div.remove());
+
+        if(div.querySelector('.remove-product')) div.querySelector('.remove-product').addEventListener('click', () => div.remove());
     }
 
     if(closeLinkModalBtn) {
@@ -1033,18 +867,18 @@ if(div.querySelector('.remove-product')) div.querySelector('.remove-product').ad
             localStorage.setItem('hasShownLinkAlert_Aridago', 'true');
             hasShownLinkAlert = true;
         });
-}
+    }
 
     if(addProductBtn) addProductBtn.addEventListener('click', createProductBlock);
     
     if(devisForm) {
         const confirmationModal = document.getElementById('confirmation-modal');
-const whatsappLink = document.getElementById('whatsapp-link');
+        const whatsappLink = document.getElementById('whatsapp-link');
         const closeConfirmationBtn = document.getElementById('close-confirmation-modal');
 
         function closeAndResetDevisModal() {
             confirmationModal.style.display = 'none';
-devisForm.reset();
+            devisForm.reset();
             productList.innerHTML = '';
             productCount = 0;
             createProductBlock();
@@ -1061,29 +895,29 @@ devisForm.reset();
             
             for (let i = 1; i <= productCount; i++) {
                 if (formData.get(`product_name_${i}`)) {
-                 
-   text += `*Produit ${i}:* ${formData.get(`product_name_${i}`)}\n*Spécification:* ${formData.get(`product_spec_${i}`)}\n*Quantité:* ${formData.get(`product_quantity_${i}`)}\n*Lien:* ${formData.get(`product_link_${i}`)}\n\n`;
-}
+                    text += `*Produit ${i}:* ${formData.get(`product_name_${i}`)}\n*Spécification:* ${formData.get(`product_spec_${i}`)}\n*Quantité:* ${formData.get(`product_quantity_${i}`)}\n*Lien:* ${formData.get(`product_link_${i}`)}\n\n`;
+                }
             }
             
             whatsappLink.href = `https://wa.me/8615600021123?text=${encodeURIComponent(text)}`;
-confirmationModal.style.display = 'flex';
+            confirmationModal.style.display = 'flex';
         });
 
         whatsappLink.addEventListener('click', () => {
             setTimeout(closeAndResetDevisModal, 1500);
         });
-closeConfirmationBtn.addEventListener('click', closeAndResetDevisModal);
+        
+        closeConfirmationBtn.addEventListener('click', closeAndResetDevisModal);
 
         confirmationModal.addEventListener('click', (e) => {
             if (e.target === confirmationModal) {
                 closeAndResetDevisModal();
             }
         });
-}
+    }
     
     if(productList) createProductBlock();
-document.querySelectorAll('.faq-question').forEach(btn => {
+    document.querySelectorAll('.faq-question').forEach(btn => {
         btn.addEventListener('click', () => {
             const answer = btn.nextElementSibling;
             const icon = btn.querySelector('svg');
@@ -1091,124 +925,105 @@ document.querySelectorAll('.faq-question').forEach(btn => {
             icon.classList.toggle('rotate-180');
         });
     });
-// ================== LOGIQUE ADMIN ==================
+
+    // ================== LOGIQUE ADMIN ==================
     const adminSection = document.getElementById('page-admin');
-adminSection.innerHTML = `<div class="bg-slate-800 text-white p-6 md:p-10 rounded-3xl shadow-lg">
+    adminSection.innerHTML = `<div class="bg-slate-800 text-white p-6 md:p-10 rounded-3xl shadow-lg">
         <div id="admin-login">
             <h2 class="font-poppins text-3xl font-bold text-center mb-4">Accès Administrateur</h2>
             <div class="max-w-sm mx-auto">
                 <div class="mb-4"><label for="admin-email" class="block text-sm font-semibold mb-1">Email</label><input type="email" id="admin-email" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div>
-                <div class="mb-4"><label for="admin-password" class="block 
-text-sm font-semibold mb-1">Mot de passe</label><input type="password" id="admin-password" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div>
+                <div class="mb-4"><label for="admin-password" class="block text-sm font-semibold mb-1">Mot de passe</label><input type="password" id="admin-password" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div>
                 <button id="admin-login-btn" class="mt-4 w-full btn-primary font-bold py-3 px-4 rounded-xl">Se connecter</button>
                 <p id="admin-error" class="text-red-400 text-center mt-2 hidden"></p>
             </div>
         </div>
         <div id="admin-dashboard" class="hidden">
-           
- <h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2>
+            <h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2>
             <div id="admin-stats" class="grid grid-cols-2 gap-4 mb-8"></div>
             
             <div class="bg-gray-700 p-6 rounded-2xl mb-8 border-2 border-dashed border-yellow-400">
                 <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-magic mr-3 text-yellow-400"></i>Générateur de Fiche Produit par IA</h3>
-               
- <div class="space-y-4">
+                <div class="space-y-4">
                     <div>
                         <label class="block text-sm font-semibold mb-1">Nom ou mots-clés du produit</label>
                         <input type="text" id="ai-text-name" placeholder="Ex: Sac à dos de voyage, Thermos intelligent..." class="w-full bg-gray-600 rounded-lg p-2 text-white">
-       
-             </div>
+                    </div>
                     <button id="ai-generate-text-btn" class="w-full btn-primary font-bold py-2 px-4 rounded-lg flex items-center justify-center disabled:opacity-50">
                         <i class="fas fa-rocket mr-2"></i>Générer la description
                     </button>
-       
-             <p id="ai-text-status" class="text-sm text-yellow-400 mt-1 text-center h-4"></p>
+                    <p id="ai-text-status" class="text-sm text-yellow-400 mt-1 text-center h-4"></p>
                 </div>
             </div>
 
             <div class="bg-gray-700 p-6 rounded-2xl mb-8">
                 <h3 id="admin-form-title" class="text-xl font-bold mb-4">Fiche Produit</h3>
-                
-<form id="admin-product-form" class="space-y-4">
+                <form id="admin-product-form" class="space-y-4">
                     <input type="hidden" id="product-id">
                     <div><label>Nom</label><input type="text" id="product-name" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
                     <div><label>Catégorie</label><input type="text" id="product-category" list="category-suggestions" class="w-full bg-gray-600 rounded-lg p-2 text-white"><datalist id="category-suggestions"></datalist></div>
-                   
- <div><label>Description</label><textarea id="product-description" required class="w-full bg-gray-600 rounded-lg p-2 text-white" rows="6"></textarea></div>
+                    <div><label>Description</label><textarea id="product-description" required class="w-full bg-gray-600 rounded-lg p-2 text-white" rows="6"></textarea></div>
                     <div><label>Prix (Ar)</label><input type="number" id="product-price" class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
                     <div class="grid grid-cols-2 gap-4">
-                        <div class="flex items-center"><input type="checkbox" id="product-in-stock" class="w-4 h-4 text-red-600 bg-gray-700 border-gray-600 rounded focus:ring-red-500"><label for="product-in-stock" class="ml-2 text-sm font-medium 
-text-white">Disponible à Mada</label></div>
+                        <div class="flex items-center"><input type="checkbox" id="product-in-stock" class="w-4 h-4 text-red-600 bg-gray-700 border-gray-600 rounded focus:ring-red-500"><label for="product-in-stock" class="ml-2 text-sm font-medium text-white">Disponible à Mada</label></div>
                         <div class="flex items-center"><input type="checkbox" id="product-featured" class="w-4 h-4 text-yellow-400 bg-gray-700 border-gray-600 rounded focus:ring-yellow-500"><label for="product-featured" class="ml-2 text-sm font-medium text-white">Mettre en avant</label></div>
                     </div>
-                    <div><label>Image(s)</label><div class="flex flex-wrap gap-2 mt-2 items-center"><div id="image-preview-container" class="flex flex-wrap gap-2"></div><label for="product-image-upload" class="cursor-pointer w-16 h-16 bg-gray-600 rounded 
-flex items-center justify-center text-gray-400 hover:bg-gray-500"><i class="fas fa-plus"></i></label></div><input type="file" id="product-image-upload" multiple accept="image/*" class="hidden"><input type="hidden" id="product-images-json"><p id="upload-status" class="text-sm text-yellow-400 mt-1"></p></div>
+                    <div><label>Image(s)</label><div class="flex flex-wrap gap-2 mt-2 items-center"><div id="image-preview-container" class="flex flex-wrap gap-2"></div><label for="product-image-upload" class="cursor-pointer w-16 h-16 bg-gray-600 rounded flex items-center justify-center text-gray-400 hover:bg-gray-500"><i class="fas fa-plus"></i></label></div><input type="file" id="product-image-upload" multiple accept="image/*" class="hidden"><input type="hidden" id="product-images-json"><p id="upload-status" class="text-sm text-yellow-400 mt-1"></p></div>
                     <div class="flex gap-4"><button type="submit" id="admin-submit-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg">Ajouter</button><button type="button" id="admin-cancel-btn" class="w-full bg-gray-500 font-bold py-2 px-4 rounded-lg hidden">Annuler</button></div>
                 </form>
             </div>
-            
-            <div class="bg-gray-700 p-6 rounded-2xl mb-8">
-                <h3 class="text-xl font-bold mb-4">Ordre des Catégories</h3>
-                <div class="space-y-4">
-                    <div>
-                        <label for="category-order-input" class="block text-sm font-semibold mb-1">Liste des catégories (séparées par une virgule)</label>
-                        <input type="text" id="category-order-input" placeholder="Meubles, Électronique, Vêtements..." class="w-full bg-gray-600 rounded-lg p-2 text-white">
-                    </div>
-                    <button id="save-category-order-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg">Sauvegarder l'ordre</button>
-                    <p id="category-order-status" class="text-sm text-green-400 mt-1 text-center h-4"></p>
-                </div>
-            </div>
-
             <div>
-    
-            <h3 class="text-xl font-bold mb-4">Produits existants</h3>
+                <h3 class="text-xl font-bold mb-4">Produits existants</h3>
                 <div id="admin-product-list" class="space-y-4"></div>
             </div>
             <div class="bg-gray-700 p-6 rounded-2xl mt-8">
                 <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-robot mr-2 text-yellow-400"></i>Générateur de Publication IA</h3>
-          
-      <div class="space-y-4">
+                <div class="space-y-4">
                     <div><label for="ia-product-select" class="block text-sm font-semibold mb-1">Choisir un produit</label><select id="ia-product-select" class="w-full bg-gray-600 rounded-lg p-2 text-white"></select></div>
                     <button id="ia-generate-btn" class="w-full bg-yellow-500 hover:bg-yellow-600 font-bold py-2 px-4 rounded-lg flex items-center justify-center"><i class="fas fa-magic mr-2"></i>Générer la publication</button>
-                    <div><label for="ia-generated-post" class="block text-sm 
-font-semibold mb-1">Résultat</label><div class="relative"><textarea id="ia-generated-post" readonly class="w-full bg-gray-800 rounded-lg p-3 text-white h-48 resize-none"></textarea><button id="ia-copy-btn" class="absolute top-2 right-2 bg-gray-600 hover:bg-gray-500 text-white font-bold py-1 px-2 rounded-md text-xs hidden"><i class="fas fa-copy mr-1"></i>Copier</button></div><p id="ia-status" class="text-sm text-gray-400 mt-1"></p></div>
+                    <div><label for="ia-generated-post" class="block text-sm font-semibold mb-1">Résultat</label><div class="relative"><textarea id="ia-generated-post" readonly class="w-full bg-gray-800 rounded-lg p-3 text-white h-48 resize-none"></textarea><button id="ia-copy-btn" class="absolute top-2 right-2 bg-gray-600 hover:bg-gray-500 text-white font-bold py-1 px-2 rounded-md text-xs hidden"><i class="fas fa-copy mr-1"></i>Copier</button></div><p id="ia-status" class="text-sm text-gray-400 mt-1"></p></div>
                 </div>
             </div>
             <div class="mt-8 flex flex-wrap gap-4 items-center">
-                <button id="admin-logout-btn" class="bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded-lg">Se 
-déconnecter</button>
+                <button id="admin-logout-btn" class="bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded-lg">Se déconnecter</button>
                 <a href="https://rakotobewangyu-dev.github.io/Facturation/" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center"><i class="fas fa-file-invoice-dollar mr-2"></i>Facturation</a>
             </div>
         </div>
     </div>`;
-const adminLogin = document.getElementById('admin-login');
+
+    const adminLogin = document.getElementById('admin-login');
     const adminDashboard = document.getElementById('admin-dashboard');
     const adminLoginBtn = document.getElementById('admin-login-btn');
     const adminLogoutBtn = document.getElementById('admin-logout-btn');
     const adminProductForm = document.getElementById('admin-product-form');
-const adminProductList = document.getElementById('admin-product-list');
+    const adminProductList = document.getElementById('admin-product-list');
     const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
     const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
     const deleteConfirmModal = document.getElementById('delete-confirm-modal');
-auth.onAuthStateChanged(user => {
+    
+    auth.onAuthStateChanged(user => {
         adminLogin.classList.toggle('hidden', !!user);
         adminDashboard.classList.toggle('hidden', !user);
         if (user) {
-            loadAndRenderProducts(); // Recharger les produits et l'ordre des catégories
+            renderAdminStats();
+            renderAdminList();
+            initIAGenerator(); 
+            initAiFeatures();
         }
     });
-adminLoginBtn.addEventListener('click', () => {
+
+    adminLoginBtn.addEventListener('click', () => {
         auth.signInWithEmailAndPassword(document.getElementById('admin-email').value, document.getElementById('admin-password').value)
             .catch(err => document.getElementById('admin-error').textContent = "Email ou mot de passe incorrect.");
     });
-adminLogoutBtn.addEventListener('click', () => auth.signOut());
+    adminLogoutBtn.addEventListener('click', () => auth.signOut());
 
     async function uploadToImgBB(file) {
         const formData = new FormData();
-formData.append('image', file);
+        formData.append('image', file);
         const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
         if (!res.ok) throw new Error('Échec du téléversement');
-const data = await res.json();
+        const data = await res.json();
         return data.data.url;
     }
     
@@ -1219,29 +1034,29 @@ const data = await res.json();
             const urls = await Promise.all(Array.from(e.target.files).map(uploadToImgBB));
             let currentImages = JSON.parse(document.getElementById('product-images-json').value || '[]');
             currentImages.push(...urls);
-     
-       document.getElementById('product-images-json').value = JSON.stringify(currentImages);
+            document.getElementById('product-images-json').value = JSON.stringify(currentImages);
             renderImagePreviews(currentImages);
             document.getElementById('upload-status').textContent = `Prêt.`;
         } catch (error) {
             document.getElementById('upload-status').textContent = `Erreur: ${error.message}`;
         }
     });
-function renderImagePreviews(images) {
+
+    function renderImagePreviews(images) {
         const container = document.getElementById('image-preview-container');
-container.innerHTML = images.map((url, i) => `<div class="relative"><img src="${url}" class="w-16 h-16 object-cover rounded"><button type="button" class="absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs delete-img-btn" data-index="${i}">&times;</button></div>`).join('');
-container.querySelectorAll('.delete-img-btn').forEach(btn => btn.addEventListener('click', e => {
+        container.innerHTML = images.map((url, i) => `<div class="relative"><img src="${url}" class="w-16 h-16 object-cover rounded"><button type="button" class="absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs delete-img-btn" data-index="${i}">&times;</button></div>`).join('');
+        container.querySelectorAll('.delete-img-btn').forEach(btn => btn.addEventListener('click', e => {
             let currentImages = JSON.parse(document.getElementById('product-images-json').value);
             currentImages.splice(e.currentTarget.dataset.index, 1);
             document.getElementById('product-images-json').value = JSON.stringify(currentImages);
             renderImagePreviews(currentImages);
         }));
-}
+    }
 
     function resetAdminForm() {
         adminProductForm.reset();
         document.getElementById('product-id').value = '';
-document.getElementById('product-category').value = '';
+        document.getElementById('product-category').value = '';
         document.getElementById('product-in-stock').checked = true;
         document.getElementById('product-featured').checked = false;
         document.getElementById('product-images-json').value = '[]';
@@ -1249,7 +1064,7 @@ document.getElementById('product-category').value = '';
         renderImagePreviews([]);
         document.getElementById('admin-submit-btn').textContent = 'Ajouter';
         document.getElementById('admin-cancel-btn').classList.add('hidden');
-}
+    }
 
     adminProductForm.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -1260,23 +1075,22 @@ document.getElementById('product-category').value = '';
             name: document.getElementById('product-name').value,
             category: document.getElementById('product-category').value.trim() || null,
             description: document.getElementById('product-description').value,
-  
-          price: priceValue ? parseFloat(priceValue) : null,
+            price: priceValue ? parseFloat(priceValue) : null,
             inStockMadagascar: document.getElementById('product-in-stock').checked,
             isFeatured: document.getElementById('product-featured').checked,
             images: JSON.parse(document.getElementById('product-images-json').value || '[]')
         };
         try {
             if (id) await productsCollection.doc(id).update(data);
-            
-else await productsCollection.add(data);
+            else await productsCollection.add(data);
             resetAdminForm();
             loadAndRenderProducts();
-} catch (error) { console.error("Erreur d'écriture: ", error); }
+        } catch (error) { console.error("Erreur d'écriture: ", error); }
     });
 
     document.getElementById('admin-cancel-btn').addEventListener('click', resetAdminForm);
-cancelDeleteBtn.addEventListener('click', () => deleteConfirmModal.style.display = 'none');
+
+    cancelDeleteBtn.addEventListener('click', () => deleteConfirmModal.style.display = 'none');
     confirmDeleteBtn.addEventListener('click', async () => {
         try {
             await productsCollection.doc(confirmDeleteBtn.dataset.id).delete();
@@ -1284,91 +1098,56 @@ cancelDeleteBtn.addEventListener('click', () => deleteConfirmModal.style.display
         } catch (error) { console.error("Erreur de suppression: ", error); }
         finally { deleteConfirmModal.style.display = 'none'; }
     });
-
-    // NOUVEAU: Logique pour l'ordre des catégories
-    function initCategoryOrdering() {
-        const orderInput = document.getElementById('category-order-input');
-        const saveOrderBtn = document.getElementById('save-category-order-btn');
-        const statusP = document.getElementById('category-order-status');
-
-        if (orderInput) {
-            orderInput.value = categoryOrder.join(', ');
-        }
-
-        if (saveOrderBtn) {
-            saveOrderBtn.addEventListener('click', async () => {
-                const orderString = orderInput.value;
-                const newOrder = orderString.split(',').map(item => item.trim()).filter(Boolean);
-                
-                try {
-                    await settingsCollection.doc('categories').set({ order: newOrder });
-                    statusP.textContent = 'Ordre sauvegardé avec succès !';
-                    setTimeout(() => statusP.textContent = '', 3000);
-                    // Mettre à jour l'ordre localement et rafraîchir les filtres
-                    categoryOrder = newOrder;
-                    renderCategoryFilters();
-                } catch (error) {
-                    statusP.textContent = 'Erreur lors de la sauvegarde.';
-                    console.error("Erreur de sauvegarde de l'ordre: ", error);
-                }
-            });
-        }
-    }
-
-function renderAdminStats() {
+    
+    function renderAdminStats() {
         const statsContainer = document.getElementById('admin-stats');
         if (!statsContainer) return;
-const totalProducts = boutiqueProducts.length;
+        const totalProducts = boutiqueProducts.length;
         const inStockMada = boutiqueProducts.filter(p => p.inStockMadagascar !== false).length;
-statsContainer.innerHTML = `
+        statsContainer.innerHTML = `
             <div class="bg-gray-700 p-4 rounded-lg text-center">
                 <p class="text-3xl font-bold">${totalProducts}</p>
                 <p class="text-sm text-gray-400">Produits au total</p>
             </div>
             <div class="bg-gray-700 p-4 rounded-lg text-center">
-                
-<p class="text-3xl font-bold">${inStockMada}</p>
+                <p class="text-3xl font-bold">${inStockMada}</p>
                 <p class="text-sm text-gray-400">En stock à Mada</p>
             </div>
         `;
-}
+    }
 
     function renderAdminList() {
         if (!adminProductList) return;
-const categories = [...new Set(boutiqueProducts.map(p => p.category).filter(Boolean))];
+        
+        const categories = [...new Set(boutiqueProducts.map(p => p.category).filter(Boolean))];
         const suggestionsContainer = document.getElementById('category-suggestions');
-if (suggestionsContainer) {
+        if (suggestionsContainer) {
             suggestionsContainer.innerHTML = categories.map(c => `<option value="${c}"></option>`).join('');
-}
+        }
 
         adminProductList.innerHTML = boutiqueProducts.map(p => {
             const statusIndicator = p.inStockMadagascar !== false
                 ? `<span class="h-3 w-3 rounded-full bg-green-500 flex-shrink-0" title="Disponible à Madagascar"></span>`
                 : `<span class="h-3 w-3 rounded-full bg-yellow-500 flex-shrink-0" title="Sur commande"></span>`;
             const featuredIndicator = p.isFeatured
-       
-         ? `<i class="fas fa-star text-yellow-400" title="Produit en avant"></i>`
+                ? `<i class="fas fa-star text-yellow-400" title="Produit en avant"></i>`
                 : `<i class="fas fa-star text-gray-400/20"></i>`;
             return `
                 <div class="bg-gray-600 p-3 rounded-lg flex items-center justify-between">
                     <div class="flex items-center gap-3 overflow-hidden">
-     
-                   ${statusIndicator}
+                        ${statusIndicator}
                         ${featuredIndicator}
                         <div class="truncate">
                             <p class="font-bold truncate">${p.name}</p>
-  
-                          <p class="text-xs text-gray-400 truncate">${p.category ||
-'Sans catégorie'}</p>
+                            <p class="text-xs text-gray-400 truncate">${p.category || 'Sans catégorie'}</p>
                         </div>
                     </div>
                     <div class="flex space-x-2 flex-shrink-0">
-                        <button class="edit-product-btn bg-blue-500 px-3 py-1 rounded text-white text-sm" 
-data-id="${p.id}">Modifier</button>
+                        <button class="edit-product-btn bg-blue-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Modifier</button>
                         <button class="delete-product-btn bg-red-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Supprimer</button>
                     </div>
                 </div>`;
-}).join('');
+        }).join('');
         
         adminProductList.querySelectorAll('.edit-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
             const p = boutiqueProducts.find(prod => prod.id === e.currentTarget.dataset.id);
@@ -1377,155 +1156,152 @@ data-id="${p.id}">Modifier</button>
             document.getElementById('product-category').value = p.category || '';
             document.getElementById('product-description').value = p.description;
             document.getElementById('product-price').value = p.price || '';
- 
-           document.getElementById('product-in-stock').checked = p.inStockMadagascar !== false;
+            document.getElementById('product-in-stock').checked = p.inStockMadagascar !== false;
             document.getElementById('product-featured').checked = p.isFeatured === true;
             document.getElementById('product-images-json').value = JSON.stringify(p.images || []);
             renderImagePreviews(p.images || []);
             document.getElementById('admin-submit-btn').textContent = 'Mettre à jour';
-document.getElementById('admin-cancel-btn').classList.remove('hidden');
+            document.getElementById('admin-cancel-btn').classList.remove('hidden');
             window.scrollTo(0, 0);
         }));
         adminProductList.querySelectorAll('.delete-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
             confirmDeleteBtn.dataset.id = e.currentTarget.dataset.id;
             deleteConfirmModal.style.display = 'flex';
         }));
-}
+    }
     
     // ================== LOGIQUE GÉNÉRATEUR IA ==================
 
     async function callGenerativeApi(url, payload, maxRetries = 3) {
         let attempt = 0;
-while (attempt < maxRetries) {
+        while (attempt < maxRetries) {
             try {
                 const response = await fetch(url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                 
-   body: JSON.stringify(payload)
+                    body: JSON.stringify(payload)
                 });
-const responseText = await response.text();
+
+                const responseText = await response.text();
                 
                 if (!response.ok) {
                     let errorDetails = `(Status: ${response.status})`;
-try {
+                    try {
                         const errorResult = JSON.parse(responseText);
-errorDetails = errorResult?.error?.message || `(Status: ${response.status})`;
+                        errorDetails = errorResult?.error?.message || `(Status: ${response.status})`;
                     } catch (e) {
-                        errorDetails = responseText ||
-response.statusText;
+                        errorDetails = responseText || response.statusText;
                     }
                     throw new Error(`Erreur API ${errorDetails}`);
-}
+                }
                 
                 const result = JSON.parse(responseText);
-if (!result.candidates || result.candidates.length === 0) {
+
+                if (!result.candidates || result.candidates.length === 0) {
                     if (result.promptFeedback) {
                         const blockReason = result.promptFeedback.blockReason;
-console.error("Prompt bloqué:", result.promptFeedback);
+                        console.error("Prompt bloqué:", result.promptFeedback);
                         throw new Error(`La requête a été bloquée: ${blockReason}`);
-}
+                    }
                     throw new Error("La réponse de l'API ne contient aucun résultat valide.");
-}
+                }
 
                 return result;
-} catch (error) {
+
+            } catch (error) {
                 console.error(`Tentative ${attempt + 1} échouée:`, error);
-attempt++;
+                attempt++;
                 if (attempt >= maxRetries) {
-                    throw error;
-}
-                const delay = Math.pow(2, attempt) * 200;
-await new Promise(resolve => setTimeout(resolve, delay));
+                    throw error; 
+                }
+                const delay = Math.pow(2, attempt) * 200; 
+                await new Promise(resolve => setTimeout(resolve, delay));
             }
         }
     }
 
     async function generateAIPost(product) {
         const apiKey = "AIzaSyDeTIQtd0xLZAIamRfajdQd2vAGrjIWGi4";
-const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
 
-        const systemPrompt = `Tu es un gestionnaire de réseaux sociaux expert pour "Aridago", une entreprise qui facilite les achats en Chine pour des clients à Madagascar.
-Ta mission est de créer des publications Facebook engageantes, professionnelles et vendeuses.`;
-const userQuery = `Génère une publication Facebook pour le produit suivant.
-Mets en avant ses avantages de manière créative et termine par un appel à l'action clair.
-Utilise des emojis pertinents pour rendre la publication attractive.\n\n- Nom du produit: ${product.name}\n- Prix: ${product.price ?
-product.price.toLocaleString('fr-FR') + ' Ariary' : 'Prix sur devis'}\n- Description: ${product.description}\n\nLa publication doit être en français.
-Ne pas utiliser de formatage Markdown comme les astérisques pour le gras.`;
-const payload = {
+        const systemPrompt = `Tu es un gestionnaire de réseaux sociaux expert pour "Aridago", une entreprise qui facilite les achats en Chine pour des clients à Madagascar. Ta mission est de créer des publications Facebook engageantes, professionnelles et vendeuses.`;
+        const userQuery = `Génère une publication Facebook pour le produit suivant. Mets en avant ses avantages de manière créative et termine par un appel à l'action clair. Utilise des emojis pertinents pour rendre la publication attractive.\n\n- Nom du produit: ${product.name}\n- Prix: ${product.price ? product.price.toLocaleString('fr-FR') + ' Ariary' : 'Prix sur devis'}\n- Description: ${product.description}\n\nLa publication doit être en français. Ne pas utiliser de formatage Markdown comme les astérisques pour le gras.`;
+
+        const payload = {
             contents: [{ parts: [{ text: userQuery }] }],
             systemInstruction: { parts: [{ text: systemPrompt }] },
         };
-try {
+
+        try {
             const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
-const responseText = await response.text();
+
+            const responseText = await response.text();
 
             if (!response.ok) {
                 let errorDetails = `(Status: ${response.status})`;
-try {
+                try {
                     const errorResult = JSON.parse(responseText);
-errorDetails = errorResult?.error?.message || response.statusText;
+                    errorDetails = errorResult?.error?.message || response.statusText;
                 } catch (e) {
                    errorDetails = response.statusText;
-}
+                }
                 throw new Error(`Erreur de l'API: ${errorDetails}`);
-}
+            }
             
             const result = JSON.parse(responseText);
-const candidate = result.candidates?.[0];
+            const candidate = result.candidates?.[0];
 
             if (candidate && candidate.content?.parts?.[0]?.text) {
                 return candidate.content.parts[0].text.replace(/\*\*/g, '').replace(/\*/g, '');
-} else {
+            } else {
                  if (result.promptFeedback && result.promptFeedback.blockReason) {
                      throw new Error(`Contenu bloqué par sécurité (${result.promptFeedback.blockReason}).`);
-}
+                }
                 return "Désolé, la réponse de l'IA était vide ou mal formée.";
-}
+            }
         } catch (error) {
             console.error('Erreur API Gemini:', error);
-return `Désolé, une erreur est survenue. Détails: ${error.message}`;
+            return `Désolé, une erreur est survenue. Détails: ${error.message}`;
         }
     }
 
     function initIAGenerator() {
         const productSelect = document.getElementById('ia-product-select');
-const generateBtn = document.getElementById('ia-generate-btn');
+        const generateBtn = document.getElementById('ia-generate-btn');
         const resultTextarea = document.getElementById('ia-generated-post');
         const statusP = document.getElementById('ia-status');
         const copyBtn = document.getElementById('ia-copy-btn');
 
         if (!productSelect) return;
-productSelect.innerHTML = '<option value="">-- Sélectionnez un produit --</option>' +
+
+        productSelect.innerHTML = '<option value="">-- Sélectionnez un produit --</option>' +
             boutiqueProducts.map(p => `<option value="${p.id}">${p.name}</option>`).join('');
-generateBtn.addEventListener('click', async () => {
+
+        generateBtn.addEventListener('click', async () => {
             const selectedProductId = productSelect.value;
             if (!selectedProductId) {
                 statusP.textContent = "Veuillez d'abord sélectionner un produit.";
                 statusP.className = "text-sm text-red-400 mt-1";
                 return;
-         
-   }
+            }
             const product = boutiqueProducts.find(p => p.id === selectedProductId);
 
             statusP.textContent = "Génération en cours... L'IA réfléchit ✨";
             statusP.className = "text-sm text-yellow-400 mt-1 animate-pulse";
             resultTextarea.value = "";
             generateBtn.disabled = true;
-            generateBtn.innerHTML = 
-'<i class="fas fa-spinner fa-spin mr-2"></i>Génération...';
+            generateBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>Génération...';
             copyBtn.classList.add('hidden');
 
             const generatedText = await generateAIPost(product);
 
             resultTextarea.value = generatedText;
             resultTextarea.readOnly = false;
-            statusP.textContent = "Génération terminée !
-Vous pouvez modifier le texte.";
+            statusP.textContent = "Génération terminée ! Vous pouvez modifier le texte.";
             statusP.className = "text-sm text-green-400 mt-1";
             generateBtn.disabled = false;
             generateBtn.innerHTML = '<i class="fas fa-magic mr-2"></i>Générer une autre publication';
@@ -1533,8 +1309,7 @@ Vous pouvez modifier le texte.";
         });
         
         copyBtn.addEventListener('click', () => {
-       
-     resultTextarea.select();
+            resultTextarea.select();
             document.execCommand('copy');
             copyBtn.innerHTML = '<i class="fas fa-check mr-1"></i>Copié !';
             setTimeout(() => { copyBtn.innerHTML = '<i class="fas fa-copy mr-1"></i>Copier'; }, 2000);
@@ -1544,68 +1319,66 @@ Vous pouvez modifier le texte.";
     function initAiFeatures() {
         const aiTextName = document.getElementById('ai-text-name');
         const aiGenerateTextBtn = document.getElementById('ai-generate-text-btn');
-   
-     const aiTextStatus = document.getElementById('ai-text-status');
+        const aiTextStatus = document.getElementById('ai-text-status');
 
         if(!aiGenerateTextBtn) return;
 
         aiGenerateTextBtn.addEventListener('click', async () => {
             const productName = aiTextName.value.trim();
-if (!productName) {
+            if (!productName) {
                 aiTextStatus.textContent = 'Veuillez fournir un nom ou des mots-clés.';
-return;
+                return;
             }
 
             aiTextStatus.textContent = 'Génération du texte en cours...';
-aiGenerateTextBtn.disabled = true;
+            aiGenerateTextBtn.disabled = true;
 
             try {
                 const apiKey = "AIzaSyDeTIQtd0xLZAIamRfajdQd2vAGrjIWGi4";
-const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
-                const prompt = `En tant qu'assistant de fiche produit, génère une description pour "${productName}".
-La description doit commencer par une seule phrase d'accroche courte et percutante.
-Juste après, à la ligne, continue avec une liste à puces concise (- Caractéristique : Valeur) des spécifications techniques et des caractéristiques clés.
-La réponse doit être en texte brut, sans formatage Markdown. Format attendu : NOM : [Nom clair du produit] ;;;
-DESCRIPTION : [Phrase d'accroche.]\n\n- Spécification : ...\n- Autre Spécification : ...`;
-const payload = { contents: [{ parts: [{ text: prompt }] }] };
+                
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                const prompt = `En tant qu'assistant de fiche produit, génère une description pour "${productName}". La description doit commencer par une seule phrase d'accroche courte et percutante. Juste après, à la ligne, continue avec une liste à puces concise (- Caractéristique : Valeur) des spécifications techniques et des caractéristiques clés. La réponse doit être en texte brut, sans formatage Markdown. Format attendu : NOM : [Nom clair du produit] ;;; DESCRIPTION : [Phrase d'accroche.]\n\n- Spécification : ...\n- Autre Spécification : ...`;
+
+                const payload = { contents: [{ parts: [{ text: prompt }] }] };
 
                 const result = await callGenerativeApi(apiUrl, payload);
-const text = result.candidates[0].content.parts[0].text;
+                const text = result.candidates[0].content.parts[0].text;
                 
                 const parts = text.split(';;;');
                 const generatedName = parts[0].replace('NOM :', '').trim();
                 const generatedDesc = parts[1].replace('DESCRIPTION :', '').trim();
-document.getElementById('product-name').value = generatedName;
+
+                document.getElementById('product-name').value = generatedName;
                 document.getElementById('product-description').value = generatedDesc;
                 aiTextStatus.textContent = 'Description générée avec succès !';
-} catch (error) {
+
+            } catch (error) {
                 console.error('Erreur du générateur de texte IA:', error);
-aiTextStatus.textContent = `Erreur: ${error.message}`;
+                aiTextStatus.textContent = `Erreur: ${error.message}`;
             } finally {
                 aiGenerateTextBtn.disabled = false;
-}
+            }
         });
     }
     
     // Améliorations UI
     function initScrollAnimations() {
         const animatedElements = document.querySelectorAll('.scroll-animate');
-if ("IntersectionObserver" in window) {
+        if ("IntersectionObserver" in window) {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('scrolled-in');
-              
-      } else {
-                        // Optionnel: décommenter pour que l'animation se rejoue en scrollant vers le haut
-                        // entry.target.classList.remove('scrolled-in');
+                    } else {
+                        entry.target.classList.remove('scrolled-in');
                     }
                 });
             }, { threshold: 0.1 });
-animatedElements.forEach(el => observer.observe(el));
+            
+            animatedElements.forEach(el => observer.observe(el));
         } else {
             animatedElements.forEach(el => el.classList.add('scrolled-in'));
-}
+        }
     }
 
     // ================== APPEL INITIAL ==================
@@ -1615,3 +1388,5 @@ animatedElements.forEach(el => observer.observe(el));
 </script>
 </body>
 </html>
+
+
