@@ -117,28 +117,38 @@
           white-space: nowrap;
           border-width: 0;
         }
+        /* Style pour le filtre scrollable (Modification 2) */
+        #category-filters {
+            -ms-overflow-style: none;  /* IE and Edge */
+            scrollbar-width: none;  /* Firefox */
+        }
+        #category-filters::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, and Opera */
+        }
     </style>
 </head>
 <body class="text-slate-800">
 
     <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-2 sm:px-4 py-2 flex justify-between items-center">
-            <div class="flex items-center space-x-2 sm:space-x-4">
-                <a href="#" class="nav-link flex-shrink-0" data-page="accueil">
-                     <img src="https://i.ibb.co/4nXZ4R2V/image-removebg-preview.png" alt="Logo Aridago" class="h-12 sm:h-14 md:h-16 w-auto">
-                </a>
-                <nav class="flex items-center space-x-1 sm:space-x-2 md:space-x-4 text-xs sm:text-sm md:text-base">
-                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="accueil">Accueil</a>
-                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="boutique">Boutique</a>
-                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="devis">Devis</a>
-                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="echange">Transfert</a>
-                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="apropos">À Propos</a>
-                </nav>
-            </div>
+        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+            <!-- Left: Logo -->
+            <a href="#" class="nav-link" data-page="accueil">
+                 <img src="https://i.ibb.co/4nXZ4R2V/image-removebg-preview.png" alt="Logo Aridago" class="h-14 md:h-16 w-auto">
+            </a>
             
-            <div class="flex items-center">
-                <button id="admin-link-header" class="text-slate-700 hover:text-red-600 text-lg p-2"><i class="fas fa-user-shield"></i></button>
-            </div>
+            <!-- Center: Navigation for all sizes -->
+            <nav class="flex-shrink-0 flex items-center space-x-1 sm:space-x-2 md:space-x-4 text-xs sm:text-sm md:text-base">
+                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="accueil">Accueil</a>
+                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="boutique">Boutique</a>
+                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="devis">Devis</a>
+                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="echange">Transfert</a>
+                <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="apropos">À Propos</a>
+            </nav>
+            
+            <!-- Right: Invisible spacer to center the nav -->
+            <a href="#" class="nav-link invisible" aria-hidden="true">
+                 <img src="https://i.ibb.co/4nXZ4R2V/image-removebg-preview.png" alt="" class="h-14 md:h-16 w-auto">
+            </a>
         </div>
     </header>
 
@@ -199,7 +209,8 @@
                         </button>
                      </div>
                  </div>
-                 <div id="category-filters" class="flex flex-wrap justify-center items-center gap-2 mb-8"></div>
+                 <!-- Filtre scrollable (Modification 2) -->
+                 <div id="category-filters" class="flex items-center gap-3 mb-8 overflow-x-auto whitespace-nowrap py-2 px-4 -mx-4 md:justify-center"></div>
                  <div id="product-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
                     <p id="loading-products" class="text-center text-gray-500 col-span-full">Chargement des produits...</p>
                  </div>
@@ -526,8 +537,9 @@
                      </ul>
                 </div>
             </div>
+             <!-- Pied de page avec bouton Admin (Modification 3) -->
             <div class="text-center pt-8 border-t border-slate-700">
-                <p class="text-slate-500">&copy; <span id="year"></span> Aridago - Tous droits réservés.</p>
+                <p class="text-slate-500">&copy; <span id="year"></span> Aridago - Tous droits réservés. <button id="admin-link-footer" class="ml-2 text-slate-500 hover:text-white hover:underline transition">Admin</button></p>
             </div>
         </div>
     </footer>
@@ -638,7 +650,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         window.scrollTo(0, 0);
         if (pageId === 'page-boutique') renderBoutique();
-        initScrollAnimations();
+        initScrollAnimations(); // Re-initialize animations on page change
     }
     
     function viewProduct(productId) {
@@ -673,7 +685,8 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    document.getElementById('admin-link-header').addEventListener('click', (e) => {
+    // Gestion du clic sur le bouton Admin dans le footer (Modification 3)
+    document.getElementById('admin-link-footer').addEventListener('click', (e) => {
         e.preventDefault();
         showPage('page-admin');
     });
@@ -762,8 +775,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderCategoryFilters() {
         const categories = ['Tous', ...new Set(boutiqueProducts.map(p => p.category).filter(Boolean))];
         const container = document.getElementById('category-filters');
-        container.innerHTML = `<span class="font-semibold text-slate-600 mr-3">Filtre :</span>` + categories.map((cat, index) => 
-            `<button class="category-filter px-3 py-1 text-sm font-semibold rounded-lg ${index === 0 ? 'active-filter' : ''}" data-category="${cat}">${cat}</button>`
+        // Modification 2: Ajout de flex-shrink-0 et ajustement du style
+        container.innerHTML = `<span class="font-semibold text-slate-600 mr-3 flex-shrink-0">Filtre :</span>` + categories.map((cat, index) => 
+            `<button class="category-filter flex-shrink-0 px-4 py-2 text-sm font-semibold rounded-full ${index === 0 ? 'active-filter' : ''}" data-category="${cat}">${cat}</button>`
         ).join('');
 
         container.querySelectorAll('.category-filter').forEach(btn => {
@@ -1750,20 +1764,20 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Améliorations UI
+    // Améliorations UI - Animation de scroll (Modification 4)
     function initScrollAnimations() {
         const animatedElements = document.querySelectorAll('.scroll-animate');
         if ("IntersectionObserver" in window) {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('scrolled-in');
-                    }
+                    // Ajoute ou retire la classe 'scrolled-in' selon que l'élément est visible ou non
+                    entry.target.classList.toggle('scrolled-in', entry.isIntersecting);
                 });
             }, { threshold: 0.1 });
             
             animatedElements.forEach(el => observer.observe(el));
         } else {
+            // Fallback pour les anciens navigateurs
             animatedElements.forEach(el => el.classList.add('scrolled-in'));
         }
     }
