@@ -89,6 +89,23 @@
             opacity: 1;
             transform: translateY(0);
         }
+        .category-filter {
+            transition: all 0.3s ease-in-out;
+            background-color: #f3f4f6; /* bg-gray-100 */
+            color: #4b5563; /* text-gray-600 */
+            box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px -1px rgba(0, 0, 0, 0.1);
+        }
+        .category-filter:hover {
+             transform: translateY(-2px);
+             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+             background-color: #e5e7eb; /* bg-gray-200 */
+        }
+        .category-filter.active-filter {
+            background: linear-gradient(90deg, #d92a2a, #f7b731); /* Use the theme gradient */
+            color: white;
+            box-shadow: 0 4px 6px -1px rgba(217, 42, 42, 0.3), 0 2px 4px -2px rgba(247, 183, 49, 0.3); /* shadow-md with theme colors */
+            transform: translateY(-2px);
+        }
     </style>
 </head>
 <body class="text-slate-800">
@@ -170,6 +187,7 @@
                         </button>
                      </div>
                  </div>
+                 <div id="category-filters" class="flex flex-wrap justify-center items-center gap-2 mb-8"></div>
                  <div id="product-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
                     <p id="loading-products" class="text-center text-gray-500 col-span-full">Chargement des produits...</p>
                  </div>
@@ -624,6 +642,7 @@ document.addEventListener('DOMContentLoaded', function() {
             
             boutiqueProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             
+            renderCategoryFilters();
             renderBoutique();
             
             const featuredProducts = boutiqueProducts.filter(p => p.isFeatured === true).slice(0, 4);
@@ -690,13 +709,40 @@ document.addEventListener('DOMContentLoaded', function() {
         return str ? str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "") : '';
     }
 
+    function renderCategoryFilters() {
+        const categories = ['Tous', ...new Set(boutiqueProducts.map(p => p.category).filter(Boolean))];
+        const container = document.getElementById('category-filters');
+        container.innerHTML = `<span class="font-semibold text-slate-600 mr-3">Filtrer par :</span>` + categories.map((cat, index) => 
+            `<button class="category-filter px-3 py-1 text-sm font-semibold rounded-lg ${index === 0 ? 'active-filter' : ''}" data-category="${cat}">${cat}</button>`
+        ).join('');
+
+        container.querySelectorAll('.category-filter').forEach(btn => {
+            btn.addEventListener('click', () => {
+                container.querySelector('.active-filter')?.classList.remove('active-filter');
+                btn.classList.add('active-filter');
+                renderBoutique();
+            });
+        });
+    }
+
     function renderBoutique() {
         const productGrid = document.getElementById('product-grid');
         const loadingText = document.getElementById('loading-products');
         const searchBar = document.getElementById('search-bar');
-        const searchTerm = normalizeString(searchBar ? searchBar.value : '');
-        const filteredProducts = boutiqueProducts.filter(p => normalizeString(p.name).includes(searchTerm));
         
+        const activeCategory = document.querySelector('#category-filters .active-filter')?.dataset.category;
+        const searchTerm = normalizeString(searchBar ? searchBar.value : '');
+        
+        let filteredProducts = boutiqueProducts;
+
+        if (activeCategory && activeCategory !== 'Tous') {
+            filteredProducts = filteredProducts.filter(p => p.category === activeCategory);
+        }
+        
+        if (searchTerm) {
+            filteredProducts = filteredProducts.filter(p => normalizeString(p.name).includes(searchTerm));
+        }
+
         if (loadingText) loadingText.style.display = 'none';
         productGrid.innerHTML = filteredProducts.length > 0
             ? filteredProducts.map(createProductCard).join('')
@@ -1342,4 +1388,5 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
+
 
