@@ -130,21 +130,19 @@
 <body class="text-slate-800">
 
     <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
-        <!-- Modification 1: Ajustement du header pour mobile -->
+        <!-- Modification 1: Header ajusté pour aligner la navigation à droite sur mobile -->
         <div class="container mx-auto px-2 sm:px-4 py-2 flex justify-between items-center">
             <a href="#" class="nav-link flex-shrink-0" data-page="accueil">
                  <img src="https://i.ibb.co/4nXZ4R2V/image-removebg-preview.png" alt="Logo Aridago" class="h-14 w-auto">
             </a>
             
-            <nav class="flex items-center space-x-1 sm:space-x-3 md:space-x-4 text-[10px] sm:text-sm md:text-base">
+            <nav class="flex items-center space-x-1 sm:space-x-2 md:space-x-4 text-[10px] sm:text-sm md:text-base">
                 <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="accueil">Accueil</a>
                 <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="boutique">Boutique</a>
                 <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="devis">Devis</a>
                 <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="echange">Transfert</a>
                 <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="apropos">À Propos</a>
             </nav>
-
-            <div class="flex-shrink-0 w-14" aria-hidden="true"></div>
         </div>
     </header>
 
@@ -286,7 +284,6 @@
         
        <section id="page-echange" class="page-content hidden">
             <div class="container mx-auto max-w-4xl p-4 md:p-8">
-                <!-- Modification 3: Nouvelle image pour la page de transfert -->
                 <div class="w-full max-w-2xl mx-auto mb-10 mt-8">
                     <img src="https://i.ibb.co/2P2rS8F/Ariary-3.png" alt="Service de transfert d'argent Aridago" class="w-full h-auto rounded-2xl shadow-lg">
                 </div>
@@ -303,35 +300,28 @@
                     <h2 class="text-2xl font-bold text-center mb-6 text-gray-800 flex items-center justify-center"><i class="fas fa-calculator mr-3 theme-gradient-text"></i>Convertisseur de Devises</h2>
 
                     <div id="exchange-calculator" class="space-y-6">
-                        <!-- Bloc "Vous envoyez" -->
                         <div class="bg-slate-50 p-4 rounded-2xl border-2 border-slate-200">
                             <label id="from-currency-label" for="from-amount" class="block text-sm font-semibold text-gray-500 mb-2">Vous envoyez</label>
                             <div class="relative flex items-center">
                                 <input type="number" id="from-amount" name="from-amount" class="w-full bg-transparent text-3xl font-bold text-slate-800 focus:outline-none" placeholder="0">
-                                <!-- Modification 2: Taille et contenu de l'icône adaptés -->
                                 <div id="from-currency-badge" class="flex-shrink-0 bg-green-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center">
                                     MGA
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Bouton Swap -->
                         <div class="flex justify-center items-center">
                              <div class="w-full h-px bg-slate-200"></div>
-                              <!-- Modification 2: Taille de l'icône adaptée -->
                              <button id="swap-button" class="bg-white border-2 border-slate-200 hover:bg-slate-100 rounded-full w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 mx-4 flex items-center justify-center transition-transform transform hover:rotate-180">
                                  <i class="fas fa-exchange-alt text-slate-600 text-lg sm:text-xl"></i>
                              </button>
                              <div class="w-full h-px bg-slate-200"></div>
                         </div>
 
-
-                        <!-- Bloc "Vous recevez" -->
                         <div class="bg-slate-50 p-4 rounded-2xl border-2 border-slate-200">
                             <label id="to-currency-label" for="to-amount" class="block text-sm font-semibold text-gray-500 mb-2">Le bénéficiaire reçoit</label>
                             <div class="relative flex items-center">
                                 <input type="number" id="to-amount" name="to-amount" class="w-full bg-transparent text-3xl font-bold text-slate-800 focus:outline-none" placeholder="0">
-                                 <!-- Modification 2: Taille et contenu de l'icône adaptés -->
                                 <div id="to-currency-badge" class="flex-shrink-0 bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center">
                                      RMB
                                 </div>
@@ -346,19 +336,18 @@
                     <div class="mt-8 pt-6 border-t border-gray-200">
                          <label class="block text-lg font-semibold text-gray-700 mb-4 text-center">1. Choisissez votre moyen de paiement</label>
                          <div id="payment-options-from" class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
-                             <!-- Les options de paiement seront générées par JavaScript -->
                          </div>
                     </div>
 
                     <div class="mt-8 pt-6 border-t border-gray-200">
                          <label class="block text-lg font-semibold text-gray-700 mb-4 text-center">2. Choisissez le moyen de réception</label>
                          <div id="reception-options-to" class="grid grid-cols-2 gap-2 md:gap-4">
-                             <!-- Les options de réception seront générées par JavaScript -->
                          </div>
                     </div>
 
                     <div class="mt-10 text-center">
-                        <button id="exchange-whatsapp-btn" class="w-full md:w-auto inline-flex justify-center items-center py-4 px-16 text-lg font-bold rounded-xl text-white btn-whatsapp shadow-lg hover:shadow-xl transform hover:scale-105 transition">
+                        <!-- Modification 3: Bouton et icône ajustés -->
+                        <button id="exchange-whatsapp-btn" class="inline-flex justify-center items-center py-3 px-8 md:py-4 md:px-16 text-base md:text-lg font-bold rounded-xl text-white btn-whatsapp shadow-lg hover:shadow-xl transform hover:scale-105 transition">
                          <ion-icon name="logo-whatsapp" class="mr-3 text-2xl"></ion-icon>
                             Confirmer la transaction
                         </button>
@@ -648,7 +637,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         window.scrollTo(0, 0);
         if (pageId === 'page-boutique') renderBoutique();
-        initScrollAnimations(); // Re-initialize animations on page change
+        initScrollAnimations();
     }
     
     function viewProduct(productId) {
@@ -1035,8 +1024,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const toAmountInput = document.getElementById('to-amount');
         const fromCurrencyBadge = document.getElementById('from-currency-badge');
         const toCurrencyBadge = document.getElementById('to-currency-badge');
-        const fromCurrencyLabel = document.getElementById('from-currency-label');
-        const toCurrencyLabel = document.getElementById('to-currency-label');
         const rateDisplay = document.getElementById('rate-display');
         const swapButton = document.getElementById('swap-button');
         const exchangeWhatsappBtn = document.getElementById('exchange-whatsapp-btn');
@@ -1045,10 +1032,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (!fromAmountInput) return;
 
-        let rates = {
-            RMB_TO_MGA: 615,
-            MGA_TO_RMB_DIVISOR: 625,
-        };
+        let rates = { RMB_TO_MGA: 615, MGA_TO_RMB_DIVISOR: 625 };
         let isRmbToMga = false;
 
         const paymentMethods = {
@@ -1061,13 +1045,32 @@ document.addEventListener('DOMContentLoaded', function() {
             MGA: [{ id: 'recept-espece', name: 'Espèce' }, { id: 'recept-mvola', name: 'MVola' }, { id: 'recept-orangemoney', name: 'Orange Money' }, { id: 'recept-airtelmoney', name: 'Airtel Money' }]
         };
 
+        // Modification 2: Logique de clic améliorée
+        paymentOptionsContainer.addEventListener('click', (e) => {
+            const targetLabel = e.target.closest('.payment-label');
+            if (!targetLabel) return;
+            paymentOptionsContainer.querySelectorAll('.payment-label').forEach(l => {
+                l.classList.remove('bg-red-100', 'font-bold', 'text-red-700');
+            });
+            targetLabel.classList.add('bg-red-100', 'font-bold', 'text-red-700');
+        });
+
+        receptionOptionsContainer.addEventListener('click', (e) => {
+            const targetLabel = e.target.closest('.reception-label');
+            if (!targetLabel) return;
+            receptionOptionsContainer.querySelectorAll('.reception-label').forEach(l => {
+                l.classList.remove('bg-green-100', 'font-bold', 'text-green-700');
+            });
+            targetLabel.classList.add('bg-green-100', 'font-bold', 'text-green-700');
+        });
+
         async function fetchRates() {
             try {
                 const doc = await settingsCollection.doc('exchangeRates').get();
                 if (doc.exists) {
                     const data = doc.data();
-                    if(data.rmbToMga) rates.RMB_TO_MGA = data.rmbToMga;
-                    if(data.mgaToRmbDivisor) rates.MGA_TO_RMB_DIVISOR = data.mgaToRmbDivisor;
+                    rates.RMB_TO_MGA = data.rmbToMga || rates.RMB_TO_MGA;
+                    rates.MGA_TO_RMB_DIVISOR = data.mgaToRmbDivisor || rates.MGA_TO_RMB_DIVISOR;
                 }
             } catch (error) {
                 console.error("Impossible de charger les taux, utilisation des valeurs par défaut.", error);
@@ -1077,24 +1080,13 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
-        // Modification 4: Correction du changement de couleur des boutons
         function renderPaymentOptions() {
             const currency = isRmbToMga ? 'RMB' : 'MGA';
-            const options = paymentMethods[currency];
-            paymentOptionsContainer.innerHTML = options.map((opt, index) => `
+            paymentOptionsContainer.innerHTML = paymentMethods[currency].map((opt, index) => `
                 <label for="payment-${opt.id}" class="payment-label flex items-center justify-center text-center bg-gray-100 p-3 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">
                     <input type="radio" id="payment-${opt.id}" name="payment-method" value="${opt.name}" class="sr-only" ${index === 0 ? 'checked' : ''}>
                     <span class="font-medium text-gray-700">${opt.name}</span>
-                </label>
-            `).join('');
-
-            const paymentLabels = paymentOptionsContainer.querySelectorAll('.payment-label');
-            paymentLabels.forEach(label => {
-                label.addEventListener('click', () => {
-                    paymentLabels.forEach(l => l.classList.remove('bg-red-100', 'font-bold', 'text-red-700'));
-                    label.classList.add('bg-red-100', 'font-bold', 'text-red-700');
-                });
-            });
+                </label>`).join('');
             
             const checkedPayment = paymentOptionsContainer.querySelector('input:checked');
             if (checkedPayment) {
@@ -1104,22 +1096,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function renderReceptionOptions() {
             const currency = isRmbToMga ? 'MGA' : 'RMB';
-            const options = receptionMethods[currency];
-            receptionOptionsContainer.innerHTML = options.map((opt, index) => `
+            receptionOptionsContainer.innerHTML = receptionMethods[currency].map((opt, index) => `
                  <label for="reception-${opt.id}" class="reception-label flex items-center justify-center text-center bg-gray-100 p-3 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">
                     <input type="radio" id="reception-${opt.id}" name="reception-method" value="${opt.name}" class="sr-only" ${index === 0 ? 'checked' : ''}>
                     <span class="font-medium text-gray-700">${opt.name}</span>
-                </label>
-            `).join('');
-
-            const receptionLabels = receptionOptionsContainer.querySelectorAll('.reception-label');
-            receptionLabels.forEach(label => {
-                label.addEventListener('click', () => {
-                    receptionLabels.forEach(l => l.classList.remove('bg-green-100', 'font-bold', 'text-green-700'));
-                    label.classList.add('bg-green-100', 'font-bold', 'text-green-700');
-                });
-            });
-
+                </label>`).join('');
+            
             const checkedReception = receptionOptionsContainer.querySelector('input:checked');
             if(checkedReception) {
                 checkedReception.parentElement.classList.add('bg-green-100', 'font-bold', 'text-green-700');
@@ -1128,15 +1110,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function updateDisplay() {
             if (isRmbToMga) {
-                fromCurrencyBadge.innerHTML = 'RMB'; // Modification 2
+                fromCurrencyBadge.innerHTML = 'RMB';
                 fromCurrencyBadge.className = 'flex-shrink-0 bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center';
-                toCurrencyBadge.innerHTML = 'MGA'; // Modification 2
+                toCurrencyBadge.innerHTML = 'MGA';
                 toCurrencyBadge.className = 'flex-shrink-0 bg-green-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center';
                 rateDisplay.textContent = `Taux actuel : 1 RMB ≈ ${rates.RMB_TO_MGA} MGA`;
             } else {
-                fromCurrencyBadge.innerHTML = 'MGA'; // Modification 2
+                fromCurrencyBadge.innerHTML = 'MGA';
                 fromCurrencyBadge.className = 'flex-shrink-0 bg-green-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center';
-                toCurrencyBadge.innerHTML = 'RMB'; // Modification 2
+                toCurrencyBadge.innerHTML = 'RMB';
                 toCurrencyBadge.className = 'flex-shrink-0 bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center';
                 rateDisplay.textContent = `Taux actuel : ${rates.MGA_TO_RMB_DIVISOR} MGA ≈ 1 RMB`;
             }
@@ -1150,17 +1132,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const rateMgaToRmb = 1 / rates.MGA_TO_RMB_DIVISOR;
 
             if (isFromInput) {
-                if (isNaN(fromValue) || fromValue <= 0) {
-                    toAmountInput.value = '';
-                    return;
-                }
+                if (isNaN(fromValue) || fromValue <= 0) { toAmountInput.value = ''; return; }
                 let calculatedToValue = isRmbToMga ? fromValue * rates.RMB_TO_MGA : fromValue * rateMgaToRmb;
                 toAmountInput.value = calculatedToValue.toFixed(2);
             } else {
-                 if (isNaN(toValue) || toValue <= 0) {
-                    fromAmountInput.value = '';
-                    return;
-                }
+                 if (isNaN(toValue) || toValue <= 0) { fromAmountInput.value = ''; return; }
                 let calculatedFromValue = isRmbToMga ? toValue / rates.RMB_TO_MGA : toValue / rateMgaToRmb;
                 fromAmountInput.value = calculatedFromValue.toFixed(2);
             }
@@ -1168,12 +1144,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
         fromAmountInput.addEventListener('input', () => calculate(true));
         toAmountInput.addEventListener('input', () => calculate(false));
-
         swapButton.addEventListener('click', () => {
             isRmbToMga = !isRmbToMga;
-            const tempValue = fromAmountInput.value;
-            fromAmountInput.value = toAmountInput.value;
-            toAmountInput.value = tempValue;
+            [fromAmountInput.value, toAmountInput.value] = [toAmountInput.value, fromAmountInput.value];
             updateDisplay();
         });
 
@@ -1185,28 +1158,17 @@ document.addEventListener('DOMContentLoaded', function() {
             const selectedPayment = document.querySelector('input[name="payment-method"]:checked');
             const selectedReception = document.querySelector('input[name="reception-method"]:checked');
 
-            if (!fromAmount || !toAmount || parseFloat(fromAmount) <= 0) {
-                alert("Veuillez entrer un montant valide.");
-                return;
-            }
-            if (!selectedPayment) {
-                 alert("Veuillez choisir un moyen de paiement.");
-                 return;
-            }
-            if (!selectedReception) {
-                 alert("Veuillez choisir un moyen de réception.");
-                 return;
-            }
-            const paymentValue = selectedPayment.value;
-            const receptionValue = selectedReception.value;
+            if (!fromAmount || !toAmount || parseFloat(fromAmount) <= 0) { alert("Veuillez entrer un montant valide."); return; }
+            if (!selectedPayment) { alert("Veuillez choisir un moyen de paiement."); return; }
+            if (!selectedReception) { alert("Veuillez choisir un moyen de réception."); return; }
 
             const message = `*NOUVELLE DEMANDE DE TRANSFERT D'ARGENT - ARIDAGO*\n\n` +
                             `-----------------------------------\n` +
                             `*Montant envoyé :* ${fromAmount} ${fromCurrency}\n` +
                             `*Montant à recevoir :* ${toAmount} ${toCurrency}\n` +
                             `-----------------------------------\n` +
-                            `*Moyen de paiement :* ${paymentValue}\n` +
-                            `*Moyen de réception :* ${receptionValue}\n\n` +
+                            `*Moyen de paiement :* ${selectedPayment.value}\n` +
+                            `*Moyen de réception :* ${selectedReception.value}\n\n` +
                             `Merci de me confirmer les instructions pour finaliser la transaction.`;
 
             window.open(`https://wa.me/8615600021123?text=${encodeURIComponent(message)}`, '_blank');
