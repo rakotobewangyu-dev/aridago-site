@@ -117,7 +117,7 @@
           white-space: nowrap;
           border-width: 0;
         }
-        /* Style pour le filtre scrollable (Modification 2) */
+        /* Style pour le filtre scrollable */
         #category-filters {
             -ms-overflow-style: none;  /* IE and Edge */
             scrollbar-width: none;  /* Firefox */
@@ -130,25 +130,21 @@
 <body class="text-slate-800">
 
     <header class="bg-white/80 backdrop-blur-md shadow-sm sticky top-0 z-50">
-        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
-            <!-- Left: Logo -->
-            <a href="#" class="nav-link" data-page="accueil">
-                 <img src="https://i.ibb.co/4nXZ4R2V/image-removebg-preview.png" alt="Logo Aridago" class="h-14 md:h-16 w-auto">
+        <!-- Modification 1: Ajustement du header pour mobile -->
+        <div class="container mx-auto px-2 sm:px-4 py-2 flex justify-between items-center">
+            <a href="#" class="nav-link flex-shrink-0" data-page="accueil">
+                 <img src="https://i.ibb.co/4nXZ4R2V/image-removebg-preview.png" alt="Logo Aridago" class="h-14 w-auto">
             </a>
             
-            <!-- Center: Navigation for all sizes -->
-            <nav class="flex-shrink-0 flex items-center space-x-1 sm:space-x-2 md:space-x-4 text-xs sm:text-sm md:text-base">
+            <nav class="flex items-center space-x-1 sm:space-x-3 md:space-x-4 text-[10px] sm:text-sm md:text-base">
                 <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="accueil">Accueil</a>
                 <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="boutique">Boutique</a>
                 <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="devis">Devis</a>
                 <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="echange">Transfert</a>
                 <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="apropos">À Propos</a>
             </nav>
-            
-            <!-- Right: Invisible spacer to center the nav -->
-            <a href="#" class="nav-link invisible" aria-hidden="true">
-                 <img src="https://i.ibb.co/4nXZ4R2V/image-removebg-preview.png" alt="" class="h-14 md:h-16 w-auto">
-            </a>
+
+            <div class="flex-shrink-0 w-14" aria-hidden="true"></div>
         </div>
     </header>
 
@@ -209,7 +205,6 @@
                         </button>
                      </div>
                  </div>
-                 <!-- Filtre scrollable (Modification 2) -->
                  <div id="category-filters" class="flex items-center gap-3 mb-8 overflow-x-auto whitespace-nowrap py-2 px-4 -mx-4 md:justify-center"></div>
                  <div id="product-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
                     <p id="loading-products" class="text-center text-gray-500 col-span-full">Chargement des produits...</p>
@@ -291,8 +286,9 @@
         
        <section id="page-echange" class="page-content hidden">
             <div class="container mx-auto max-w-4xl p-4 md:p-8">
+                <!-- Modification 3: Nouvelle image pour la page de transfert -->
                 <div class="w-full max-w-2xl mx-auto mb-10 mt-8">
-                    <img src="https://i.ibb.co/bM3hhhfC/Ariary-2.png" alt="Aridago Transfert d'argent Service" class="w-full h-auto rounded-2xl shadow-lg">
+                    <img src="https://i.ibb.co/2P2rS8F/Ariary-3.png" alt="Service de transfert d'argent Aridago" class="w-full h-auto rounded-2xl shadow-lg">
                 </div>
                  <header class="text-center mb-10 scroll-animate">
                     <h1 class="text-3xl md:text-5xl font-extrabold text-gray-800 leading-tight">
@@ -312,8 +308,9 @@
                             <label id="from-currency-label" for="from-amount" class="block text-sm font-semibold text-gray-500 mb-2">Vous envoyez</label>
                             <div class="relative flex items-center">
                                 <input type="number" id="from-amount" name="from-amount" class="w-full bg-transparent text-3xl font-bold text-slate-800 focus:outline-none" placeholder="0">
-                                <div id="from-currency-badge" class="flex-shrink-0 bg-green-600 text-white px-4 py-2 rounded-full text-lg font-bold flex items-center">
-                                    <span class="mr-2">🇲🇬</span> MGA
+                                <!-- Modification 2: Taille et contenu de l'icône adaptés -->
+                                <div id="from-currency-badge" class="flex-shrink-0 bg-green-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center">
+                                    MGA
                                 </div>
                             </div>
                         </div>
@@ -321,8 +318,9 @@
                         <!-- Bouton Swap -->
                         <div class="flex justify-center items-center">
                              <div class="w-full h-px bg-slate-200"></div>
-                             <button id="swap-button" class="bg-white border-2 border-slate-200 hover:bg-slate-100 rounded-full w-14 h-14 flex-shrink-0 mx-4 flex items-center justify-center transition-transform transform hover:rotate-180">
-                                 <i class="fas fa-exchange-alt text-slate-600 text-xl"></i>
+                              <!-- Modification 2: Taille de l'icône adaptée -->
+                             <button id="swap-button" class="bg-white border-2 border-slate-200 hover:bg-slate-100 rounded-full w-12 h-12 sm:w-14 sm:h-14 flex-shrink-0 mx-4 flex items-center justify-center transition-transform transform hover:rotate-180">
+                                 <i class="fas fa-exchange-alt text-slate-600 text-lg sm:text-xl"></i>
                              </button>
                              <div class="w-full h-px bg-slate-200"></div>
                         </div>
@@ -333,8 +331,9 @@
                             <label id="to-currency-label" for="to-amount" class="block text-sm font-semibold text-gray-500 mb-2">Le bénéficiaire reçoit</label>
                             <div class="relative flex items-center">
                                 <input type="number" id="to-amount" name="to-amount" class="w-full bg-transparent text-3xl font-bold text-slate-800 focus:outline-none" placeholder="0">
-                                <div id="to-currency-badge" class="flex-shrink-0 bg-red-600 text-white px-4 py-2 rounded-full text-lg font-bold flex items-center">
-                                     <span class="mr-2">🇨🇳</span> RMB
+                                 <!-- Modification 2: Taille et contenu de l'icône adaptés -->
+                                <div id="to-currency-badge" class="flex-shrink-0 bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center">
+                                     RMB
                                 </div>
                             </div>
                         </div>
@@ -537,7 +536,6 @@
                      </ul>
                 </div>
             </div>
-             <!-- Pied de page avec bouton Admin (Modification 3) -->
             <div class="text-center pt-8 border-t border-slate-700">
                 <p class="text-slate-500">&copy; <span id="year"></span> Aridago - Tous droits réservés. <button id="admin-link-footer" class="ml-2 text-slate-500 hover:text-white hover:underline transition">Admin</button></p>
             </div>
@@ -685,7 +683,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // Gestion du clic sur le bouton Admin dans le footer (Modification 3)
     document.getElementById('admin-link-footer').addEventListener('click', (e) => {
         e.preventDefault();
         showPage('page-admin');
@@ -775,7 +772,6 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderCategoryFilters() {
         const categories = ['Tous', ...new Set(boutiqueProducts.map(p => p.category).filter(Boolean))];
         const container = document.getElementById('category-filters');
-        // Modification 2: Ajout de flex-shrink-0 et ajustement du style
         container.innerHTML = `<span class="font-semibold text-slate-600 mr-3 flex-shrink-0">Filtre :</span>` + categories.map((cat, index) => 
             `<button class="category-filter flex-shrink-0 px-4 py-2 text-sm font-semibold rounded-full ${index === 0 ? 'active-filter' : ''}" data-category="${cat}">${cat}</button>`
         ).join('');
@@ -1053,34 +1049,16 @@ document.addEventListener('DOMContentLoaded', function() {
             RMB_TO_MGA: 615,
             MGA_TO_RMB_DIVISOR: 625,
         };
-        // Par défaut, l'échange est MGA -> RMB
         let isRmbToMga = false;
 
         const paymentMethods = {
-            RMB: [
-                { id: 'alipay', name: 'Alipay' },
-                { id: 'wechatpay', name: 'WeChat Pay' }
-            ],
-            MGA: [
-                { id: 'espece', name: 'Espèce' },
-                { id: 'mvola', name: 'MVola' },
-                { id: 'orangemoney', name: 'Orange Money' },
-                { id: 'airtelmoney', name: 'Airtel Money' }
-            ]
+            RMB: [{ id: 'alipay', name: 'Alipay' }, { id: 'wechatpay', name: 'WeChat Pay' }],
+            MGA: [{ id: 'espece', name: 'Espèce' }, { id: 'mvola', name: 'MVola' }, { id: 'orangemoney', name: 'Orange Money' }, { id: 'airtelmoney', name: 'Airtel Money' }]
         };
         
-        // Options pour la réception
         const receptionMethods = {
-            RMB: [
-                { id: 'recept-alipay', name: 'Alipay' },
-                { id: 'recept-wechatpay', name: 'WeChat Pay' }
-            ],
-            MGA: [
-                { id: 'recept-espece', name: 'Espèce' },
-                { id: 'recept-mvola', name: 'MVola' },
-                { id: 'recept-orangemoney', name: 'Orange Money' },
-                { id: 'recept-airtelmoney', name: 'Airtel Money' }
-            ]
+            RMB: [{ id: 'recept-alipay', name: 'Alipay' }, { id: 'recept-wechatpay', name: 'WeChat Pay' }],
+            MGA: [{ id: 'recept-espece', name: 'Espèce' }, { id: 'recept-mvola', name: 'MVola' }, { id: 'recept-orangemoney', name: 'Orange Money' }, { id: 'recept-airtelmoney', name: 'Airtel Money' }]
         };
 
         async function fetchRates() {
@@ -1099,6 +1077,7 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         }
         
+        // Modification 4: Correction du changement de couleur des boutons
         function renderPaymentOptions() {
             const currency = isRmbToMga ? 'RMB' : 'MGA';
             const options = paymentMethods[currency];
@@ -1116,7 +1095,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     label.classList.add('bg-red-100', 'font-bold', 'text-red-700');
                 });
             });
-            // Initial state
+            
             const checkedPayment = paymentOptionsContainer.querySelector('input:checked');
             if (checkedPayment) {
                 checkedPayment.parentElement.classList.add('bg-red-100', 'font-bold', 'text-red-700');
@@ -1140,7 +1119,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     label.classList.add('bg-green-100', 'font-bold', 'text-green-700');
                 });
             });
-             // Initial state
+
             const checkedReception = receptionOptionsContainer.querySelector('input:checked');
             if(checkedReception) {
                 checkedReception.parentElement.classList.add('bg-green-100', 'font-bold', 'text-green-700');
@@ -1149,20 +1128,16 @@ document.addEventListener('DOMContentLoaded', function() {
 
         function updateDisplay() {
             if (isRmbToMga) {
-                fromCurrencyBadge.innerHTML = '<span class="mr-2">🇨🇳</span> RMB';
-                fromCurrencyBadge.className = 'flex-shrink-0 bg-red-600 text-white px-4 py-2 rounded-full text-lg font-bold flex items-center';
-                toCurrencyBadge.innerHTML = '<span class="mr-2">🇲🇬</span> MGA';
-                toCurrencyBadge.className = 'flex-shrink-0 bg-green-600 text-white px-4 py-2 rounded-full text-lg font-bold flex items-center';
-                fromCurrencyLabel.textContent = 'Vous envoyez';
-                toCurrencyLabel.textContent = 'Le bénéficiaire reçoit';
+                fromCurrencyBadge.innerHTML = 'RMB'; // Modification 2
+                fromCurrencyBadge.className = 'flex-shrink-0 bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center';
+                toCurrencyBadge.innerHTML = 'MGA'; // Modification 2
+                toCurrencyBadge.className = 'flex-shrink-0 bg-green-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center';
                 rateDisplay.textContent = `Taux actuel : 1 RMB ≈ ${rates.RMB_TO_MGA} MGA`;
             } else {
-                fromCurrencyBadge.innerHTML = '<span class="mr-2">🇲🇬</span> MGA';
-                fromCurrencyBadge.className = 'flex-shrink-0 bg-green-600 text-white px-4 py-2 rounded-full text-lg font-bold flex items-center';
-                toCurrencyBadge.innerHTML = '<span class="mr-2">🇨🇳</span> RMB';
-                toCurrencyBadge.className = 'flex-shrink-0 bg-red-600 text-white px-4 py-2 rounded-full text-lg font-bold flex items-center';
-                fromCurrencyLabel.textContent = 'Vous envoyez';
-                toCurrencyLabel.textContent = 'Le bénéficiaire reçoit';
+                fromCurrencyBadge.innerHTML = 'MGA'; // Modification 2
+                fromCurrencyBadge.className = 'flex-shrink-0 bg-green-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center';
+                toCurrencyBadge.innerHTML = 'RMB'; // Modification 2
+                toCurrencyBadge.className = 'flex-shrink-0 bg-red-600 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center';
                 rateDisplay.textContent = `Taux actuel : ${rates.MGA_TO_RMB_DIVISOR} MGA ≈ 1 RMB`;
             }
             renderPaymentOptions();
@@ -1179,24 +1154,14 @@ document.addEventListener('DOMContentLoaded', function() {
                     toAmountInput.value = '';
                     return;
                 }
-                let calculatedToValue;
-                if (isRmbToMga) {
-                    calculatedToValue = fromValue * rates.RMB_TO_MGA;
-                } else {
-                    calculatedToValue = fromValue * rateMgaToRmb;
-                }
+                let calculatedToValue = isRmbToMga ? fromValue * rates.RMB_TO_MGA : fromValue * rateMgaToRmb;
                 toAmountInput.value = calculatedToValue.toFixed(2);
             } else {
                  if (isNaN(toValue) || toValue <= 0) {
                     fromAmountInput.value = '';
                     return;
                 }
-                let calculatedFromValue;
-                if (isRmbToMga) {
-                    calculatedFromValue = toValue / rates.RMB_TO_MGA;
-                } else {
-                    calculatedFromValue = toValue / rateMgaToRmb;
-                }
+                let calculatedFromValue = isRmbToMga ? toValue / rates.RMB_TO_MGA : toValue / rateMgaToRmb;
                 fromAmountInput.value = calculatedFromValue.toFixed(2);
             }
         }
@@ -1557,7 +1522,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 statusEl.textContent = "Taux sauvegardés avec succès !";
                 statusEl.className = "text-sm text-green-400 mt-1 text-center h-4";
                 
-                // Rafraîchir la page d'échange si elle est visible
                 if (!document.getElementById('page-echange').classList.contains('hidden')) {
                     initExchangeCalculator();
                 }
@@ -1764,20 +1728,17 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Améliorations UI - Animation de scroll (Modification 4)
     function initScrollAnimations() {
         const animatedElements = document.querySelectorAll('.scroll-animate');
         if ("IntersectionObserver" in window) {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    // Ajoute ou retire la classe 'scrolled-in' selon que l'élément est visible ou non
                     entry.target.classList.toggle('scrolled-in', entry.isIntersecting);
                 });
             }, { threshold: 0.1 });
             
             animatedElements.forEach(el => observer.observe(el));
         } else {
-            // Fallback pour les anciens navigateurs
             animatedElements.forEach(el => el.classList.add('scrolled-in'));
         }
     }
