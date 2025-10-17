@@ -286,7 +286,7 @@
                         Service de Transfert d'Argent<br><span class="theme-gradient-text">Ariary (MGA) & Yuan (RMB)</span>
                     </h1>
                     <p class="mt-4 text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
-                        Transférez votre argent simplement, rapidement et en toute sécurité pour vos transactions entre Madagascar et la Chine.
+                        Transférez votre argent simplement, rapidement et en toute sécurité pour vos transactions entre la Chine et Madagascar.
                     </p>
                 </header>
 
@@ -318,7 +318,7 @@
                             </div>
                         </div>
 
-                        <div id="rate-display" class="text-center text-gray-500 font-semibold pt-2 text-lg">Chargement du taux...</div>
+                        <div id="rate-display" class="text-center text-gray-500 font-semibold pt-2 text-lg">Chargement du cours de change...</div>
                     </div>
 
                     <div class="mt-8 pt-6 border-t border-gray-200">
@@ -739,7 +739,7 @@ document.addEventListener('DOMContentLoaded', function() {
             toCurrencyBadge.textContent = toCurrency;
             fromCurrencyBadge.className = `flex-shrink-0 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center ${isRmbToMga ? 'bg-red-600' : 'bg-green-600'}`;
             toCurrencyBadge.className = `flex-shrink-0 text-white px-3 py-1 sm:px-4 sm:py-2 rounded-full text-base sm:text-lg font-bold flex items-center ${isRmbToMga ? 'bg-green-600' : 'bg-red-600'}`;
-            rateDisplay.textContent = isRmbToMga ? `Taux : 1 RMB ≈ ${rates.RMB_TO_MGA} MGA` : `Taux : ${rates.MGA_TO_RMB_DIVISOR} MGA ≈ 1 RMB`;
+            rateDisplay.textContent = isRmbToMga ? `Cours de Change : 1 RMB ≈ ${rates.RMB_TO_MGA} MGA` : `Cours de Change : ${rates.MGA_TO_RMB_DIVISOR} MGA ≈ 1 RMB`;
 
             renderSelect(paymentOptionsContainer, 'payment-method-select', paymentMethods[fromCurrency]);
             renderSelect(receptionOptionsContainer, 'reception-method-select', receptionMethods[toCurrency]);
@@ -767,11 +767,29 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         exchangeWhatsappBtn.addEventListener('click', () => {
-            const fromAmount = fromAmountInput.value;
+            const fromAmount = parseFloat(fromAmountInput.value).toFixed(2);
+            const toAmount = parseFloat(toAmountInput.value).toFixed(2);
             const paymentValue = document.getElementById('payment-method-select').value;
             const receptionValue = document.getElementById('reception-method-select').value;
-            if (!fromAmount > 0) { alert("Veuillez entrer un montant valide."); return; }
-            const message = `*DEMANDE DE TRANSFERT - ARIDAGO*\n\n*Montant envoyé :* ${fromAmount} ${isRmbToMga ? 'RMB' : 'MGA'}\n*Moyen de paiement :* ${paymentValue}\n*Moyen de réception :* ${receptionValue}`;
+
+            if (!(fromAmount > 0) || !(toAmount > 0)) {
+                alert("Veuillez entrer un montant valide.");
+                return;
+            }
+
+            const fromCurrency = isRmbToMga ? 'RMB' : 'MGA';
+            const toCurrency = isRmbToMga ? 'MGA' : 'RMB';
+            const exchangeRateText = isRmbToMga ? `${rates.RMB_TO_MGA} Ariary / Rmb` : `${rates.MGA_TO_RMB_DIVISOR} Ariary / Rmb`;
+
+            const message = `NOUVELLE DEMANDE DE TRANSFERT D'ARGENT - ARIDAGO\n\n` +
+                            `-----------------------------------\n` +
+                            `Montant envoyé : ${fromAmount} ${fromCurrency}\n` +
+                            `Montant à recevoir : ${toAmount} ${toCurrency}\n` +
+                            `-----------------------------------\n` +
+                            `Cours de Change: ${exchangeRateText}\n` +
+                            `Moyen de paiement : ${paymentValue}\n` +
+                            `Moyen de réception : ${receptionValue}`;
+
             window.open(`https://wa.me/8615600021123?text=${encodeURIComponent(message)}`, '_blank');
         });
 
@@ -804,6 +822,4 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
-
-
 
