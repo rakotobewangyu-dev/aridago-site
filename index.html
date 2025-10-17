@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aridago - Boutique et Devis</title>
+    <title>Aridago - Boutique, Devis & Échange</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -106,14 +106,16 @@
             box-shadow: 0 4px 6px -1px rgba(217, 42, 42, 0.3), 0 2px 4px -2px rgba(247, 183, 49, 0.3); /* shadow-md with theme colors */
             transform: translateY(-2px);
         }
-        
-        /* Cache la barre de défilement des filtres */
-        #category-filters::-webkit-scrollbar {
-            display: none;
-        }
-        #category-filters {
-            -ms-overflow-style: none;
-            scrollbar-width: none;
+        .sr-only {
+          position: absolute;
+          width: 1px;
+          height: 1px;
+          padding: 0;
+          margin: -1px;
+          overflow: hidden;
+          clip: rect(0, 0, 0, 0);
+          white-space: nowrap;
+          border-width: 0;
         }
     </style>
 </head>
@@ -129,6 +131,7 @@
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="accueil">Accueil</a>
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="boutique">Boutique</a>
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="devis">Devis</a>
+                    <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="echange">Échange</a>
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="apropos">À Propos</a>
                 </nav>
             </div>
@@ -196,7 +199,7 @@
                         </button>
                      </div>
                  </div>
-                 <div id="category-filters" class="flex items-center gap-3 mb-8 overflow-x-auto flex-nowrap py-2 justify-start md:justify-center"></div>
+                 <div id="category-filters" class="flex flex-wrap justify-center items-center gap-2 mb-8"></div>
                  <div id="product-grid" class="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8">
                     <p id="loading-products" class="text-center text-gray-500 col-span-full">Chargement des produits...</p>
                  </div>
@@ -269,54 +272,89 @@
                 <section class="mt-12 bg-white p-6 md:p-10 rounded-3xl shadow-lg scroll-animate">
                     <h2 class="text-2xl font-bold text-gray-800 mb-6 text-center">Questions fréquentes (FAQ)</h2>
                     <div id="faq-container" class="space-y-2">
-                        <div class="faq-item bg-gray-50 rounded-xl">
-                            <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
-                                <span>Quels sont les frais de transport Chine-Madagascar ?</span>
-                                <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-                                <p>Les frais de transport ne sont pas inclus dans le devis initial. Ils dépendent du poids et du volume total de votre commande. Nous vous fournirons une estimation détaillée de ces frais lors de la confirmation de votre commande.</p>
-                            </div>
                         </div>
-                        <div class="faq-item bg-gray-50 rounded-xl">
-                            <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
-                                <span>Quels sont les délais de livraison estimés ?</span>
-                                <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-                                <p>Les délais varient en fonction du type de transport choisi (aérien ou maritime). En général, comptez entre 3 à 10 jours pour le transport aérien et 30 à 60 jours pour le transport maritime, après réception de tous vos articles dans notre entrepôt en Chine.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item bg-gray-50 rounded-xl">
-                            <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
-                                <span>Quels sont les moyens de paiement acceptés ?</span>
-                                <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-                                <p>Pour les paiements en <b>Yuan (CNY)</b>, nous acceptons : Alipay et WeChatPay.<br>Pour les paiements en <b>Ariary (MGA)</b>, nous acceptons : Espèce, MVola, Orange Money et Airtel Money.<br>Les détails vous seront communiqués lors de la validation de votre devis.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item bg-gray-50 rounded-xl">
-                            <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
-                                <span>Comment garantissez-vous la qualité des produits ?</span>
-                                <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-                                <p>La qualité est notre priorité. Nos équipes en Chine effectuent un contrôle qualité systématique avant toute expédition. Nous vous envoyons des photos et des vidéos des produits pour que vous puissiez valider la conformité de votre commande avant son envoi.</p>
-                            </div>
-                        </div>
-                        <div class="faq-item bg-gray-50 rounded-xl">
-                            <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
-                                <span>Est-il possible de commander un échantillon ?</span>
-                                <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
-                            </button>
-                            <div class="faq-answer hidden px-4 pb-4 text-gray-600">
-                                <p>Oui, sur demande, nous pouvons organiser l'envoi d'un échantillon pour la plupart des produits. Le coût de l'échantillon et les frais d'expédition sont généralement à la charge du client, sauf accord particulier.</p>
-                            </div>
-                        </div>
-                    </div>
                 </section>
                 
+            </div>
+        </section>
+        
+       <section id="page-echange" class="page-content hidden">
+            <div class="w-full h-[300px] md:h-[400px] overflow-hidden">
+                 <img src="https://i.ibb.co/gFWLdn0q/Ariary-1.png" alt="Aridago Échange Service" class="w-full h-full object-cover">
+            </div>
+
+            <div class="container mx-auto max-w-4xl p-4 md:p-8">
+                 <header class="text-center mb-10 scroll-animate">
+                    <h1 class="text-3xl md:text-5xl font-extrabold text-gray-800 leading-tight">
+                        Service d'Échange Simplifié<br><span class="theme-gradient-text">Ariary (MGA) & Yuan (RMB)</span>
+                    </h1>
+                    <p class="mt-4 text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+                        Échangez vos devises simplement, rapidement et en toute sécurité pour vos transactions entre Madagascar et la Chine.
+                    </p>
+                </header>
+
+                <main class="bg-white p-6 md:p-8 rounded-3xl shadow-xl scroll-animate">
+                    <h2 class="text-2xl font-bold text-center mb-6 text-gray-800 flex items-center justify-center"><i class="fas fa-calculator mr-3 theme-gradient-text"></i>Convertisseur de Devises</h2>
+
+                    <div id="exchange-calculator" class="space-y-6">
+                        <!-- Bloc "Vous envoyez" -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border-2 border-slate-200">
+                            <label id="from-currency-label" for="from-amount" class="block text-sm font-semibold text-gray-500 mb-2">Vous envoyez</label>
+                            <div class="relative flex items-center">
+                                <input type="number" id="from-amount" name="from-amount" class="w-full bg-transparent text-3xl font-bold text-slate-800 focus:outline-none" placeholder="0">
+                                <div id="from-currency-badge" class="flex-shrink-0 bg-green-600 text-white px-4 py-2 rounded-full text-lg font-bold flex items-center">
+                                    <span class="mr-2">🇲🇬</span> MGA
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Bouton Swap -->
+                        <div class="flex justify-center items-center">
+                             <div class="w-full h-px bg-slate-200"></div>
+                             <button id="swap-button" class="bg-white border-2 border-slate-200 hover:bg-slate-100 rounded-full w-14 h-14 flex-shrink-0 mx-4 flex items-center justify-center transition-transform transform hover:rotate-180">
+                                 <i class="fas fa-exchange-alt text-slate-600 text-xl"></i>
+                             </button>
+                             <div class="w-full h-px bg-slate-200"></div>
+                        </div>
+
+
+                        <!-- Bloc "Vous recevez" -->
+                        <div class="bg-slate-50 p-4 rounded-2xl border-2 border-slate-200">
+                            <label id="to-currency-label" for="to-amount" class="block text-sm font-semibold text-gray-500 mb-2">Le bénéficiaire reçoit</label>
+                            <div class="relative flex items-center">
+                                <input type="number" id="to-amount" name="to-amount" class="w-full bg-transparent text-3xl font-bold text-slate-800 focus:outline-none" placeholder="0">
+                                <div id="to-currency-badge" class="flex-shrink-0 bg-red-600 text-white px-4 py-2 rounded-full text-lg font-bold flex items-center">
+                                     <span class="mr-2">🇨🇳</span> RMB
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="rate-display" class="text-center text-gray-500 font-semibold pt-2 text-lg">
+                            Chargement du taux...
+                        </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                         <label class="block text-lg font-semibold text-gray-700 mb-4 text-center">1. Choisissez votre moyen de paiement</label>
+                         <div id="payment-options-from" class="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
+                             <!-- Les options de paiement seront générées par JavaScript -->
+                         </div>
+                    </div>
+
+                    <div class="mt-8 pt-6 border-t border-gray-200">
+                         <label class="block text-lg font-semibold text-gray-700 mb-4 text-center">2. Choisissez le moyen de réception</label>
+                         <div id="reception-options-to" class="grid grid-cols-2 gap-2 md:gap-4">
+                             <!-- Les options de réception seront générées par JavaScript -->
+                         </div>
+                    </div>
+
+                    <div class="mt-10 text-center">
+                        <button id="exchange-whatsapp-btn" class="w-full md:w-auto inline-flex justify-center items-center py-4 px-16 text-lg font-bold rounded-xl text-white btn-whatsapp shadow-lg hover:shadow-xl transform hover:scale-105 transition">
+                         <ion-icon name="logo-whatsapp" class="mr-3 text-2xl"></ion-icon>
+                            Confirmer la transaction
+                        </button>
+                    </div>
+                </main>
             </div>
         </section>
 
@@ -477,6 +515,7 @@
                         <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="accueil">Accueil</a></li>
                         <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="boutique">Boutique</a></li>
                         <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="devis">Devis sur Mesure</a></li>
+                        <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="echange">Échange</a></li>
                         <li><a href="#" class="text-slate-400 hover:text-white nav-link" data-page="apropos">À Propos</a></li>
                      </ul>
                 </div>
@@ -558,6 +597,8 @@ document.addEventListener('DOMContentLoaded', function() {
     const db = firebase.firestore();
     const auth = firebase.auth();
     const productsCollection = db.collection('products');
+    const settingsCollection = db.collection('settings');
+
 
     let boutiqueProducts = [];
     const pages = document.querySelectorAll('.page-content');
@@ -662,6 +703,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 renderAdminList();
                 initIAGenerator();
                 initAiFeatures();
+                initAdminRateManagement();
             }
         } catch (error) {
             console.error("Erreur de chargement: ", error);
@@ -721,8 +763,8 @@ document.addEventListener('DOMContentLoaded', function() {
     function renderCategoryFilters() {
         const categories = ['Tous', ...new Set(boutiqueProducts.map(p => p.category).filter(Boolean))];
         const container = document.getElementById('category-filters');
-        container.innerHTML = `<span class="font-semibold text-slate-600 mr-3 flex-shrink-0">Filtre :</span>` + categories.map((cat, index) => 
-            `<button class="category-filter flex-shrink-0 px-4 py-2 text-sm font-semibold rounded-lg ${index === 0 ? 'active-filter' : ''}" data-category="${cat}">${cat}</button>`
+        container.innerHTML = `<span class="font-semibold text-slate-600 mr-3">Filtre :</span>` + categories.map((cat, index) => 
+            `<button class="category-filter px-3 py-1 text-sm font-semibold rounded-lg ${index === 0 ? 'active-filter' : ''}" data-category="${cat}">${cat}</button>`
         ).join('');
 
         container.querySelectorAll('.category-filter').forEach(btn => {
@@ -869,6 +911,57 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if(div.querySelector('.remove-product')) div.querySelector('.remove-product').addEventListener('click', () => div.remove());
     }
+    
+    function renderDevisFaq() {
+        const faqContainer = document.querySelector('#page-devis #faq-container');
+        if (!faqContainer) return;
+        faqContainer.innerHTML = `
+            <div class="faq-item bg-gray-50 rounded-xl">
+                <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
+                    <span>Quels sont les frais de transport Chine-Madagascar ?</span>
+                    <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer hidden px-4 pb-4 text-gray-600">
+                    <p>Les frais de transport ne sont pas inclus dans le devis initial. Ils dépendent du poids et du volume total de votre commande. Nous vous fournirons une estimation détaillée de ces frais lors de la confirmation de votre commande.</p>
+                </div>
+            </div>
+            <div class="faq-item bg-gray-50 rounded-xl">
+                <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
+                    <span>Quels sont les délais de livraison estimés ?</span>
+                    <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer hidden px-4 pb-4 text-gray-600">
+                    <p>Les délais varient en fonction du type de transport choisi (aérien ou maritime). En général, comptez entre 3 à 10 jours pour le transport aérien et 30 à 60 jours pour le transport maritime, après réception de tous vos articles dans notre entrepôt en Chine.</p>
+                </div>
+            </div>
+            <div class="faq-item bg-gray-50 rounded-xl">
+                <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
+                    <span>Quels sont les moyens de paiement acceptés ?</span>
+                    <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer hidden px-4 pb-4 text-gray-600">
+                    <p>Pour les paiements en <b>Yuan (CNY)</b>, nous acceptons : Alipay et WeChatPay.<br>Pour les paiements en <b>Ariary (MGA)</b>, nous acceptons : Espèce, MVola, Orange Money et Airtel Money.<br>Les détails vous seront communiqués lors de la validation de votre devis.</p>
+                </div>
+            </div>
+            <div class="faq-item bg-gray-50 rounded-xl">
+                <button class="faq-question w-full text-left font-bold text-gray-800 p-4 flex justify-between items-center">
+                    <span>Comment garantissez-vous la qualité des produits ?</span>
+                    <svg class="w-5 h-5 transform transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg>
+                </button>
+                <div class="faq-answer hidden px-4 pb-4 text-gray-600">
+                    <p>La qualité est notre priorité. Nos équipes en Chine effectuent un contrôle qualité systématique avant toute expédition. Nous vous envoyons des photos et des vidéos des produits pour que vous puissiez valider la conformité de votre commande avant son envoi.</p>
+                </div>
+            </div>
+        `;
+        document.querySelectorAll('#page-devis .faq-question').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const answer = btn.nextElementSibling;
+                const icon = btn.querySelector('svg');
+                answer.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+    }
 
     if(closeLinkModalBtn) {
         closeLinkModalBtn.addEventListener('click', () => {
@@ -926,257 +1019,545 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     if(productList) createProductBlock();
-    document.querySelectorAll('.faq-question').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const answer = btn.nextElementSibling;
-            const icon = btn.querySelector('svg');
-            answer.classList.toggle('hidden');
-            icon.classList.toggle('rotate-180');
+
+    // ================== LOGIQUE ÉCHANGE ==================
+    function initExchangeCalculator() {
+        const fromAmountInput = document.getElementById('from-amount');
+        const toAmountInput = document.getElementById('to-amount');
+        const fromCurrencyBadge = document.getElementById('from-currency-badge');
+        const toCurrencyBadge = document.getElementById('to-currency-badge');
+        const fromCurrencyLabel = document.getElementById('from-currency-label');
+        const toCurrencyLabel = document.getElementById('to-currency-label');
+        const rateDisplay = document.getElementById('rate-display');
+        const swapButton = document.getElementById('swap-button');
+        const exchangeWhatsappBtn = document.getElementById('exchange-whatsapp-btn');
+        const paymentOptionsContainer = document.getElementById('payment-options-from');
+        const receptionOptionsContainer = document.getElementById('reception-options-to');
+
+        if (!fromAmountInput) return;
+
+        let rates = {
+            RMB_TO_MGA: 615,
+            MGA_TO_RMB_DIVISOR: 625,
+        };
+        // Par défaut, l'échange est MGA -> RMB
+        let isRmbToMga = false;
+
+        const paymentMethods = {
+            RMB: [
+                { id: 'alipay', name: 'Alipay' },
+                { id: 'wechatpay', name: 'WeChat Pay' }
+            ],
+            MGA: [
+                { id: 'espece', name: 'Espèce' },
+                { id: 'mvola', name: 'MVola' },
+                { id: 'orangemoney', name: 'Orange Money' },
+                { id: 'airtelmoney', name: 'Airtel Money' }
+            ]
+        };
+        
+        // Options pour la réception
+        const receptionMethods = {
+            RMB: [
+                { id: 'recept-alipay', name: 'Alipay' },
+                { id: 'recept-wechatpay', name: 'WeChat Pay' }
+            ],
+            MGA: [
+                { id: 'recept-espece', name: 'Espèce' },
+                { id: 'recept-mvola', name: 'MVola' },
+                { id: 'recept-orangemoney', name: 'Orange Money' },
+                { id: 'recept-airtelmoney', name: 'Airtel Money' }
+            ]
+        };
+
+        async function fetchRates() {
+            try {
+                const doc = await settingsCollection.doc('exchangeRates').get();
+                if (doc.exists) {
+                    const data = doc.data();
+                    if(data.rmbToMga) rates.RMB_TO_MGA = data.rmbToMga;
+                    if(data.mgaToRmbDivisor) rates.MGA_TO_RMB_DIVISOR = data.mgaToRmbDivisor;
+                }
+            } catch (error) {
+                console.error("Impossible de charger les taux, utilisation des valeurs par défaut.", error);
+            } finally {
+                updateDisplay();
+                calculate(true);
+            }
+        }
+        
+        function renderPaymentOptions() {
+            const currency = isRmbToMga ? 'RMB' : 'MGA';
+            const options = paymentMethods[currency];
+            paymentOptionsContainer.innerHTML = options.map((opt, index) => `
+                <label for="payment-${opt.id}" class="payment-label flex items-center justify-center text-center bg-gray-100 p-3 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">
+                    <input type="radio" id="payment-${opt.id}" name="payment-method" value="${opt.name}" class="sr-only" ${index === 0 ? 'checked' : ''}>
+                    <span class="font-medium text-gray-700">${opt.name}</span>
+                </label>
+            `).join('');
+
+            const paymentLabels = paymentOptionsContainer.querySelectorAll('.payment-label');
+            paymentLabels.forEach(label => {
+                label.addEventListener('click', () => {
+                    paymentLabels.forEach(l => l.classList.remove('bg-red-100', 'font-bold', 'text-red-700'));
+                    label.classList.add('bg-red-100', 'font-bold', 'text-red-700');
+                });
+            });
+            // Initial state
+            const checkedPayment = paymentOptionsContainer.querySelector('input:checked');
+            if (checkedPayment) {
+                checkedPayment.parentElement.classList.add('bg-red-100', 'font-bold', 'text-red-700');
+            }
+        }
+
+        function renderReceptionOptions() {
+            const currency = isRmbToMga ? 'MGA' : 'RMB';
+            const options = receptionMethods[currency];
+            receptionOptionsContainer.innerHTML = options.map((opt, index) => `
+                 <label for="reception-${opt.id}" class="reception-label flex items-center justify-center text-center bg-gray-100 p-3 rounded-lg cursor-pointer hover:bg-gray-200 transition-colors">
+                    <input type="radio" id="reception-${opt.id}" name="reception-method" value="${opt.name}" class="sr-only" ${index === 0 ? 'checked' : ''}>
+                    <span class="font-medium text-gray-700">${opt.name}</span>
+                </label>
+            `).join('');
+
+            const receptionLabels = receptionOptionsContainer.querySelectorAll('.reception-label');
+            receptionLabels.forEach(label => {
+                label.addEventListener('click', () => {
+                    receptionLabels.forEach(l => l.classList.remove('bg-green-100', 'font-bold', 'text-green-700'));
+                    label.classList.add('bg-green-100', 'font-bold', 'text-green-700');
+                });
+            });
+             // Initial state
+            const checkedReception = receptionOptionsContainer.querySelector('input:checked');
+            if(checkedReception) {
+                checkedReception.parentElement.classList.add('bg-green-100', 'font-bold', 'text-green-700');
+            }
+        }
+
+        function updateDisplay() {
+            if (isRmbToMga) {
+                fromCurrencyBadge.innerHTML = '<span class="mr-2">🇨🇳</span> RMB';
+                fromCurrencyBadge.className = 'flex-shrink-0 bg-red-600 text-white px-4 py-2 rounded-full text-lg font-bold flex items-center';
+                toCurrencyBadge.innerHTML = '<span class="mr-2">🇲🇬</span> MGA';
+                toCurrencyBadge.className = 'flex-shrink-0 bg-green-600 text-white px-4 py-2 rounded-full text-lg font-bold flex items-center';
+                fromCurrencyLabel.textContent = 'Vous envoyez';
+                toCurrencyLabel.textContent = 'Le bénéficiaire reçoit';
+                rateDisplay.textContent = `Taux actuel : 1 RMB ≈ ${rates.RMB_TO_MGA} MGA`;
+            } else {
+                fromCurrencyBadge.innerHTML = '<span class="mr-2">🇲🇬</span> MGA';
+                fromCurrencyBadge.className = 'flex-shrink-0 bg-green-600 text-white px-4 py-2 rounded-full text-lg font-bold flex items-center';
+                toCurrencyBadge.innerHTML = '<span class="mr-2">🇨🇳</span> RMB';
+                toCurrencyBadge.className = 'flex-shrink-0 bg-red-600 text-white px-4 py-2 rounded-full text-lg font-bold flex items-center';
+                fromCurrencyLabel.textContent = 'Vous envoyez';
+                toCurrencyLabel.textContent = 'Le bénéficiaire reçoit';
+                rateDisplay.textContent = `Taux actuel : ${rates.MGA_TO_RMB_DIVISOR} MGA ≈ 1 RMB`;
+            }
+            renderPaymentOptions();
+            renderReceptionOptions();
+        }
+
+        function calculate(isFromInput) {
+            const fromValue = parseFloat(fromAmountInput.value);
+            const toValue = parseFloat(toAmountInput.value);
+            const rateMgaToRmb = 1 / rates.MGA_TO_RMB_DIVISOR;
+
+            if (isFromInput) {
+                if (isNaN(fromValue) || fromValue <= 0) {
+                    toAmountInput.value = '';
+                    return;
+                }
+                let calculatedToValue;
+                if (isRmbToMga) {
+                    calculatedToValue = fromValue * rates.RMB_TO_MGA;
+                } else {
+                    calculatedToValue = fromValue * rateMgaToRmb;
+                }
+                toAmountInput.value = calculatedToValue.toFixed(2);
+            } else {
+                 if (isNaN(toValue) || toValue <= 0) {
+                    fromAmountInput.value = '';
+                    return;
+                }
+                let calculatedFromValue;
+                if (isRmbToMga) {
+                    calculatedFromValue = toValue / rates.RMB_TO_MGA;
+                } else {
+                    calculatedFromValue = toValue / rateMgaToRmb;
+                }
+                fromAmountInput.value = calculatedFromValue.toFixed(2);
+            }
+        }
+
+        fromAmountInput.addEventListener('input', () => calculate(true));
+        toAmountInput.addEventListener('input', () => calculate(false));
+
+        swapButton.addEventListener('click', () => {
+            isRmbToMga = !isRmbToMga;
+            const tempValue = fromAmountInput.value;
+            fromAmountInput.value = toAmountInput.value;
+            toAmountInput.value = tempValue;
+            updateDisplay();
         });
-    });
+
+        exchangeWhatsappBtn.addEventListener('click', () => {
+            const fromAmount = fromAmountInput.value;
+            const toAmount = toAmountInput.value;
+            const fromCurrency = isRmbToMga ? 'RMB' : 'MGA';
+            const toCurrency = isRmbToMga ? 'MGA' : 'RMB';
+            const selectedPayment = document.querySelector('input[name="payment-method"]:checked');
+            const selectedReception = document.querySelector('input[name="reception-method"]:checked');
+
+            if (!fromAmount || !toAmount || parseFloat(fromAmount) <= 0) {
+                alert("Veuillez entrer un montant valide.");
+                return;
+            }
+            if (!selectedPayment) {
+                 alert("Veuillez choisir un moyen de paiement.");
+                 return;
+            }
+            if (!selectedReception) {
+                 alert("Veuillez choisir un moyen de réception.");
+                 return;
+            }
+            const paymentValue = selectedPayment.value;
+            const receptionValue = selectedReception.value;
+
+            const message = `*NOUVELLE DEMANDE D'ÉCHANGE - ARIDAGO*\n\n` +
+                            `-----------------------------------\n` +
+                            `*Montant envoyé :* ${fromAmount} ${fromCurrency}\n` +
+                            `*Montant à recevoir :* ${toAmount} ${toCurrency}\n` +
+                            `-----------------------------------\n` +
+                            `*Moyen de paiement :* ${paymentValue}\n` +
+                            `*Moyen de réception :* ${receptionValue}\n\n` +
+                            `Merci de me confirmer les instructions pour finaliser la transaction.`;
+
+            window.open(`https://wa.me/8615600021123?text=${encodeURIComponent(message)}`, '_blank');
+        });
+
+        fetchRates();
+    }
+
 
     // ================== LOGIQUE ADMIN ==================
     const adminSection = document.getElementById('page-admin');
-    adminSection.innerHTML = `<div class="bg-slate-800 text-white p-6 md:p-10 rounded-3xl shadow-lg">
-        <div id="admin-login">
-            <h2 class="font-poppins text-3xl font-bold text-center mb-4">Accès Administrateur</h2>
-            <div class="max-w-sm mx-auto">
-                <div class="mb-4"><label for="admin-email" class="block text-sm font-semibold mb-1">Email</label><input type="email" id="admin-email" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div>
-                <div class="mb-4"><label for="admin-password" class="block text-sm font-semibold mb-1">Mot de passe</label><input type="password" id="admin-password" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div>
-                <button id="admin-login-btn" class="mt-4 w-full btn-primary font-bold py-3 px-4 rounded-xl">Se connecter</button>
-                <p id="admin-error" class="text-red-400 text-center mt-2 hidden"></p>
-            </div>
-        </div>
-        <div id="admin-dashboard" class="hidden">
-            <h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2>
-            <div id="admin-stats" class="grid grid-cols-2 gap-4 mb-8"></div>
-            
-            <div class="bg-gray-700 p-6 rounded-2xl mb-8 border-2 border-dashed border-yellow-400">
-                <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-magic mr-3 text-yellow-400"></i>Générateur de Fiche Produit par IA</h3>
-                <div class="space-y-4">
-                    <div>
-                        <label class="block text-sm font-semibold mb-1">Nom ou mots-clés du produit</label>
-                        <input type="text" id="ai-text-name" placeholder="Ex: Sac à dos de voyage, Thermos intelligent..." class="w-full bg-gray-600 rounded-lg p-2 text-white">
-                    </div>
-                    <button id="ai-generate-text-btn" class="w-full btn-primary font-bold py-2 px-4 rounded-lg flex items-center justify-center disabled:opacity-50">
-                        <i class="fas fa-rocket mr-2"></i>Générer la description
-                    </button>
-                    <p id="ai-text-status" class="text-sm text-yellow-400 mt-1 text-center h-4"></p>
+    if (adminSection) {
+        adminSection.innerHTML = `<div class="bg-slate-800 text-white p-6 md:p-10 rounded-3xl shadow-lg">
+            <div id="admin-login">
+                <h2 class="font-poppins text-3xl font-bold text-center mb-4">Accès Administrateur</h2>
+                <div class="max-w-sm mx-auto">
+                    <div class="mb-4"><label for="admin-email" class="block text-sm font-semibold mb-1">Email</label><input type="email" id="admin-email" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div>
+                    <div class="mb-4"><label for="admin-password" class="block text-sm font-semibold mb-1">Mot de passe</label><input type="password" id="admin-password" class="w-full bg-gray-700 border-2 border-gray-600 rounded-xl p-3 text-white"></div>
+                    <button id="admin-login-btn" class="mt-4 w-full btn-primary font-bold py-3 px-4 rounded-xl">Se connecter</button>
+                    <p id="admin-error" class="text-red-400 text-center mt-2 hidden"></p>
                 </div>
             </div>
+            <div id="admin-dashboard" class="hidden">
+                <h2 class="font-poppins text-3xl font-bold mb-6">Tableau de bord</h2>
+                <div id="admin-stats" class="grid grid-cols-2 gap-4 mb-8"></div>
 
-            <div class="bg-gray-700 p-6 rounded-2xl mb-8">
-                <h3 id="admin-form-title" class="text-xl font-bold mb-4">Fiche Produit</h3>
-                <form id="admin-product-form" class="space-y-4">
-                    <input type="hidden" id="product-id">
-                    <div><label>Nom</label><input type="text" id="product-name" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
-                    <div><label>Catégorie</label><input type="text" id="product-category" list="category-suggestions" class="w-full bg-gray-600 rounded-lg p-2 text-white"><datalist id="category-suggestions"></datalist></div>
-                    <div><label>Description</label><textarea id="product-description" required class="w-full bg-gray-600 rounded-lg p-2 text-white" rows="6"></textarea></div>
-                    <div><label>Prix (Ar)</label><input type="number" id="product-price" class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="flex items-center"><input type="checkbox" id="product-in-stock" class="w-4 h-4 text-red-600 bg-gray-700 border-gray-600 rounded focus:ring-red-500"><label for="product-in-stock" class="ml-2 text-sm font-medium text-white">Disponible à Mada</label></div>
-                        <div class="flex items-center"><input type="checkbox" id="product-featured" class="w-4 h-4 text-yellow-400 bg-gray-700 border-gray-600 rounded focus:ring-yellow-500"><label for="product-featured" class="ml-2 text-sm font-medium text-white">Mettre en avant</label></div>
-                    </div>
-                    <div><label>Image(s)</label><div class="flex flex-wrap gap-2 mt-2 items-center"><div id="image-preview-container" class="flex flex-wrap gap-2"></div><label for="product-image-upload" class="cursor-pointer w-16 h-16 bg-gray-600 rounded flex items-center justify-center text-gray-400 hover:bg-gray-500"><i class="fas fa-plus"></i></label></div><input type="file" id="product-image-upload" multiple accept="image/*" class="hidden"><input type="hidden" id="product-images-json"><p id="upload-status" class="text-sm text-yellow-400 mt-1"></p></div>
-                    <div class="flex gap-4"><button type="submit" id="admin-submit-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg">Ajouter</button><button type="button" id="admin-cancel-btn" class="w-full bg-gray-500 font-bold py-2 px-4 rounded-lg hidden">Annuler</button></div>
-                </form>
-            </div>
-            <div>
-                <h3 class="text-xl font-bold mb-4">Produits existants</h3>
-                <div id="admin-product-list" class="space-y-4"></div>
-            </div>
-            <div class="bg-gray-700 p-6 rounded-2xl mt-8">
-                <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-robot mr-2 text-yellow-400"></i>Générateur de Publication IA</h3>
-                <div class="space-y-4">
-                    <div><label for="ia-product-select" class="block text-sm font-semibold mb-1">Choisir un produit</label><select id="ia-product-select" class="w-full bg-gray-600 rounded-lg p-2 text-white"></select></div>
-                    <button id="ia-generate-btn" class="w-full bg-yellow-500 hover:bg-yellow-600 font-bold py-2 px-4 rounded-lg flex items-center justify-center"><i class="fas fa-magic mr-2"></i>Générer la publication</button>
-                    <div><label for="ia-generated-post" class="block text-sm font-semibold mb-1">Résultat</label><div class="relative"><textarea id="ia-generated-post" readonly class="w-full bg-gray-800 rounded-lg p-3 text-white h-48 resize-none"></textarea><button id="ia-copy-btn" class="absolute top-2 right-2 bg-gray-600 hover:bg-gray-500 text-white font-bold py-1 px-2 rounded-md text-xs hidden"><i class="fas fa-copy mr-1"></i>Copier</button></div><p id="ia-status" class="text-sm text-gray-400 mt-1"></p></div>
-                </div>
-            </div>
-            <div class="mt-8 flex flex-wrap gap-4 items-center">
-                <button id="admin-logout-btn" class="bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded-lg">Se déconnecter</button>
-                <a href="https://rakotobewangyu-dev.github.io/Facturation/" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center"><i class="fas fa-file-invoice-dollar mr-2"></i>Facturation</a>
-            </div>
-        </div>
-    </div>`;
-
-    const adminLogin = document.getElementById('admin-login');
-    const adminDashboard = document.getElementById('admin-dashboard');
-    const adminLoginBtn = document.getElementById('admin-login-btn');
-    const adminLogoutBtn = document.getElementById('admin-logout-btn');
-    const adminProductForm = document.getElementById('admin-product-form');
-    const adminProductList = document.getElementById('admin-product-list');
-    const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
-    const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
-    const deleteConfirmModal = document.getElementById('delete-confirm-modal');
-    
-    auth.onAuthStateChanged(user => {
-        adminLogin.classList.toggle('hidden', !!user);
-        adminDashboard.classList.toggle('hidden', !user);
-        if (user) {
-            renderAdminStats();
-            renderAdminList();
-            initIAGenerator(); 
-            initAiFeatures();
-        }
-    });
-
-    adminLoginBtn.addEventListener('click', () => {
-        auth.signInWithEmailAndPassword(document.getElementById('admin-email').value, document.getElementById('admin-password').value)
-            .catch(err => document.getElementById('admin-error').textContent = "Email ou mot de passe incorrect.");
-    });
-    adminLogoutBtn.addEventListener('click', () => auth.signOut());
-
-    async function uploadToImgBB(file) {
-        const formData = new FormData();
-        formData.append('image', file);
-        const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
-        if (!res.ok) throw new Error('Échec du téléversement');
-        const data = await res.json();
-        return data.data.url;
-    }
-    
-    document.getElementById('product-image-upload').addEventListener('change', async (e) => {
-        if (!e.target.files.length) return;
-        document.getElementById('upload-status').textContent = `Téléversement en cours...`;
-        try {
-            const urls = await Promise.all(Array.from(e.target.files).map(uploadToImgBB));
-            let currentImages = JSON.parse(document.getElementById('product-images-json').value || '[]');
-            currentImages.push(...urls);
-            document.getElementById('product-images-json').value = JSON.stringify(currentImages);
-            renderImagePreviews(currentImages);
-            document.getElementById('upload-status').textContent = `Prêt.`;
-        } catch (error) {
-            document.getElementById('upload-status').textContent = `Erreur: ${error.message}`;
-        }
-    });
-
-    function renderImagePreviews(images) {
-        const container = document.getElementById('image-preview-container');
-        container.innerHTML = images.map((url, i) => `<div class="relative"><img src="${url}" class="w-16 h-16 object-cover rounded"><button type="button" class="absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs delete-img-btn" data-index="${i}">&times;</button></div>`).join('');
-        container.querySelectorAll('.delete-img-btn').forEach(btn => btn.addEventListener('click', e => {
-            let currentImages = JSON.parse(document.getElementById('product-images-json').value);
-            currentImages.splice(e.currentTarget.dataset.index, 1);
-            document.getElementById('product-images-json').value = JSON.stringify(currentImages);
-            renderImagePreviews(currentImages);
-        }));
-    }
-
-    function resetAdminForm() {
-        adminProductForm.reset();
-        document.getElementById('product-id').value = '';
-        document.getElementById('product-category').value = '';
-        document.getElementById('product-in-stock').checked = true;
-        document.getElementById('product-featured').checked = false;
-        document.getElementById('product-images-json').value = '[]';
-        document.getElementById('upload-status').textContent = '';
-        renderImagePreviews([]);
-        document.getElementById('admin-submit-btn').textContent = 'Ajouter';
-        document.getElementById('admin-cancel-btn').classList.add('hidden');
-    }
-
-    adminProductForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const id = document.getElementById('product-id').value;
-        const priceValue = document.getElementById('product-price').value;
-        
-        const data = {
-            name: document.getElementById('product-name').value,
-            category: document.getElementById('product-category').value.trim() || null,
-            description: document.getElementById('product-description').value,
-            price: priceValue ? parseFloat(priceValue) : null,
-            inStockMadagascar: document.getElementById('product-in-stock').checked,
-            isFeatured: document.getElementById('product-featured').checked,
-            images: JSON.parse(document.getElementById('product-images-json').value || '[]')
-        };
-        try {
-            if (id) await productsCollection.doc(id).update(data);
-            else await productsCollection.add(data);
-            resetAdminForm();
-            loadAndRenderProducts();
-        } catch (error) { console.error("Erreur d'écriture: ", error); }
-    });
-
-    document.getElementById('admin-cancel-btn').addEventListener('click', resetAdminForm);
-
-    cancelDeleteBtn.addEventListener('click', () => deleteConfirmModal.style.display = 'none');
-    confirmDeleteBtn.addEventListener('click', async () => {
-        try {
-            await productsCollection.doc(confirmDeleteBtn.dataset.id).delete();
-            loadAndRenderProducts();
-        } catch (error) { console.error("Erreur de suppression: ", error); }
-        finally { deleteConfirmModal.style.display = 'none'; }
-    });
-    
-    function renderAdminStats() {
-        const statsContainer = document.getElementById('admin-stats');
-        if (!statsContainer) return;
-        const totalProducts = boutiqueProducts.length;
-        const inStockMada = boutiqueProducts.filter(p => p.inStockMadagascar !== false).length;
-        statsContainer.innerHTML = `
-            <div class="bg-gray-700 p-4 rounded-lg text-center">
-                <p class="text-3xl font-bold">${totalProducts}</p>
-                <p class="text-sm text-gray-400">Produits au total</p>
-            </div>
-            <div class="bg-gray-700 p-4 rounded-lg text-center">
-                <p class="text-3xl font-bold">${inStockMada}</p>
-                <p class="text-sm text-gray-400">En stock à Mada</p>
-            </div>
-        `;
-    }
-
-    function renderAdminList() {
-        if (!adminProductList) return;
-        
-        const categories = [...new Set(boutiqueProducts.map(p => p.category).filter(Boolean))];
-        const suggestionsContainer = document.getElementById('category-suggestions');
-        if (suggestionsContainer) {
-            suggestionsContainer.innerHTML = categories.map(c => `<option value="${c}"></option>`).join('');
-        }
-
-        adminProductList.innerHTML = boutiqueProducts.map(p => {
-            const statusIndicator = p.inStockMadagascar !== false
-                ? `<span class="h-3 w-3 rounded-full bg-green-500 flex-shrink-0" title="Disponible à Madagascar"></span>`
-                : `<span class="h-3 w-3 rounded-full bg-yellow-500 flex-shrink-0" title="Sur commande"></span>`;
-            const featuredIndicator = p.isFeatured
-                ? `<i class="fas fa-star text-yellow-400" title="Produit en avant"></i>`
-                : `<i class="fas fa-star text-gray-400/20"></i>`;
-            return `
-                <div class="bg-gray-600 p-3 rounded-lg flex items-center justify-between">
-                    <div class="flex items-center gap-3 overflow-hidden">
-                        ${statusIndicator}
-                        ${featuredIndicator}
-                        <div class="truncate">
-                            <p class="font-bold truncate">${p.name}</p>
-                            <p class="text-xs text-gray-400 truncate">${p.category || 'Sans catégorie'}</p>
+                <div class="bg-gray-700 p-6 rounded-2xl mb-8">
+                    <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-chart-line mr-3 text-green-400"></i>Gestion des Taux de Change</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label for="admin-rate-rmb-mga" class="block text-sm font-semibold mb-1">Taux de Vente (1 RMB = X MGA)</label>
+                            <input type="number" id="admin-rate-rmb-mga" step="any" placeholder="Ex: 615" class="w-full bg-gray-600 rounded-lg p-2 text-white">
                         </div>
+                        <div>
+                            <label for="admin-rate-mga-rmb" class="block text-sm font-semibold mb-1">Taux d'Achat (X MGA = 1 RMB)</label>
+                            <input type="number" id="admin-rate-mga-rmb" step="any" placeholder="Ex: 625" class="w-full bg-gray-600 rounded-lg p-2 text-white">
+                        </div>
+                        <button id="admin-save-rates-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg flex items-center justify-center">
+                            <i class="fas fa-save mr-2"></i>Sauvegarder les Taux
+                        </button>
+                        <p id="admin-rates-status" class="text-sm text-green-400 mt-1 text-center h-4"></p>
                     </div>
-                    <div class="flex space-x-2 flex-shrink-0">
-                        <button class="edit-product-btn bg-blue-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Modifier</button>
-                        <button class="delete-product-btn bg-red-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Supprimer</button>
+                </div>
+                
+                <div class="bg-gray-700 p-6 rounded-2xl mb-8 border-2 border-dashed border-yellow-400">
+                    <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-magic mr-3 text-yellow-400"></i>Générateur de Fiche Produit par IA</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-sm font-semibold mb-1">Nom ou mots-clés du produit</label>
+                            <input type="text" id="ai-text-name" placeholder="Ex: Sac à dos de voyage, Thermos intelligent..." class="w-full bg-gray-600 rounded-lg p-2 text-white">
+                        </div>
+                        <button id="ai-generate-text-btn" class="w-full btn-primary font-bold py-2 px-4 rounded-lg flex items-center justify-center disabled:opacity-50">
+                            <i class="fas fa-rocket mr-2"></i>Générer la description
+                        </button>
+                        <p id="ai-text-status" class="text-sm text-yellow-400 mt-1 text-center h-4"></p>
                     </div>
-                </div>`;
-        }).join('');
+                </div>
+
+                <div class="bg-gray-700 p-6 rounded-2xl mb-8">
+                    <h3 id="admin-form-title" class="text-xl font-bold mb-4">Fiche Produit</h3>
+                    <form id="admin-product-form" class="space-y-4">
+                        <input type="hidden" id="product-id">
+                        <div><label>Nom</label><input type="text" id="product-name" required class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
+                        <div><label>Catégorie</label><input type="text" id="product-category" list="category-suggestions" class="w-full bg-gray-600 rounded-lg p-2 text-white"><datalist id="category-suggestions"></datalist></div>
+                        <div><label>Description</label><textarea id="product-description" required class="w-full bg-gray-600 rounded-lg p-2 text-white" rows="6"></textarea></div>
+                        <div><label>Prix (Ar)</label><input type="number" id="product-price" class="w-full bg-gray-600 rounded-lg p-2 text-white"></div>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="flex items-center"><input type="checkbox" id="product-in-stock" class="w-4 h-4 text-red-600 bg-gray-700 border-gray-600 rounded focus:ring-red-500"><label for="product-in-stock" class="ml-2 text-sm font-medium text-white">Disponible à Mada</label></div>
+                            <div class="flex items-center"><input type="checkbox" id="product-featured" class="w-4 h-4 text-yellow-400 bg-gray-700 border-gray-600 rounded focus:ring-yellow-500"><label for="product-featured" class="ml-2 text-sm font-medium text-white">Mettre en avant</label></div>
+                        </div>
+                        <div><label>Image(s)</label><div class="flex flex-wrap gap-2 mt-2 items-center"><div id="image-preview-container" class="flex flex-wrap gap-2"></div><label for="product-image-upload" class="cursor-pointer w-16 h-16 bg-gray-600 rounded flex items-center justify-center text-gray-400 hover:bg-gray-500"><i class="fas fa-plus"></i></label></div><input type="file" id="product-image-upload" multiple accept="image/*" class="hidden"><input type="hidden" id="product-images-json"><p id="upload-status" class="text-sm text-yellow-400 mt-1"></p></div>
+                        <div class="flex gap-4"><button type="submit" id="admin-submit-btn" class="w-full btn-secondary font-bold py-2 px-4 rounded-lg">Ajouter</button><button type="button" id="admin-cancel-btn" class="w-full bg-gray-500 font-bold py-2 px-4 rounded-lg hidden">Annuler</button></div>
+                    </form>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold mb-4">Produits existants</h3>
+                    <div id="admin-product-list" class="space-y-4"></div>
+                </div>
+                <div class="bg-gray-700 p-6 rounded-2xl mt-8">
+                    <h3 class="text-xl font-bold mb-4 flex items-center"><i class="fas fa-robot mr-2 text-yellow-400"></i>Générateur de Publication IA</h3>
+                    <div class="space-y-4">
+                        <div><label for="ia-product-select" class="block text-sm font-semibold mb-1">Choisir un produit</label><select id="ia-product-select" class="w-full bg-gray-600 rounded-lg p-2 text-white"></select></div>
+                        <button id="ia-generate-btn" class="w-full bg-yellow-500 hover:bg-yellow-600 font-bold py-2 px-4 rounded-lg flex items-center justify-center"><i class="fas fa-magic mr-2"></i>Générer la publication</button>
+                        <div><label for="ia-generated-post" class="block text-sm font-semibold mb-1">Résultat</label><div class="relative"><textarea id="ia-generated-post" readonly class="w-full bg-gray-800 rounded-lg p-3 text-white h-48 resize-none"></textarea><button id="ia-copy-btn" class="absolute top-2 right-2 bg-gray-600 hover:bg-gray-500 text-white font-bold py-1 px-2 rounded-md text-xs hidden"><i class="fas fa-copy mr-1"></i>Copier</button></div><p id="ia-status" class="text-sm text-gray-400 mt-1"></p></div>
+                    </div>
+                </div>
+                <div class="mt-8 flex flex-wrap gap-4 items-center">
+                    <button id="admin-logout-btn" class="bg-red-600 hover:bg-red-700 font-bold py-2 px-4 rounded-lg">Se déconnecter</button>
+                    <a href="https://rakotobewangyu-dev.github.io/Facturation/" target="_blank" class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg inline-flex items-center"><i class="fas fa-file-invoice-dollar mr-2"></i>Facturation</a>
+                </div>
+            </div>
+        </div>`;
+
+        const adminLogin = document.getElementById('admin-login');
+        const adminDashboard = document.getElementById('admin-dashboard');
+        const adminLoginBtn = document.getElementById('admin-login-btn');
+        const adminLogoutBtn = document.getElementById('admin-logout-btn');
+        const adminProductForm = document.getElementById('admin-product-form');
+        const adminProductList = document.getElementById('admin-product-list');
+        const confirmDeleteBtn = document.getElementById('confirm-delete-btn');
+        const cancelDeleteBtn = document.getElementById('cancel-delete-btn');
+        const deleteConfirmModal = document.getElementById('delete-confirm-modal');
         
-        adminProductList.querySelectorAll('.edit-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
-            const p = boutiqueProducts.find(prod => prod.id === e.currentTarget.dataset.id);
-            document.getElementById('product-id').value = p.id;
-            document.getElementById('product-name').value = p.name;
-            document.getElementById('product-category').value = p.category || '';
-            document.getElementById('product-description').value = p.description;
-            document.getElementById('product-price').value = p.price || '';
-            document.getElementById('product-in-stock').checked = p.inStockMadagascar !== false;
-            document.getElementById('product-featured').checked = p.isFeatured === true;
-            document.getElementById('product-images-json').value = JSON.stringify(p.images || []);
-            renderImagePreviews(p.images || []);
-            document.getElementById('admin-submit-btn').textContent = 'Mettre à jour';
-            document.getElementById('admin-cancel-btn').classList.remove('hidden');
-            window.scrollTo(0, 0);
-        }));
-        adminProductList.querySelectorAll('.delete-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
-            confirmDeleteBtn.dataset.id = e.currentTarget.dataset.id;
-            deleteConfirmModal.style.display = 'flex';
-        }));
+        auth.onAuthStateChanged(user => {
+            if (adminLogin && adminDashboard) {
+                adminLogin.classList.toggle('hidden', !!user);
+                adminDashboard.classList.toggle('hidden', !user);
+                if (user) {
+                    renderAdminStats();
+                    renderAdminList();
+                    initIAGenerator(); 
+                    initAiFeatures();
+                    initAdminRateManagement();
+                }
+            }
+        });
+
+        adminLoginBtn.addEventListener('click', () => {
+            auth.signInWithEmailAndPassword(document.getElementById('admin-email').value, document.getElementById('admin-password').value)
+                .catch(err => document.getElementById('admin-error').textContent = "Email ou mot de passe incorrect.");
+        });
+        adminLogoutBtn.addEventListener('click', () => auth.signOut());
+
+        async function uploadToImgBB(file) {
+            const formData = new FormData();
+            formData.append('image', file);
+            const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_API_KEY}`, { method: 'POST', body: formData });
+            if (!res.ok) throw new Error('Échec du téléversement');
+            const data = await res.json();
+            return data.data.url;
+        }
+        
+        document.getElementById('product-image-upload').addEventListener('change', async (e) => {
+            if (!e.target.files.length) return;
+            document.getElementById('upload-status').textContent = `Téléversement en cours...`;
+            try {
+                const urls = await Promise.all(Array.from(e.target.files).map(uploadToImgBB));
+                let currentImages = JSON.parse(document.getElementById('product-images-json').value || '[]');
+                currentImages.push(...urls);
+                document.getElementById('product-images-json').value = JSON.stringify(currentImages);
+                renderImagePreviews(currentImages);
+                document.getElementById('upload-status').textContent = `Prêt.`;
+            } catch (error) {
+                document.getElementById('upload-status').textContent = `Erreur: ${error.message}`;
+            }
+        });
+
+        function renderImagePreviews(images) {
+            const container = document.getElementById('image-preview-container');
+            container.innerHTML = images.map((url, i) => `<div class="relative"><img src="${url}" class="w-16 h-16 object-cover rounded"><button type="button" class="absolute -top-1 -right-1 bg-red-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-xs delete-img-btn" data-index="${i}">&times;</button></div>`).join('');
+            container.querySelectorAll('.delete-img-btn').forEach(btn => btn.addEventListener('click', e => {
+                let currentImages = JSON.parse(document.getElementById('product-images-json').value);
+                currentImages.splice(e.currentTarget.dataset.index, 1);
+                document.getElementById('product-images-json').value = JSON.stringify(currentImages);
+                renderImagePreviews(currentImages);
+            }));
+        }
+
+        function resetAdminForm() {
+            adminProductForm.reset();
+            document.getElementById('product-id').value = '';
+            document.getElementById('product-category').value = '';
+            document.getElementById('product-in-stock').checked = true;
+            document.getElementById('product-featured').checked = false;
+            document.getElementById('product-images-json').value = '[]';
+            document.getElementById('upload-status').textContent = '';
+            renderImagePreviews([]);
+            document.getElementById('admin-submit-btn').textContent = 'Ajouter';
+            document.getElementById('admin-cancel-btn').classList.add('hidden');
+        }
+
+        adminProductForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const id = document.getElementById('product-id').value;
+            const priceValue = document.getElementById('product-price').value;
+            
+            const data = {
+                name: document.getElementById('product-name').value,
+                category: document.getElementById('product-category').value.trim() || null,
+                description: document.getElementById('product-description').value,
+                price: priceValue ? parseFloat(priceValue) : null,
+                inStockMadagascar: document.getElementById('product-in-stock').checked,
+                isFeatured: document.getElementById('product-featured').checked,
+                images: JSON.parse(document.getElementById('product-images-json').value || '[]')
+            };
+            try {
+                if (id) await productsCollection.doc(id).update(data);
+                else await productsCollection.add(data);
+                resetAdminForm();
+                loadAndRenderProducts();
+            } catch (error) { console.error("Erreur d'écriture: ", error); }
+        });
+
+        document.getElementById('admin-cancel-btn').addEventListener('click', resetAdminForm);
+
+        cancelDeleteBtn.addEventListener('click', () => deleteConfirmModal.style.display = 'none');
+        confirmDeleteBtn.addEventListener('click', async () => {
+            try {
+                await productsCollection.doc(confirmDeleteBtn.dataset.id).delete();
+                loadAndRenderProducts();
+            } catch (error) { console.error("Erreur de suppression: ", error); }
+            finally { deleteConfirmModal.style.display = 'none'; }
+        });
+        
+        function renderAdminStats() {
+            const statsContainer = document.getElementById('admin-stats');
+            if (!statsContainer) return;
+            const totalProducts = boutiqueProducts.length;
+            const inStockMada = boutiqueProducts.filter(p => p.inStockMadagascar !== false).length;
+            statsContainer.innerHTML = `
+                <div class="bg-gray-700 p-4 rounded-lg text-center">
+                    <p class="text-3xl font-bold">${totalProducts}</p>
+                    <p class="text-sm text-gray-400">Produits au total</p>
+                </div>
+                <div class="bg-gray-700 p-4 rounded-lg text-center">
+                    <p class="text-3xl font-bold">${inStockMada}</p>
+                    <p class="text-sm text-gray-400">En stock à Mada</p>
+                </div>
+            `;
+        }
+
+        function renderAdminList() {
+            if (!adminProductList) return;
+            
+            const categories = [...new Set(boutiqueProducts.map(p => p.category).filter(Boolean))];
+            const suggestionsContainer = document.getElementById('category-suggestions');
+            if (suggestionsContainer) {
+                suggestionsContainer.innerHTML = categories.map(c => `<option value="${c}"></option>`).join('');
+            }
+
+            adminProductList.innerHTML = boutiqueProducts.map(p => {
+                const statusIndicator = p.inStockMadagascar !== false
+                    ? `<span class="h-3 w-3 rounded-full bg-green-500 flex-shrink-0" title="Disponible à Madagascar"></span>`
+                    : `<span class="h-3 w-3 rounded-full bg-yellow-500 flex-shrink-0" title="Sur commande"></span>`;
+                const featuredIndicator = p.isFeatured
+                    ? `<i class="fas fa-star text-yellow-400" title="Produit en avant"></i>`
+                    : `<i class="fas fa-star text-gray-400/20"></i>`;
+                return `
+                    <div class="bg-gray-600 p-3 rounded-lg flex items-center justify-between">
+                        <div class="flex items-center gap-3 overflow-hidden">
+                            ${statusIndicator}
+                            ${featuredIndicator}
+                            <div class="truncate">
+                                <p class="font-bold truncate">${p.name}</p>
+                                <p class="text-xs text-gray-400 truncate">${p.category || 'Sans catégorie'}</p>
+                            </div>
+                        </div>
+                        <div class="flex space-x-2 flex-shrink-0">
+                            <button class="edit-product-btn bg-blue-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Modifier</button>
+                            <button class="delete-product-btn bg-red-500 px-3 py-1 rounded text-white text-sm" data-id="${p.id}">Supprimer</button>
+                        </div>
+                    </div>`;
+            }).join('');
+            
+            adminProductList.querySelectorAll('.edit-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
+                const p = boutiqueProducts.find(prod => prod.id === e.currentTarget.dataset.id);
+                document.getElementById('product-id').value = p.id;
+                document.getElementById('product-name').value = p.name;
+                document.getElementById('product-category').value = p.category || '';
+                document.getElementById('product-description').value = p.description;
+                document.getElementById('product-price').value = p.price || '';
+                document.getElementById('product-in-stock').checked = p.inStockMadagascar !== false;
+                document.getElementById('product-featured').checked = p.isFeatured === true;
+                document.getElementById('product-images-json').value = JSON.stringify(p.images || []);
+                renderImagePreviews(p.images || []);
+                document.getElementById('admin-submit-btn').textContent = 'Mettre à jour';
+                document.getElementById('admin-cancel-btn').classList.remove('hidden');
+                window.scrollTo(0, 0);
+            }));
+            adminProductList.querySelectorAll('.delete-product-btn').forEach(btn => btn.addEventListener('click', (e) => {
+                confirmDeleteBtn.dataset.id = e.currentTarget.dataset.id;
+                deleteConfirmModal.style.display = 'flex';
+            }));
+        }
+    }
+
+    function initAdminRateManagement() {
+        const rmbMgaInput = document.getElementById('admin-rate-rmb-mga');
+        const mgaRmbInput = document.getElementById('admin-rate-mga-rmb');
+        const saveBtn = document.getElementById('admin-save-rates-btn');
+        const statusEl = document.getElementById('admin-rates-status');
+
+        if(!saveBtn) return;
+
+        settingsCollection.doc('exchangeRates').get().then(doc => {
+            if (doc.exists) {
+                const data = doc.data();
+                if (data.rmbToMga) rmbMgaInput.value = data.rmbToMga;
+                if (data.mgaToRmbDivisor) mgaRmbInput.value = data.mgaToRmbDivisor;
+            }
+        });
+
+        saveBtn.addEventListener('click', async () => {
+            const rmbToMga = parseFloat(rmbMgaInput.value);
+            const mgaToRmbDivisor = parseFloat(mgaRmbInput.value);
+
+            if (isNaN(rmbToMga) || isNaN(mgaToRmbDivisor) || rmbToMga <= 0 || mgaToRmbDivisor <= 0) {
+                statusEl.textContent = "Veuillez entrer des taux valides.";
+                statusEl.className = "text-sm text-red-400 mt-1 text-center h-4";
+                return;
+            }
+
+            try {
+                saveBtn.disabled = true;
+                statusEl.textContent = "Sauvegarde en cours...";
+                statusEl.className = "text-sm text-yellow-400 mt-1 text-center h-4";
+                
+                await settingsCollection.doc('exchangeRates').set({
+                    rmbToMga: rmbToMga,
+                    mgaToRmbDivisor: mgaToRmbDivisor
+                }, { merge: true });
+
+                statusEl.textContent = "Taux sauvegardés avec succès !";
+                statusEl.className = "text-sm text-green-400 mt-1 text-center h-4";
+                
+                // Rafraîchir la page d'échange si elle est visible
+                if (!document.getElementById('page-echange').classList.contains('hidden')) {
+                    initExchangeCalculator();
+                }
+
+            } catch (error) {
+                console.error("Erreur lors de la sauvegarde: ", error);
+                statusEl.textContent = "Erreur lors de la sauvegarde.";
+                statusEl.className = "text-sm text-red-400 mt-1 text-center h-4";
+            } finally {
+                saveBtn.disabled = false;
+                setTimeout(() => { statusEl.textContent = ''; }, 3000);
+            }
+        });
     }
     
     // ================== LOGIQUE GÉNÉRATEUR IA ==================
@@ -1378,8 +1759,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('scrolled-in');
-                    } else {
-                        entry.target.classList.remove('scrolled-in');
                     }
                 });
             }, { threshold: 0.1 });
@@ -1393,7 +1772,10 @@ document.addEventListener('DOMContentLoaded', function() {
     // ================== APPEL INITIAL ==================
     loadAndRenderProducts();
     initSearchFunctionality();
+    initExchangeCalculator();
+    renderDevisFaq();
 });
 </script>
 </body>
 </html>
+
