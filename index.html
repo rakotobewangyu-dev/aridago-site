@@ -1250,11 +1250,54 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         
+        async function callGenerativeApi(url, payload) {
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+            if (!response.ok) throw new Error(`Erreur API: ${response.statusText}`);
+            return response.json();
+        }
+
         function initAiFeatures() {
+            const aiTextName = document.getElementById('ai-text-name');
             const aiGenerateTextBtn = document.getElementById('ai-generate-text-btn');
+            const aiTextStatus = document.getElementById('ai-text-status');
+
             aiGenerateTextBtn.addEventListener('click', async () => {
-                 // La logique IA a été omise pour se concentrer sur les corrections principales
-                document.getElementById('ai-text-status').textContent = 'Fonctionnalité IA en maintenance.';
+                const productName = aiTextName.value.trim();
+                if (!productName) {
+                    aiTextStatus.textContent = 'Veuillez fournir un nom ou des mots-clés.';
+                    return;
+                }
+
+                aiTextStatus.textContent = 'Génération du texte en cours...';
+                aiGenerateTextBtn.disabled = true;
+
+                try {
+                    const apiKey = "AIzaSyDeTIQtd0xLZAIamRfajdQd2vAGrjIWGi4";
+                    const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`;
+                    const prompt = `En tant qu'assistant de fiche produit, génère une description pour "${productName}". La description doit commencer par une seule phrase d'accroche courte et percutante. Juste après, à la ligne, continue avec une liste à puces concise (- Caractéristique : Valeur) des spécifications techniques et des caractéristiques clés. La réponse doit être en texte brut, sans formatage Markdown. Format attendu : NOM : [Nom clair du produit] ;;; DESCRIPTION : [Phrase d'accroche.]\n\n- Spécification : ...\n- Autre Spécification : ...`;
+
+                    const payload = { contents: [{ parts: [{ text: prompt }] }] };
+                    const result = await callGenerativeApi(apiUrl, payload);
+                    const text = result.candidates[0].content.parts[0].text;
+                    
+                    const parts = text.split(';;;');
+                    const generatedName = parts[0].replace('NOM :', '').trim();
+                    const generatedDesc = parts[1].replace('DESCRIPTION :', '').trim();
+
+                    document.getElementById('product-name').value = generatedName;
+                    document.getElementById('product-description').value = generatedDesc;
+                    aiTextStatus.textContent = 'Description générée avec succès !';
+
+                } catch (error) {
+                    console.error('Erreur du générateur de texte IA:', error);
+                    aiTextStatus.textContent = `Erreur: ${error.message}`;
+                } finally {
+                    aiGenerateTextBtn.disabled = false;
+                }
             });
         }
     }
