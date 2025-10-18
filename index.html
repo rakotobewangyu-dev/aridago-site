@@ -279,7 +279,7 @@
        <section id="page-echange" class="page-content hidden">
             <div class="container mx-auto max-w-4xl p-4 md:p-8">
                 <div class="w-full max-w-2xl mx-auto mb-10 mt-8">
-                    <img src="https://i.ibb.co/2P2rS8F/Ariary-3.png" alt="Service de transfert d'argent Aridago" class="w-full h-auto rounded-2xl shadow-lg">
+                    <img src="https://i.ibb.co/2P2rS8F/Ariary-3.png" alt="Ariary-3" class="w-full h-auto rounded-2xl shadow-lg">
                 </div>
                  <header class="text-center mb-10 scroll-animate">
                     <h1 class="text-3xl md:text-5xl font-extrabold text-gray-800 leading-tight">
@@ -951,7 +951,8 @@ document.addEventListener('DOMContentLoaded', function() {
         toAmountInput.addEventListener('input', () => calculate(false));
         swapButton.addEventListener('click', () => {
             isRmbToMga = !isRmbToMga;
-            [fromAmountInput.value, toAmountInput.value] = [toAmountInput.value, fromAmountInput.value];
+            fromAmountInput.value = '';
+            toAmountInput.value = '';
             updateDisplay();
         });
 
@@ -1324,4 +1325,3 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 </body>
 </html>
-
