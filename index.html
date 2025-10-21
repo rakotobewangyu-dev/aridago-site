@@ -133,7 +133,7 @@
                  <img src="https://i.ibb.co/4nXZ4R2V/image-removebg-preview.png" alt="Logo Aridago" class="h-14 w-auto">
             </a>
             
-            <div class="flex-1 flex justify-end md:justify-center">
+            <div class="flex-1 flex justify-end md:justify-start">
                  <nav class="flex items-center space-x-1 sm:space-x-2 md:space-x-4 text-[10px] sm:text-sm md:text-base">
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="accueil">Accueil</a>
                     <a href="#" class="font-semibold text-slate-700 hover:text-red-600 relative nav-link nav-link-underline px-1 sm:px-2" data-page="boutique">Boutique</a>
@@ -580,6 +580,18 @@ document.addEventListener('DOMContentLoaded', function() {
     let boutiqueProducts = [];
     const pages = document.querySelectorAll('.page-content');
     const navLinks = document.querySelectorAll('.nav-link');
+
+    function initScrollAnimations() {
+        const animatedElements = document.querySelectorAll('.scroll-animate');
+        if ("IntersectionObserver" in window) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => entry.target.classList.toggle('scrolled-in', entry.isIntersecting));
+            }, { threshold: 0.1 });
+            animatedElements.forEach(el => observer.observe(el));
+        } else {
+            animatedElements.forEach(el => el.classList.add('scrolled-in'));
+        }
+    }
     
     function showPage(pageId, fromPopState = false) {
         pages.forEach(page => page.classList.add('hidden'));
@@ -1300,18 +1312,6 @@ document.addEventListener('DOMContentLoaded', function() {
                     aiGenerateTextBtn.disabled = false;
                 }
             });
-        }
-    }
-
-    function initScrollAnimations() {
-        const animatedElements = document.querySelectorAll('.scroll-animate');
-        if ("IntersectionObserver" in window) {
-            const observer = new IntersectionObserver((entries) => {
-                entries.forEach(entry => entry.target.classList.toggle('scrolled-in', entry.isIntersecting));
-            }, { threshold: 0.1 });
-            animatedElements.forEach(el => observer.observe(el));
-        } else {
-            animatedElements.forEach(el => el.classList.add('scrolled-in'));
         }
     }
 
