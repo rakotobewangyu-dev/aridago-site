@@ -738,7 +738,8 @@ document.addEventListener('DOMContentLoaded', function() {
         
         let filteredProducts = boutiqueProducts.filter(p => {
             const nameMatch = !searchTerm || normalizeString(p.name).includes(searchTerm);
-            const categoryMatch = !activeCategory || activeCategory === 'Tous' || p.category === activeActiveCategory;
+            // CORRECTION DU BUG : Remplacement de 'activeActiveCategory' par 'activeCategory'
+            const categoryMatch = !activeCategory || activeCategory === 'Tous' || p.category === activeCategory;
             return nameMatch && categoryMatch;
         });
 
@@ -852,6 +853,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 </button>
                 <div class="faq-answer hidden px-4 pb-4 text-gray-600">
                     <p>La qualité est notre priorité. Nos équipes en Chine effectuent un contrôle qualité systématique avant toute expédition. Nous vous envoyons des photos et des vidéos des produits pour que vous puissiez valider la conformité de votre commande avant son envoi.</p>
+
                 </div>
             </div>`;
         document.querySelectorAll('#page-devis .faq-question').forEach(btn => {
